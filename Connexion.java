@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package projetjava2018;
+package Modele;
 
 /*
  * 
  * Librairies importées
  */
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * 
@@ -62,7 +59,106 @@ public class Connexion {
 
         // création d'un ordre SQL (statement)
         stmt = conn.createStatement();
+        
+        //R0
+        rset = stmt.executeQuery("SELECT * FROM chambre");
+        //rsetMeta = rset.getMetaData();
+        
+        while(rset.next()){
+            System.out.println(rset.getString("code_service"));
+            
+        }
+        
+        //R1
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT nom, prenom FROM malade WHERE mutuelle = 'MAAF'");
+        while(rset.next()){
+            System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));        
+        }
+        
+        //R2
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM infirmier i, employe e WHERE i.numero = e.numero AND i.rotation = 'NUIT'");
+        while(rset.next()){
+            System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));        
+        }
+        
+        //R3
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT s.nom, s.batiment, d.specialite, e.nom, e.prenom FROM service s, docteur d, employe e WHERE s.directeur = d.numero AND d.numero = e.numero");
+        while(rset.next()){
+            System.out.println(rset.getString("s.nom") + " " + rset.getString("s.batiment")+ " " + rset.getString("d.specialite") + " " + rset.getString("e.prenom") + " " + rset.getString("e.nom"));   
+        }
+        
+        //R4
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT c.no_chambre, h.lit, s.nom, m.nom, m.prenom, m.mutuelle FROM chambre c, malade m, hospitalisation h, service s WHERE c.no_chambre = h.no_chambre AND c.code_service = s.code AND m.numero = h.no_malade AND m.mutuelle LIKE 'MN%' AND s.batiment = 'B'");
+        while(rset.next()){
+            System.out.println(rset.getString("c.no_chambre") + " " + rset.getString("h.lit") + " " + rset.getString("s.nom") + " " + rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("m.mutuelle"));        
+        }
+        
+        //R5
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT AVG(i.salaire), i.code_service FROM infirmier i GROUP BY i.code_service");
+        while(rset.next()){
+            System.out.println(rset.getString("i.code_service") + " " + rset.getString("AVG(i.salaire)"));        
+        }
+        
+        //R6
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT c.code_service, AVG(c.nb_lits) FROM chambre c, service s WHERE s.code = c.code_service AND s.batiment = 'A' GROUP BY c.code_service");
+        while(rset.next()){
+            System.out.println(rset.getString("c.code_service") + " " + rset.getString("AVG(c.nb_lits)"));        
+        }
+        
+        //R7
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT m.nom, m.prenom, COUNT(s.no_docteur), COUNT(DISTINCT d.specialite) FROM soigne s, malade m, docteur d WHERE s.no_malade = m.numero AND s.no_docteur = d.numero GROUP BY s.no_malade HAVING COUNT(s.no_docteur) > 3 ORDER BY nom");
+        while(rset.next()){
+            System.out.println(rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("COUNT(s.no_docteur)") + " " + rset.getString("COUNT(DISTINCT d.specialite)"));        
+        }
+        
+        //R8
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT s.nom, COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade) FROM service s, infirmier i, hospitalisation h WHERE s.code = i.code_service AND h.code_service = s.code GROUP BY s.code");
+        while(rset.next()){
+            System.out.println(rset.getString("s.nom") + " " + rset.getString("COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade)"));
+        }
+        
+        //R9
+        System.out.println("-------------------");
+        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) > '1' ORDER BY nom");
+        while(rset.next()){
+            System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
+        }
+        
+        //R10
+        System.out.println("-------------------");
+        System.out.println("Les medecins n'ayant aucun patient hospitalise sont les suivants:");
+        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) = '0' ORDER BY nom");
+        while(rset.next()){
+            System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom")); }
+        
+       /*Scanner sc = new Scanner(System.in);
+        
+       //System.out.println("Veuillez saisir un nom :");
+       String nom = sc.nextLine();
+       System.out.println("Veuillez saisir un prenom : ");
+       String prenom = sc.nextLine();*/
+           
+        //}
+        
+       //System.out.println("Veuillez saisir une table : ");
+       //String table = sc.nextLine();
+       
+       //String query = "SELECT * FROM " + table; 
+        
+        //rset = stmt.executeQuery(query);
+        
+        //while(rset.next()){
+        //    System.out.println(rset.getString("code_service"));  
     }
+    //}
 
     /**
      * Constructeur avec 4 paramètres : username et password ECE, login et
@@ -95,7 +191,7 @@ public class Connexion {
 
         }
     }
-
+    
     /**
      * Méthode qui ajoute la table en parametre dans son ArrayList
      *
@@ -210,4 +306,17 @@ public class Connexion {
     public void executeUpdate(String requeteMaj) throws SQLException {
         stmt.executeUpdate(requeteMaj);
     }
+    
+    public void RecherchePersonne(String nom, String prenom) throws SQLException, ClassNotFoundException {
+        
+       String query = "SELECT h.no_chambre, h.lit, h.code_service FROM malade m, hospitalisation h WHERE nom = '" + nom + "' AND prenom = '" + prenom + "' AND m.numero = h.no_malade";
+       System.out.println(query);
+       rset = stmt.executeQuery(query);
+        
+       while(rset.next()){
+            System.out.println("La chambre du malade hospitalise est " + rset.getString("h.no_chambre") + " dans le sevice " + rset.getString("h.code_service"));   
+        
+        }
+    }
+    
 }

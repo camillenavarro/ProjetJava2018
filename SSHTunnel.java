@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava2018;
+package Modele;
+
+/**
+ *
+ * @author Rim
+ */
 
 import com.jcraft.jsch.*;
 
 /**
- * Etablit une connexion au serveur de la base de données via un tunnel SSH
+ * Etablit une connexion au serveur de la base de donnÃ©es via un tunnel SSH
  *
  * Date: 23/03/2014 Time: 13:30
  *
@@ -27,15 +32,15 @@ public class SSHTunnel {
      *       Constructors     *
      ************************ */
     /**
-     * Constructeur permettant la connexion à un serveur via un double tunnel
+     * Constructeur permettant la connexion Ã  un serveur via un double tunnel
      * SSH
      *
      * @param username Nom d'utilisateur ECE
      * @param password Mot de passe ECE
-     * @param firstHost Premier hôte avec lequel il faut établir un tunnel SSH
-     * @param secondHost Second hôte avec lequel il faut établir un tunnel SSH
-     * @param firstHostPort Port utiliser pour se connecter au premier hôte
-     * @param secondHostPort Port utiliser pour se connecter au second hôte
+     * @param firstHost Premier hÃ´te avec lequel il faut Ã©tablir un tunnel SSH
+     * @param secondHost Second hÃ´te avec lequel il faut Ã©tablir un tunnel SSH
+     * @param firstHostPort Port utiliser pour se connecter au premier hÃ´te
+     * @param secondHostPort Port utiliser pour se connecter au second hÃ´te
      */
     public SSHTunnel(String username, String password, String firstHost, String secondHost, int firstHostPort, int secondHostPort) {
         this.username = username;
@@ -48,7 +53,7 @@ public class SSHTunnel {
 
     /**
      * Constructeur permettant la connexion automatique au serveur de la base de
-     * données ECE
+     * donnÃ©es ECE
      *
      * @param username Nom d'utilisateur ECE
      * @param password Mot de passe ECE
@@ -64,7 +69,7 @@ public class SSHTunnel {
     /**
      * Tente de se connecter au serveur
      *
-     * @return TRUE si la connexion réussie, FALSE sinon
+     * @return TRUE si la connexion rÃ©ussie, FALSE sinon
      */
     @SuppressWarnings("CallToThreadDumpStack")
     public boolean connect() {
@@ -84,7 +89,7 @@ public class SSHTunnel {
             //System.out.println("SSH connexion successful : localhost -> "+this.getFirstHost()+":"+this.getFirstHostPort()+" -> "+" "+port+":"+this.getSecondHost()+":"+this.getSecondHostPort());
             return true;
         } catch (JSchException e) {
-            System.out.println("Problème SSH");
+            System.out.println("ProblÃ¨me SSH");
         }
 
         return false;
@@ -133,9 +138,9 @@ public class SSHTunnel {
      *      Private class     *
      ************************ */
     /**
-     * Classe gérant l'interaction de l'utilisateur lors de la connexion. Elle
+     * Classe gÃ©rant l'interaction de l'utilisateur lors de la connexion. Elle
      * automatise la connexion en fournissant les informations de connexion sans
-     * les demander à l'utilisateur
+     * les demander Ã  l'utilisateur
      */
     static class SilentUserInfo implements UserInfo, UIKeyboardInteractive {
 
@@ -184,4 +189,3 @@ public class SSHTunnel {
         }
     }
 }
-
