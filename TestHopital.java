@@ -53,6 +53,13 @@ public class TestHopital implements ActionListener {
        zFen.getRechServ().addActionListener(this) ;
        zFen.getRechChambre().addActionListener(this) ;
        zFen.getBoutonRetour().addActionListener(this) ;
+       zFen.getModMalade().addActionListener(this) ;
+       zFen.getModDocteur().addActionListener(this) ;
+       zFen.getModInfirmier().addActionListener(this) ;
+       zFen.getModService().addActionListener(this) ;
+       zFen.getModChambre().addActionListener(this) ;
+       zFen.getNouveauS().addActionListener(this) ;
+       zFen.getSuppS().addActionListener(this) ;
     }
     
     public static void main(String[] args) throws IOException{
@@ -80,7 +87,7 @@ public class TestHopital implements ActionListener {
         
         if(e.getSource()==zFen.getNouveauP())
         {
-            
+            zFen.ajouterPatient();
         }
         if(e.getSource()==zFen.getNouvelE())
         {
@@ -88,7 +95,7 @@ public class TestHopital implements ActionListener {
         }
         if(e.getSource()==zFen.getModifier())
         {
-            hop.MAJ();
+            zFen.modifier();
         }
         if(e.getSource()==zFen.getSuppP())
         {
@@ -98,39 +105,69 @@ public class TestHopital implements ActionListener {
         {
             
         }
+        if(e.getSource()==zFen.getNouveauS())
+        {
+            
+        }
+        if(e.getSource()==zFen.getSuppS())
+        {
+            
+        }
         if(e.getSource()==zFen.getRechMalade())
         {
             String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Malades");
+            zFen.saisieRecherche(champs, "Malade");
         }
         if(e.getSource()==zFen.getRechInf())
         {
           String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Employes");
+            zFen.saisieRecherche(champs, "Infirmier");
         }
         if(e.getSource()==zFen.getRechDoc())
         {
-          String champs[] = new String[2] ;
+            String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Employes");
+            zFen.saisieRecherche(champs, "Docteur");
         }
         if(e.getSource()==zFen.getRechServ())
         {
             String champs[] = new String[1] ;
-            champs[0] = "Code Service" ;
-            zFen.saisieRecherche(champs, "Services");
+            champs[0] = "Nom du service" ;
+            zFen.saisieRecherche(champs, "Service");
         }
         if(e.getSource()==zFen.getRechChambre())
         {
-//            String champs[] = new String[1] ;
-//            champs[0] = "Numéro de chambre" ;
-//            zFen.saisieRecherche(champs, "Chambres");
+            String champs[] = new String[2] ;
+            champs[0] = "Numéro de chambre" ;
+            champs[1] = "Nom du service" ;
+            zFen.saisieRecherche(champs, "Chambre");
         }
+        if(e.getSource()==zFen.getModMalade())
+        {
+            
+        }
+        if(e.getSource()==zFen.getModInfirmier())
+        {
+            
+        }
+        if(e.getSource()==zFen.getModDocteur())
+        {
+            
+        }
+        if(e.getSource()==zFen.getModService())
+        {
+            
+        }
+        if(e.getSource()==zFen.getModChambre())
+        {
+            
+        }
+        
     }
 }
         
