@@ -7,7 +7,6 @@ package Modele;
 import Controleur.*;
 import Vue.*;
 
-import java.util.Scanner;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
@@ -21,7 +20,6 @@ public class Hopital {
     static final String NAME = "hopital";
     static final String LOGIN = "root";
     static final String PASSWORD = "";
-    Scanner sc = new Scanner(System.in);
     Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
@@ -30,7 +28,12 @@ public class Hopital {
         try {
 
             try {
+                //Connection connection = null;
+                //Statement statement = null;
+                //ResultSet resultSet = null;
+                
                 maconnexion = new Connexion(NAME, LOGIN, PASSWORD);
+                //maconnexion.remplirChampsTable("chambre");
 
             } catch (SQLException ex) {
                 System.out.println("SQL problem.");
@@ -47,28 +50,25 @@ public class Hopital {
         //    connection.close();
         //} catch (SQLException ex) {
         //}
+    
     }
-
+    
     public void MAJ() {
-
+        
         //maconnexion.executeUpdate(requeteMAJ);
     }
-
-    public void malade() {
+    
+    public void malade(String nom, String prenom) {
 
         try {
 
-            try {
-                System.out.println("Veuillez saisir un nom :");
-                String nom = sc.nextLine();
-                System.out.println("Veuillez saisir un prenom : ");
-                String prenom = sc.nextLine();
-
+            try {        
+              
                 liste = maconnexion.RechercheMalade(nom, prenom);
                 //liste.forEach((_item) -> {
                 System.out.println(liste);
                 //});
-
+                
             } catch (SQLException ex) {
                 System.out.println("SQL problem.");
             }
@@ -76,18 +76,15 @@ public class Hopital {
         } catch (ClassNotFoundException e) {
             System.out.println("Class problem.");
         }
-
+        
     }
-
-    public void docteur() {
+    
+    public void docteur(String nom, String prenom) {
 
         try {
 
             try {
-                System.out.println("Veuillez saisir un nom :");
-                String nom = sc.nextLine();
-                System.out.println("Veuillez saisir un prenom : ");
-                String prenom = sc.nextLine();
+                
 
                 liste = maconnexion.RechercheDocteur(nom, prenom);
                 System.out.println(liste);
@@ -102,15 +99,11 @@ public class Hopital {
 
     }
 
-    public void infirmier() {
+    public void infirmier(String nom, String prenom) {
 
         try {
 
             try {
-                System.out.println("Veuillez saisir un nom :");
-                String nom = sc.nextLine();
-                System.out.println("Veuillez saisir un prenom : ");
-                String prenom = sc.nextLine();
                 
                 liste = maconnexion.RechercheInfirmier(nom, prenom);
                 System.out.println(liste);
@@ -124,18 +117,16 @@ public class Hopital {
         }
 
     }
-
-    public void service() {
-
+        
+    public void service(String nomService) {
+            
         try {
 
-            try {
-                System.out.println("Veuillez saisir le nom du service : ");
-                String nomService = sc.nextLine();
+            try {                        
                 
                 liste = maconnexion.RechercheService(nomService);
-                System.out.println(liste);
-                
+                System.out.println(liste);       
+
             } catch (SQLException ex) {
                 System.out.println("SQL problem.");
             }
@@ -143,30 +134,7 @@ public class Hopital {
         } catch (ClassNotFoundException e) {
             System.out.println("Class problem.");
         }
-
-    }
-    
-    public void chambre() {
-
-        try {
-
-            try {
-                System.out.println("Veuillez saisir le numero de la chambre : ");
-                String numChambre = sc.nextLine();
-                System.out.println("Veuillez saisir le service de la chambre : ");
-                String nomService = sc.nextLine();
-                
-                liste = maconnexion.RechercheChambre(numChambre, nomService);
-                System.out.println(liste);
-                
-            } catch (SQLException ex) {
-                System.out.println("SQL problem.");
-            }
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class problem.");
-        }
-
+        
     }
 
 }

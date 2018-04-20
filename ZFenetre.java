@@ -34,9 +34,11 @@ public class ZFenetre extends JFrame {
     private JButton boutonRetour = new JButton("Retour à l'accueil") ;
     private JButton nouveauP = new JButton("Nouveau patient") ;
     private JButton nouvelE = new JButton("Nouvel employé") ;
+    private JButton nouveauS = new JButton("Nouveau soin") ;
     private JButton modifier = new JButton("Modifier une donnée") ;
     private JButton suppP = new JButton("Supprimer un patient") ;
     private JButton suppE = new JButton("Supprimer un employé") ;
+    private JButton suppS = new JButton("Supprimer un soin") ;
     private JPanel pan2 = new JPanel();
     
     private JButton rechMalade = new JButton("Rechercher un patient") ;
@@ -45,11 +47,19 @@ public class ZFenetre extends JFrame {
     private JButton rechServ = new JButton("Rechercher un service") ;
     private JButton rechChambre = new JButton("Rechercher une chambre") ;
     private JPanel pan3 = new JPanel();
+    
+    private JButton modMalade = new JButton("Modifier un patient") ;
+    private JButton modInfirmier = new JButton("Modifier un infirmier") ;
+    private JButton modDocteur = new JButton("Modifier un docteur") ;
+    private JButton modService = new JButton("Modifier un service") ;
+    private JButton modChambre = new JButton("Modifier une chambre") ;
+    private JPanel pan4 = new JPanel() ;
+    
+    private JPanel pan5 = new JPanel() ;
    
     private JFrame f = new JFrame();
     private JLabel image = new JLabel(Fond);
     
-    private ArrayList<JTextField> textField = new ArrayList();
     private JPanel saisie = new JPanel() ;
     private JButton submit = new JButton("Valider") ;
     
@@ -69,7 +79,7 @@ public class ZFenetre extends JFrame {
 
     public ZFenetre() throws IOException 
     {
-        this.setSize(1000, 748);
+        this.setSize(866,648);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setContentPane(new ImagePanel(new ImageIcon("Medecin.jpg").getImage()));
@@ -107,12 +117,23 @@ public class ZFenetre extends JFrame {
   
     public void MAJ() 
     { 
-        pan2.add(nouveauP);
-        pan2.add(nouvelE) ;
-        pan2.add(modifier);
-        pan2.add(suppP) ;
-        pan2.add(suppE) ;
-        pan2.add(boutonRetour);
+        Box line1 = Box.createHorizontalBox() ;
+        Box line2 = Box.createHorizontalBox() ;
+        Box line3 = Box.createHorizontalBox() ;
+        
+        line1.add(nouveauP);
+        line1.add(nouvelE) ;
+        line1.add(nouveauS) ;
+        line1.add(modifier);
+        line2.add(suppP) ;
+        line2.add(suppE) ;
+        line2.add(suppS);
+        line3.add(boutonRetour);
+        
+        pan2.setLayout(new BoxLayout(pan2, BoxLayout.PAGE_AXIS));
+        pan2.add(line1);
+        pan2.add(line2);
+        pan2.add(line3);
         this.setContentPane(pan2);
         this.setVisible(true);
     }
@@ -133,7 +154,7 @@ public class ZFenetre extends JFrame {
     public void saisieRecherche(String[] champs, String module)
     {
      //   this.setVisible(false) ;
-        textField.clear(); ;
+        ArrayList<JTextField> textField = new ArrayList();
         saisie.removeAll();
         pan3.removeAll();
         
@@ -147,29 +168,89 @@ public class ZFenetre extends JFrame {
             saisie.add(jtf) ;
         }
         
-        pan3.add(saisie, BorderLayout.WEST);
+        pan3.add(saisie);
         pan3.add(submit) ;
+        pan3.add(boutonRetour);
         this.setContentPane(pan3);
         this.setVisible(true);
         submit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                if(module == "Malades") 
+                if(module == "Malade") 
                     hop.malade(textField.get(0).getText(), textField.get(1).getText()) ;
-                if(module == "Employes") 
-                    hop.employe(textField.get(0).getText(), textField.get(1).getText()) ;
-                if(module == "Services") 
+                if(module == "Infirmier") 
+                    hop.infirmier(textField.get(0).getText(), textField.get(1).getText()) ;
+                if(module == "Docteur") 
+                    hop.docteur(textField.get(0).getText(), textField.get(1).getText()) ;
+                if(module == "Service") 
                     hop.service(textField.get(0).getText()) ;
-//                pan3.remove(saisie);
-//                pan3.remove(submit);
-//                for(int i = champs.length ; i >=0 ; i--)
-//                {
-//                    textField.remove(i);
-//                    saisie.remove(i); 
-//                }
-               
             }  
-        });
+        }); 
+    }
+    
+    public void ajouterPatient()
+    {
+        JTextField numero = new JTextField("") ;
+        JTextField nom = new JTextField("") ;
+        JTextField prenom = new JTextField("") ;
+        JTextField adresse = new JTextField("") ;
+        JTextField tel = new JTextField("") ;
+        JTextField mutuelle = new JTextField("") ;
+        JTextField chambre = new JTextField("") ;
         
+        numero.setPreferredSize(new Dimension(200, 30));
+        numero.setForeground(Color.black);
+        nom.setPreferredSize(new Dimension(200, 30));
+        nom.setForeground(Color.black);
+        prenom.setPreferredSize(new Dimension(200, 30));
+        prenom.setForeground(Color.black);
+        adresse.setPreferredSize(new Dimension(200, 30));
+        adresse.setForeground(Color.black);
+        tel.setPreferredSize(new Dimension(200, 30));
+        tel.setForeground(Color.black);
+        mutuelle.setPreferredSize(new Dimension(200, 30));
+        mutuelle.setForeground(Color.black);
+        chambre.setPreferredSize(new Dimension(200, 30));
+        chambre.setForeground(Color.black);
+        
+        saisie.setLayout(new BoxLayout(saisie, BoxLayout.PAGE_AXIS));
+        saisie.add(new JLabel("Numero"));
+        saisie.add(numero) ;
+        saisie.add(new JLabel("Nom"));
+        saisie.add(nom) ;
+        saisie.add(new JLabel("Prénom"));
+        saisie.add(prenom) ;
+        saisie.add(new JLabel("Adresse"));
+        saisie.add(adresse) ;
+        saisie.add(new JLabel("Téléphone"));
+        saisie.add(tel) ;
+        saisie.add(new JLabel("Mutuelle"));
+        saisie.add(mutuelle) ;
+        saisie.add(new JLabel("Chambre"));
+        saisie.add(chambre) ;
+        
+        pan5.add(saisie);
+        pan5.add(submit);
+        pan5.add(boutonRetour);
+        this.setContentPane(pan5);
+        this.setVisible(true);
+        submit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0) {
+                //ajout
+            }  
+        }); 
+    }
+    
+    public void modifier()
+    {
+        pan4.removeAll();
+        pan4.add(modMalade) ;
+        pan4.add(modInfirmier) ;
+        pan4.add(modDocteur) ;
+        pan4.add(modService) ;
+        pan4.add(modChambre) ;
+        pan4.add(boutonRetour) ;
+        this.setContentPane(pan4);
+        this.setVisible(true);
     }
     
     public JMenuItem getMenuRetour()
@@ -227,6 +308,16 @@ public class ZFenetre extends JFrame {
         return suppE ;
     }
     
+    public JButton getNouveauS()
+    {
+        return nouveauS ;
+    }
+  
+    public JButton getSuppS()
+    {
+        return suppS ;
+    }
+    
     public JButton getSubmit()
     {
         return submit ;
@@ -256,4 +347,30 @@ public class ZFenetre extends JFrame {
     {
         return rechChambre ;
     }
+    
+    public JButton getModMalade()
+    {
+        return modMalade ;
+    }
+    
+    public JButton getModInfirmier()
+    {
+        return modInfirmier ;
+    }
+    
+    public JButton getModDocteur()
+    {
+        return modDocteur ;
+    }
+    
+    public JButton getModService()
+    {
+        return modService ;
+    }
+    
+    public JButton getModChambre()
+    {
+        return modChambre ;
+    }
+    
 }
