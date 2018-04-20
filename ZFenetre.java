@@ -20,17 +20,18 @@ public class ZFenetre extends JFrame {
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Fichier = new JMenu("Fichier");
     
-    private JMenuItem Retour = new JMenuItem("Retour à l'accueil");
-    private JMenuItem Misajour = new JMenuItem("Mise à jour");
-    private JMenuItem Recherche = new JMenuItem("Recherche");
+    private JMenuItem menuRetour = new JMenuItem("Retour à l'accueil");
+    private JMenuItem menuMAJ = new JMenuItem("Mise à jour");
+    private JMenuItem menuRecherche = new JMenuItem("Recherche");
     private JMenuItem Close = new JMenuItem("Fermer");
 
     private ImageIcon Fond = new ImageIcon("Medecin.jpg");
 
-    private JButton maj = new JButton("Mise à Jour");
-    private JButton recher = new JButton("Rechercher");
+    private JButton boutonMAJ = new JButton("Mise à Jour");
+    private JButton boutonRech = new JButton("Rechercher");
     private JPanel pan1 = new JPanel();
    
+    private JButton boutonRetour = new JButton("Retour à l'accueil") ;
     private JButton nouveauP = new JButton("Nouveau patient") ;
     private JButton nouvelE = new JButton("Nouvel employé") ;
     private JButton modifier = new JButton("Modifier une donnée") ;
@@ -38,11 +39,11 @@ public class ZFenetre extends JFrame {
     private JButton suppE = new JButton("Supprimer un employé") ;
     private JPanel pan2 = new JPanel();
     
-    private JButton Malades = new JButton("Rechercher un patient") ;
-    private JButton Infirmiers = new JButton("Rechercher un infirmier") ;
-    private JButton Docteurs = new JButton("Rechercher un docteur") ;
-    private JButton Services = new JButton("Rechercher un service") ;
-    private JButton Chambres = new JButton("Rechercher une chambre") ;
+    private JButton rechMalade = new JButton("Rechercher un patient") ;
+    private JButton rechInf = new JButton("Rechercher un infirmier") ;
+    private JButton rechDoc = new JButton("Rechercher un docteur") ;
+    private JButton rechServ = new JButton("Rechercher un service") ;
+    private JButton rechChambre = new JButton("Rechercher une chambre") ;
     private JPanel pan3 = new JPanel();
    
     private JFrame f = new JFrame();
@@ -73,9 +74,9 @@ public class ZFenetre extends JFrame {
         this.setLocationRelativeTo(null);
         this.setContentPane(new ImagePanel(new ImageIcon("Medecin.jpg").getImage()));
         //On initialise nos menus   
-        this.Fichier.add(Retour);
-        this.Fichier.add(Misajour);
-        this.Fichier.add(Recherche);
+        this.Fichier.add(menuRetour);
+        this.Fichier.add(menuMAJ);
+        this.Fichier.add(menuRecherche);
         f.setContentPane(new JLabel(new ImageIcon("Medecin.jpg")));
         
         this.Fichier.addSeparator();
@@ -96,8 +97,8 @@ public class ZFenetre extends JFrame {
   
     public void accueil() 
     {
-        pan1.add(maj);
-        pan1.add(recher) ;
+        pan1.add(boutonMAJ);
+        pan1.add(boutonRech) ;
         pan1.add(image);
         this.setContentPane(pan1);
     
@@ -111,24 +112,30 @@ public class ZFenetre extends JFrame {
         pan2.add(modifier);
         pan2.add(suppP) ;
         pan2.add(suppE) ;
+        pan2.add(boutonRetour);
         this.setContentPane(pan2);
         this.setVisible(true);
     }
     
     public void optionsRecherche() 
     { 
-        pan3.add(Malades);
-        pan3.add(Infirmiers) ;
-        pan3.add(Docteurs) ;
-        pan3.add(Services);
-        pan3.add(Chambres);
+        pan3.removeAll();
+        pan3.add(rechMalade);
+        pan3.add(rechInf) ;
+        pan3.add(rechDoc) ;
+        pan3.add(rechServ);
+        pan3.add(rechChambre);
+        pan3.add(boutonRetour);
         this.setContentPane(pan3);
         this.setVisible(true);
     }
   
     public void saisieRecherche(String[] champs, String module)
     {
-        this.setVisible(false) ;
+     //   this.setVisible(false) ;
+        textField.clear(); ;
+        saisie.removeAll();
+        pan3.removeAll();
         
         for(int i = 0 ; i < champs.length ; i++)
         {
@@ -152,35 +159,47 @@ public class ZFenetre extends JFrame {
                     hop.employe(textField.get(0).getText(), textField.get(1).getText()) ;
                 if(module == "Services") 
                     hop.service(textField.get(0).getText()) ;
-                
+//                pan3.remove(saisie);
+//                pan3.remove(submit);
+//                for(int i = champs.length ; i >=0 ; i--)
+//                {
+//                    textField.remove(i);
+//                    saisie.remove(i); 
+//                }
                
-            }        
+            }  
         });
+        
     }
     
-    public JMenuItem getRetour()
+    public JMenuItem getMenuRetour()
     {
-        return Retour ;
+        return menuRetour ;
+    }
+    
+    public JButton getBoutonRetour()
+    {
+        return boutonRetour ;
     }
   
-    public JMenuItem getMAJmenu()
+    public JMenuItem getMenuMAJ()
     {
-        return Misajour ;
+        return menuMAJ ;
     }
   
-    public JMenuItem getRecherMenu()
+    public JMenuItem getMenuRecherche()
     {
-        return Recherche ;
+        return menuRecherche ;
     }
   
-    public JButton getMAJ()
+    public JButton getBoutonMAJ()
     {
-        return maj ;
+        return boutonMAJ ;
     }
   
-    public JButton getRecherche()
+    public JButton getBoutonRecherche()
     {
-        return recher ;
+        return boutonRech ;
     }
   
     public JButton getNouveauP()
@@ -213,28 +232,28 @@ public class ZFenetre extends JFrame {
         return submit ;
     }
     
-    public JButton getMalades()
+    public JButton getRechMalade()
     {
-        return Malades ;
+        return rechMalade ;
     }
   
-    public JButton getInfirmiers()
+    public JButton getRechInf()
     {
-        return Infirmiers ;
+        return rechInf ;
     }
     
-    public JButton getDocteurs()
+    public JButton getRechDoc()
     {
-        return Docteurs ;
+        return rechDoc ;
     }
     
-    public JButton getServices()
+    public JButton getRechServ()
     {
-        return Services ;
+        return rechServ ;
     }
     
-    public JButton getChambres()
+    public JButton getRechChambre()
     {
-        return Chambres ;
+        return rechChambre ;
     }
 }
