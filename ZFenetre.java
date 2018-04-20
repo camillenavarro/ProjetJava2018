@@ -122,7 +122,7 @@ public class ZFenetre extends JFrame {
         pan3.add(Docteurs) ;
         pan3.add(Services);
         pan3.add(Chambres);
-        this.setContentPane(pan2);
+        this.setContentPane(pan3);
         this.setVisible(true);
     }
   
@@ -142,7 +142,7 @@ public class ZFenetre extends JFrame {
         
         pan3.add(saisie, BorderLayout.WEST);
         pan3.add(submit) ;
-        this.setContentPane(pan2);
+        this.setContentPane(pan3);
         this.setVisible(true);
         submit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
