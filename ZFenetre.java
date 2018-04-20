@@ -140,8 +140,8 @@ public class ZFenetre extends JFrame {
             saisie.add(jtf) ;
         }
         
-        pan2.add(saisie, BorderLayout.WEST);
-        pan2.add(submit) ;
+        pan3.add(saisie, BorderLayout.WEST);
+        pan3.add(submit) ;
         this.setContentPane(pan2);
         this.setVisible(true);
         submit.addActionListener(new ActionListener(){
