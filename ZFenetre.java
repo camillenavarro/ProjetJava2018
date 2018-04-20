@@ -36,13 +36,14 @@ public class ZFenetre extends JFrame {
     private JButton modifier = new JButton("Modifier une donnée") ;
     private JButton suppP = new JButton("Supprimer un patient") ;
     private JButton suppE = new JButton("Supprimer un employé") ;
+    private JPanel pan2 = new JPanel();
     
     private JButton Malades = new JButton("Rechercher un patient") ;
     private JButton Infirmiers = new JButton("Rechercher un infirmier") ;
     private JButton Docteurs = new JButton("Rechercher un docteur") ;
     private JButton Services = new JButton("Rechercher un service") ;
     private JButton Chambres = new JButton("Rechercher une chambre") ;
-    private JPanel pan2 = new JPanel();
+    private JPanel pan3 = new JPanel();
    
     private JFrame f = new JFrame();
     private JLabel image = new JLabel(Fond);
@@ -116,11 +117,11 @@ public class ZFenetre extends JFrame {
     
     public void optionsRecherche() 
     { 
-        pan2.add(Malades);
-        pan2.add(Infirmiers) ;
-        pan2.add(Docteurs) ;
-        pan2.add(Services);
-        pan2.add(Chambres);
+        pan3.add(Malades);
+        pan3.add(Infirmiers) ;
+        pan3.add(Docteurs) ;
+        pan3.add(Services);
+        pan3.add(Chambres);
         this.setContentPane(pan2);
         this.setVisible(true);
     }
