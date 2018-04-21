@@ -212,7 +212,7 @@ public class Connexion {
     public void executeUpdate(String requeteMaj) throws SQLException {
         stmt.executeUpdate(requeteMaj);
     }
-
+    
     public ArrayList RechercheMalade(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT m.numero, m.nom, m.prenom, m.adresse, m.tel, m.mutuelle, h.no_chambre, h.lit, h.code_service, s.nom, s.batiment, e.nom FROM malade m, hospitalisation h, chambre c, service s, employe e WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "' AND m.numero = h.no_malade AND h.no_chambre = c.no_chambre AND h.code_service = c.code_service AND c.code_service = s.code AND c.surveillant = e.numero";
@@ -220,35 +220,30 @@ public class Connexion {
 
         if (rset.next()) {
             liste.add(rset.getString("m.prenom"));
+                liste.add(rset.getString("m.nom"));
+                liste.add(rset.getString("m.numero"));
+                liste.add(rset.getString("m.adresse"));
+                liste.add(rset.getString("m.tel"));
+                liste.add(rset.getString("m.mutuelle"));
+                liste.add(rset.getString("h.no_chambre"));
+                liste.add(rset.getString("h.lit"));
+                liste.add(rset.getString("e.nom"));
+                liste.add(rset.getString("s.nom"));
+                liste.add(rset.getString("s.batiment"));
+
+        } else {   
+            String query1 = "SELECT m.nom, m.prenom, m.numero, m.adresse, m.tel, m.mutuelle FROM malade m WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "'";
+            rset = stmt.executeQuery(query1);
+            
+            while(rset.next()){
+            liste.add(rset.getString("m.prenom"));
             liste.add(rset.getString("m.nom"));
             liste.add(rset.getString("m.numero"));
             liste.add(rset.getString("m.adresse"));
             liste.add(rset.getString("m.tel"));
             liste.add(rset.getString("m.mutuelle"));
-            liste.add(rset.getString("h.no_chambre"));
-            liste.add(rset.getString("h.lit"));
-            liste.add(rset.getString("e.nom"));
-            liste.add(rset.getString("s.nom"));
-            liste.add(rset.getString("s.batiment"));
-
-        } else {
-            if (rset.next()) {
-                String query1 = "SELECT m.nom, m.prenom, m.numero, m.adresse, m.tel, m.mutuelle FROM malade m WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "'";
-                rset = stmt.executeQuery(query1);
-
-                while (rset.next()) {
-                    liste.add(rset.getString("m.prenom"));
-                    liste.add(rset.getString("m.nom"));
-                    liste.add(rset.getString("m.numero"));
-                    liste.add(rset.getString("m.adresse"));
-                    liste.add(rset.getString("m.tel"));
-                    liste.add(rset.getString("m.mutuelle"));
-                }
-            } else {
-                String info = "Ce malade n'est pas dans nos repertoires.";
-                liste.add(info);
             }
-        }
+        }        
         return liste;
     }
 
@@ -258,37 +253,39 @@ public class Connexion {
         rset = stmt.executeQuery(query);
 
         if (rset.next()) {
-            liste.add(rset.getString("e.prenom"));
-            liste.add(rset.getString("e.nom"));
-            liste.add(rset.getString("e.numero"));
-            liste.add(rset.getString("e.adresse"));
-            liste.add(rset.getString("e.tel"));
-            liste.add(rset.getString("d.specialite"));
-        } else {
+        liste.add(rset.getString("e.prenom"));
+        liste.add(rset.getString("e.nom"));
+        liste.add(rset.getString("d.specialite"));
+        liste.add(rset.getString("e.numero"));
+        liste.add(rset.getString("e.adresse"));
+        liste.add(rset.getString("e.tel"));
+        }
+        else {
             String info = "Cette personne n'est pas dans le repertoire des docteurs.";
             liste.add(info);
         }
-
+        
         return liste;
     }
-
+    
     public ArrayList RechercheInfirmier(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT e.prenom, e.nom, e.numero, e.adresse, e.tel, i.rotation FROM infirmier i, employe e WHERE e.nom = '" + nom + "' AND e.prenom = '" + prenom + "' AND i.numero = e.numero";
         rset = stmt.executeQuery(query);
 
         if (rset.next()) {
-            liste.add(rset.getString("e.prenom"));
-            liste.add(rset.getString("e.nom"));
-            liste.add(rset.getString("i.rotation"));
-            liste.add(rset.getString("e.numero"));
-            liste.add(rset.getString("e.adresse"));
-            liste.add(rset.getString("e.tel"));
-        } else {
-            String info = "Cette personne n'est pas dans le repertoire des infirmiers.";
+        liste.add(rset.getString("e.prenom"));
+        liste.add(rset.getString("e.nom"));
+        liste.add(rset.getString("i.rotation"));
+        liste.add(rset.getString("e.numero"));
+        liste.add(rset.getString("e.adresse"));
+        liste.add(rset.getString("e.tel"));
+        }
+        else {
+            String info = "Cette personne n'est pas dans le repertoire des infirmieres.";
             liste.add(info);
         }
-
+        
         return liste;
     }
 
@@ -299,19 +296,20 @@ public class Connexion {
 
         if (rset.next()) {
             //System.out.println("Le service de " + rset.getString("s.nom") + " se situe dans le batiment " + rset.getString("s.batiment") + " et est sous la direction du Dr. " + rset.getString("d.nom") + " " + rset.getString("d.prenom") + ", specialiste " + rset.getString("d.specialite") + ".");
-            liste.add(rset.getString("s.nom"));
-            liste.add(rset.getString("s.code"));
-            liste.add(rset.getString("s.batiment"));
-            liste.add(rset.getString("e.prenom"));
-            liste.add(rset.getString("e.nom"));
-        } else {
+        liste.add(rset.getString("s.nom"));
+        liste.add(rset.getString("s.code"));
+        liste.add(rset.getString("s.batiment"));
+        liste.add(rset.getString("e.prenom"));
+        liste.add(rset.getString("e.nom"));
+        }
+        else{
             String info = "Ce service n'existe pas.";
             liste.add(info);
         }
-
+        
         return liste;
     }
-
+    
     public ArrayList RechercheChambre(String numChambre, String nomService) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * FROM chambre c, service s, employe e WHERE c.no_chambre = '" + numChambre + "' AND s.nom = '" + nomService + "' AND c.code_service = s.code AND c.surveillant = e.numero ";
@@ -319,17 +317,81 @@ public class Connexion {
 
         if (rset.next()) {
             //System.out.println("Le service de " + rset.getString("s.nom") + " se situe dans le batiment " + rset.getString("s.batiment") + " et est sous la direction du Dr. " + rset.getString("d.nom") + " " + rset.getString("d.prenom") + ", specialiste " + rset.getString("d.specialite") + ".");
-            liste.add(rset.getString("c.no_chambre"));
-            liste.add(rset.getString("c.nb_lits"));
-            liste.add(rset.getString("c.surveillant"));
-            liste.add(rset.getString("e.nom"));
-            liste.add(rset.getString("s.nom"));
-        } else {
-            String info = "Cette chambre dans ce service n'existe pas.";
+        liste.add(rset.getString("c.no_chambre"));
+        liste.add(rset.getString("c.surveillant"));
+        liste.add(rset.getString("e.nom"));
+        liste.add(rset.getString("c.nb_lits"));
+        liste.add(rset.getString("s.nom"));
+        }
+        else{
+            String info = "Ce service n'existe pas.";
             liste.add(info);
         }
         return liste;
     }
+    
+    public int NbdeCardio() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
+        rset = stmt.executeQuery(query);
+        
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+     public int NbdeTrauma() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+     public int NbdePneu() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
+        rset = stmt.executeQuery(query);
+       rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeOrth() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeRad() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeAn() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
+        rset = stmt.executeQuery(query);
+       rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+     
 
     public void RechercheRandom() throws SQLException, ClassNotFoundException {
 
