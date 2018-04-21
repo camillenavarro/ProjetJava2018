@@ -168,5 +168,50 @@ public class Hopital {
         
         return liste;
     }
+    
+    public Boolean numeroValideMalade(String numero)
+    {
+        try {
+
+            try {
+                
+                Boolean numeroExistant = maconnexion.RechercheNumero(numero);
+                return !numeroExistant ;
+                
+             } catch (SQLException ex) {
+                 System.out.println("SQL problem.");
+                 return false ;
+             }
+ 
+         } catch (ClassNotFoundException e) {
+             System.out.println("Class problem.");
+             return false ;
+         }
+        
+        
+    }
+    
+    public void nouveauPatient(ArrayList<String> donnees)
+    {
+        
+
+            try {
+                System.out.println("youpi");
+                String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "','" + donnees.get(5) +"')" ;
+                
+                
+                
+    //            String insert2 = "INSERT INTO hospitalisation  VALUES ('" + donnees.get(0) + "','" + donnees.get(6) + "','" + donnees.get(7) + "','"  ;
+                
+                maconnexion.executeUpdate(insert);
+            //    maconnexion.executeUpdate(insert2);
+                
+             } catch (SQLException ex) {
+                 System.out.println("hoho");
+                 System.out.println("SQL problem.");
+             }
+ 
+         
+    }
 
 }
