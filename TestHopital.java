@@ -7,22 +7,22 @@ package Controleur;
 import Modele.Connexion;
 import Modele.Hopital;
 import Modele.*;
-import Vue.ZFenetre;
+import Vue.*;
 import java.io.IOException;
 /**
  *
  * @author Rim
  */
-import java.awt.* ;
+//import java.awt.* ;
 import java.awt.event.* ;
-import javax.swing.* ;
-import java.sql.*;
-import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+//import javax.swing.* ;
+//import java.sql.*;
+//import java.util.ArrayList;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TestHopital implements ActionListener {
@@ -32,6 +32,9 @@ public class TestHopital implements ActionListener {
     private static AtomicBoolean push = new AtomicBoolean(false);
     private static ZFenetre zFen ;
     private static Hopital hop = new Hopital();
+    private static NouveauPatient np ;
+    private static NPListener npl ;
+    private static NewEmploye ne ;
     
     
     public TestHopital() throws IOException{
@@ -87,11 +90,13 @@ public class TestHopital implements ActionListener {
         
         if(e.getSource()==zFen.getNouveauP())
         {
-            zFen.ajouterPatient();
+            np = new NouveauPatient();
+            npl = new NPListener() ;
+            
         }
         if(e.getSource()==zFen.getNouvelE())
         {
-            
+            ne = new NewEmploye();
         }
         if(e.getSource()==zFen.getModifier())
         {
