@@ -414,5 +414,20 @@ public class Connexion {
         }
 
     }
+    
+    //Methode pour savoir si un numéro existe déjà dans la table ou pas 
+    public Boolean RechercheNumero(String numero) throws SQLException, ClassNotFoundException {
+        ArrayList<String> recherche = new ArrayList() ;
+        
+        String query = "SELECT numero FROM malade ";
+        rset = stmt.executeQuery(query);
+
+        while (rset.next()) {
+            
+            recherche.add(rset.getString("numero"));
+            
+        }
+        return recherche.contains(numero) ;
+    }
 
 }
