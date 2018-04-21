@@ -1,25 +1,17 @@
 package Vue;
 
-
-import java.awt.Color;
+import Controleur.*;
+import Modele.*;
 import java.io.IOException;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-import javax.swing.JTextField;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BoxLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-
+import java.util.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -34,37 +26,93 @@ import javax.swing.JFormattedTextField;
 
 public class NouveauPatient extends JFrame  {
     
+    private final JMenuBar menuBar = new JMenuBar();
+    private final JMenu Fichier = new JMenu("Fichier");
+    
+    private final JMenuItem menuRetour = new JMenuItem("Retour à l'accueil");
+    private final JMenuItem menuMAJ = new JMenuItem("Mise à jour");
+    private final JMenuItem menuRecherche = new JMenuItem("Recherche");
+    private final JMenuItem Close = new JMenuItem("Fermer");
+
+    private final ImageIcon Fond = new ImageIcon("Medecin.jpg");
+    private final JFrame f = new JFrame();
+      private JFormattedTextField numero = new JFormattedTextField("");
       private JTextField nom = new JTextField("");
       private JTextField prenom = new JTextField("");
-      private JFormattedTextField tel = new JFormattedTextField(NumberFormat.getIntegerInstance());;
+      private JFormattedTextField tel = new JFormattedTextField(NumberFormat.getIntegerInstance());
       private JTextField adresse = new JTextField("");
       private JTextField mutuel = new JTextField("");
+      private JFormattedTextField chambre = new JFormattedTextField(NumberFormat.getIntegerInstance());
+      private JTextField service = new JTextField("");
       
       private JPanel container = new JPanel();
       
       private JLabel titre = new JLabel("Nouveau Patient");
       
       private JButton save = new JButton ("Enregistrer");
+      private ArrayList<String> donnees = new ArrayList();
+     
       
+      private JButton retour = new JButton("Retour à l'accueil");
+      private Hopital hop = new Hopital() ;
+      
+      class ImagePanel extends JComponent {
+        private final Image image;
+        public ImagePanel(Image image) {
+            this.image = image;
+        }
+        
+        @Override protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(image, 0, 0, this);
+        }
+    }
   /* public static void main(String[] args) throws IOException{
        
    NouveauPatient a = new NouveauPatient();
    
    }*/
      
-  public NouveauPatient()throws IOException{
+  public NouveauPatient(){
             
             
-    this.setSize(1000, 1500);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setLocationRelativeTo(null);
-    this.setLocationRelativeTo(null);
+    this.setSize(866,648);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setContentPane(new NouveauPatient.ImagePanel(new ImageIcon("Medecin.jpg").getImage()));
+        //On initialise nos menus   
+        this.Fichier.add(menuRetour);
+        this.Fichier.add(menuMAJ);
+        this.Fichier.add(menuRecherche);
+        f.setContentPane(new JLabel(new ImageIcon("Medecin.jpg")));
+        
+        this.Fichier.addSeparator();
+    
+        Close.addActionListener(new ActionListener(){
+            public @Override void actionPerformed(ActionEvent arg0) {
+                System.exit(1);
+            }        
+        });
+        this.Fichier.add(Close); 
+    
+        //L'ordre d'ajout va déterminer l'ordre d'apparition dans le menu de gauche à droite
+        //Le premier ajouté sera tout à gauche de la barre de menu et inversement pour le dernier
+        this.menuBar.add(Fichier);
+   
+        this.setJMenuBar(menuBar);
+    
   //  container.setBackground(Color.white);
    Font police = new Font("Arial", Font.BOLD, 14);
      
-   //container.setLayout(new BoxLayout(titre,BoxLayout.Y_AXIS));
-     
+   container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
+    
     container.add(new JLabel ("Nouveau Patient")); 
+    
+    container.add(new JLabel ("Numero : ")); 
+    numero.setFont(police);
+    numero.setPreferredSize(new Dimension(150, 30));
+    numero.setForeground(Color.BLACK);
+    container.add(numero);
     
     container.add(new JLabel ("Nom : ")); 
     nom.setFont(police);
@@ -90,36 +138,63 @@ public class NouveauPatient extends JFrame  {
     adresse.setForeground(Color.BLACK);
     container.add(adresse);
     
-   container.add(new JLabel ("Mutuel : "));
+   container.add(new JLabel ("Mutuelle : "));
    mutuel.setFont(police);
     mutuel.setPreferredSize(new Dimension(150, 30));
     mutuel.setForeground(Color.BLACK);
     container.add(mutuel);
     
-    save.addActionListener(new boutonListener());
-    container.add(save);
+    container.add(new JLabel ("Service : "));
+    service.setFont(police);
+    service.setPreferredSize(new Dimension(150, 30));
+    service.setForeground(Color.BLACK);
+    container.add(service);
     
-    this.setContentPane(container);
+    container.add(new JLabel ("Chambre : "));
+    chambre.setFont(police);
+    chambre.setPreferredSize(new Dimension(150, 30));
+    chambre.setForeground(Color.BLACK);
+    container.add(chambre);
+    
+    JPanel truc = new JPanel() ;
+    truc.add(container);
+    truc.add(save);
+    truc.add(retour);
+    this.setContentPane(truc);
     this.setVisible(true);
-        }
-
-    private  class boutonListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent ae) {
-          if(ae.getSource() == save)
-            {
-               
-              try {
-                  new ZFenetre();
-              } catch (IOException ex) {
-                  Logger.getLogger(NouveauPatient.class.getName()).log(Level.SEVERE, null, ex);
-              }
-                
-                
-            
-        }
-        }
-    }
-          
+    
+    if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
+        donnees.add(numero.getText());
+    if(!(nom.getText()).equals(""))
+        donnees.add(nom.getText());
+    if(!(prenom.getText()).equals(""))
+        donnees.add(prenom.getText());
+    if(!(tel.getText()).equals(""))
+        donnees.add(tel.getText());
+    if(!(adresse.getText()).equals(""))
+        donnees.add(adresse.getText());
+    if(!(mutuel.getText()).equals(""))
+        donnees.add(mutuel.getText());
+    if(!(service.getText()).equals(""))
+        donnees.add(service.getText());
+    if(!(chambre.getText()).equals(""))
+        donnees.add(chambre.getText());
+    
+    
+  }
+    
+  public JButton getSave()
+  {
+      return save ;
+  }
   
+  public JButton getRetour()
+  {
+      return retour ;
+  }
+          
+  public ArrayList<String> getDonnees()
+  {
+      return donnees ;
+  }
 }
