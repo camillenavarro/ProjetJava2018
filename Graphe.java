@@ -5,33 +5,41 @@
  */
 package Vue;
 
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame; 
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
+import java.util.*;
+import java.sql.*;
+import Modele.Connexion;
 
 /**
  *
  * @author roman
  */
 public class Graphe {
-    
-    
-    public static void main(String[] args){
-    // create a dataset... 
-   DefaultPieDataset dataset = new DefaultPieDataset(); 
-    dataset.setValue("Category 1", 43.2); 
-    dataset.setValue("Category 2", 27.9);
-    dataset.setValue("Category 3", 79.5);
-    
-    // create a chart... 
-            JFreeChart chart = ChartFactory.createPieChart( "Sample Pie Chart", dataset, true,true, false); // legend? 
-             // tooltips? 
-             // URLs? 
+     static final String NAME = "hopital";
+    static final String LOGIN = "root";
+    static final String PASSWORD = "";
+    Connexion maconnexion= new Connexion(NAME, LOGIN, PASSWORD);
    
-ChartFrame frame = new ChartFrame("First", chart);
+     public Graphe() throws SQLException, ClassNotFoundException{
+          DefaultPieDataset dataset = new DefaultPieDataset(); 
+    dataset.setValue("Cardiologue", maconnexion.NbdeCardio()); 
+    dataset.setValue("Anesthesiste", maconnexion.NbdeAn());
+    dataset.setValue("Pneumologue", maconnexion.NbdePneu());
+    dataset.setValue("Traumatologue", maconnexion.NbdeTrauma());
+    dataset.setValue("Radiologue", maconnexion.NbdeRad());
+    dataset.setValue("Orthopediste", maconnexion.NbdeOrth());
+    JFreeChart chart = ChartFactory.createPieChart( "Spéciation des Docteurs", dataset, true,true, false);
+    ChartFrame frame = new ChartFrame("First", chart);
 frame.pack();
 frame.setVisible(true);
-
-    }
+     }
+      
+       ArrayList<String> liste = new ArrayList<>();
+       
+       
+  
 }
