@@ -12,14 +12,11 @@ import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
- *
+ *Cette class permet la création d'un nouveau Patient 
+ * Elle affiche le formulaire pour un nouveau Patient 
  * @author roman
  */
 
@@ -29,8 +26,8 @@ public class NouveauPatient  {
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu Fichier = new JMenu("Fichier");
     
-    private final JMenuItem menuRetour = new JMenuItem("Retour Ã  l'accueil");
-    private final JMenuItem menuMAJ = new JMenuItem("Mise Ã  jour");
+    private final JMenuItem menuRetour = new JMenuItem("Retour à  l'accueil");
+    private final JMenuItem menuMAJ = new JMenuItem("Mise à  jour");
     private final JMenuItem menuRecherche = new JMenuItem("Recherche");
     private final JMenuItem Close = new JMenuItem("Fermer");
 
@@ -55,24 +52,13 @@ public class NouveauPatient  {
       
       private JButton retour = new JButton("Retour Ã  l'accueil");
       private Hopital hop = new Hopital() ;
-      
-      class ImagePanel extends JComponent {
-        private final Image image;
-        public ImagePanel(Image image) {
-            this.image = image;
-        }
-        
-        @Override protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(image, 0, 0, this);
-        }
-    }
-  /* public static void main(String[] args) throws IOException{
-       
-   NouveauPatient a = new NouveauPatient();
-   
-   }*/
-     
+    
+
+     /**
+      * Constructeur de la class
+      * Elle crée le formulaire pour ajouter un nouveau Patient 
+      * @param zFen 
+      */
   public NouveauPatient(ZFenetre zFen){
            
     
@@ -83,11 +69,6 @@ public class NouveauPatient  {
     
     container.add(new JLabel ("Nouveau Patient")); 
     
-//    container.add(new JLabel ("Numero : ")); 
-//    numero.setFont(police);
-//    numero.setPreferredSize(new Dimension(150, 30));
-//    numero.setForeground(Color.BLACK);
-//    container.add(numero);
     
     container.add(new JLabel ("Nom : ")); 
     nom.setFont(police);
@@ -139,6 +120,12 @@ public class NouveauPatient  {
     zFen.setVisible(true);
     
     save.addActionListener(new ActionListener() {
+        /**
+        * Cette méthode s'occupe de ce qui se passe quand on appuie sur le bouton "Eregistrer"
+        * Elle vérifie si le formulaire n'est pas vide
+        * Et appelle la fonction nouvelle patient dans Hôpital si le formulaire est plein sinon elle affiche un message d'erreur
+         * @param e 
+         */
         public @Override void actionPerformed(ActionEvent e) {
             donnees.clear();
 //            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
@@ -175,6 +162,11 @@ public class NouveauPatient  {
     ) ; 
     
     retour.addActionListener(new ActionListener() {
+        /**
+         * Cette méthode s'occupe de ce qui se passe quand on appuie sur "Retour à  l'accueil"
+         * Elle appelle la fonction accueil de ZFenetre
+         * @param e 
+         */
         public @Override void actionPerformed(ActionEvent e) {
             zFen.accueil();
         }
