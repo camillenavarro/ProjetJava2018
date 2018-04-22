@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.*;
 
 /**
- *
+ * Classe permettant de générer un nouvel Employé
  * @author roman
  */
 public class NewEmploye {
@@ -54,9 +54,14 @@ public class NewEmploye {
       private ArrayList<String> donnees = new ArrayList();
      
       
-      private JButton retour = new JButton("Retour Ã  l'accueil");
+      private JButton retour = new JButton("Retour à  l'accueil");
       private Hopital hop = new Hopital() ;
       
+      /**
+       * Constructuer de la classe 
+       * Elle fait une nouvelle fenetre 
+       * @param zFen 
+       */
       public NewEmploye(ZFenetre zFen)
       {
           
@@ -144,6 +149,10 @@ public class NewEmploye {
     zFen.setVisible(true);
     
     save.addActionListener(new ActionListener() {
+        /**
+         * Cette methode vérifie la validité du formulaire appres avoir appuyé sur le bouton "Enregistrer"
+         * @param e 
+         */
         public @Override void actionPerformed(ActionEvent e) {
             donnees.clear();
             if(!(nom.getText()).equals(""))
@@ -205,12 +214,20 @@ public class NewEmploye {
     ) ; 
     
     retour.addActionListener(new ActionListener() {
+        /**
+         * Lance l'accueil après avoir appuyé sur le bouton "Retour à  l'accueil"
+         * @param e 
+         */
         public @Override void actionPerformed(ActionEvent e) {
             zFen.accueil();
         }
     });
  }
-
+        /**
+         * Cette méthode permet de savoir ce quil se passe quand on chosie Docteur ou Infirmier 
+         * Si on choisi un docteur on ne peut pas rentrer le salaire ou le rotation
+         * Si on choisi un infirmier on ne peut pas choisir la spécialisation 
+        */
     private class StateListener implements ActionListener {
 
         public @Override void actionPerformed(ActionEvent ae) {
