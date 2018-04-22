@@ -301,8 +301,9 @@ public class Hopital {
      * Méthode permmettant de modifier les informations d'un malade
      * @param listeMAJ
      * @throws SQLException 
+     * @return boolean true si le malade existe, false sinon
      */
-    public void updateMalade(ArrayList<String> listeMAJ) throws SQLException {
+    public Boolean updateMalade(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
         String prenom = listeMAJ.get(1);
@@ -343,12 +344,11 @@ public class Hopital {
             }
             update = "UPDATE malade SET " + set + "WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
                 
-            System.out.println(update);
             maconnexion.executeUpdate(update);
+            return true ;
         }
         else
-            JOptionPane.showMessageDialog(null, "Ce malade n'est pas dans nos répertoires");
-    
+            return false ;       
     }
     /**
      * Méthode permettant de modifier les informations d'un docteur
