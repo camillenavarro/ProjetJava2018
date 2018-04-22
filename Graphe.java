@@ -17,7 +17,7 @@ import Modele.Connexion;
 /**
  *Creation du cammenbert des spÃ©cialisation des Docteurs
 
- * @author roman
+ * @author Camille,Rim,Roman
  */
 public class Graphe {
      static final String NAME = "hopital";
