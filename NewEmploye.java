@@ -58,8 +58,8 @@ public class NewEmploye {
       private Hopital hop = new Hopital() ;
       
       /**
-       * Constructuer de la classe 
-       * Elle fait une nouvelle fenetre 
+       * Constructeur de la classe 
+       * Elle crée le formulaire pour ajouter un nouvel employé 
        * @param zFen 
        */
       public NewEmploye(ZFenetre zFen)
@@ -150,7 +150,9 @@ public class NewEmploye {
     
     save.addActionListener(new ActionListener() {
         /**
-         * Cette methode vérifie la validité du formulaire appres avoir appuyé sur le bouton "Enregistrer"
+         * Cette méthode vérifie si le formulaire est vide après avoir appuyé sur le bouton "Enregistrer"
+         * S'il n'est pas vide, on appelle la fonction nouvel employé d'Hôpital
+         * Sinon on affiche un message d'erreur 
          * @param e 
          */
         public @Override void actionPerformed(ActionEvent e) {
@@ -224,9 +226,9 @@ public class NewEmploye {
     });
  }
         /**
-         * Cette méthode permet de savoir ce quil se passe quand on chosie Docteur ou Infirmier 
-         * Si on choisi un docteur on ne peut pas rentrer le salaire ou le rotation
-         * Si on choisi un infirmier on ne peut pas choisir la spécialisation 
+         * Cette méthode permet de savoir ce qu’il se passe quand on choisit Docteur ou Infirmier 
+         * Si on choisit un docteur, on ne peut pas rentrer le salaire ou la rotation
+         * Si on choisit un infirmier, on ne peut pas choisir la spécialisation 
         */
     private class StateListener implements ActionListener {
 
