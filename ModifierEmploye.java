@@ -29,7 +29,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author camille
+ * @author Camille,Rim,Roman
  */
 public class ModifierEmploye {
     private JTextField nom = new JTextField("");
