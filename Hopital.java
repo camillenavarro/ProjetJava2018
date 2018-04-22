@@ -351,45 +351,82 @@ public class Hopital {
             return false ;       
     }
     /**
-     * Méthode permettant de modifier les informations d'un docteur
+     * Méthode permettant de modifier les informations d'un employé
      * @param listeMAJ
      * @throws SQLException 
+     * @return boolean true si l'employé existe, false sinon
      */
-    public void updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
+    public Boolean updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
         String prenom = listeMAJ.get(1);
-        String adresse = listeMAJ.get(2);
-        String tel = listeMAJ.get(3);
-        String update = null;
-
-        if (adresse != null) {
-            update = "UPDATE employe SET adresse = '" + adresse + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        String profession = listeMAJ.get(4) ;
+        
+        ArrayList<String> verif = new ArrayList() ;
+        try {
+            if(profession.equals("doc"))
+                verif = maconnexion.RechercheDocteur(nom, prenom);
+            else
+                verif = maconnexion.RechercheInfirmier(nom, prenom);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("SQL problem");
         }
+        
+        if(verif.size() > 1)
+        {
+            String adresse = listeMAJ.get(2);
+            String tel = listeMAJ.get(3);
+            String update = "", set = "";
 
-        if (tel != null) {
-            update = "UPDATE employe SET tel = '" + tel + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+            if (!adresse.equals("")) {
+                if(set.equals(""))
+                    set += "adresse = '" + adresse + "' " ;
+                else
+                    set += ", adresse = '" + adresse + "' " ;
+            }
+
+            if (!tel.equals("")) {
+                if(set.equals(""))
+                    set += "tel = '" + tel + "' " ;
+                else
+                    set += ", tel = '" + tel + "' " ;
+            }
+            update = "UPDATE employe SET " + set + "WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+            maconnexion.executeUpdate(update);
+            
+            if(profession.equals("inf"))
+            {
+                try {
+                    String num = maconnexion.getNumero(nom, prenom, "Employe") ; 
+                    updateInfirmier(listeMAJ, num) ;
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("SQL problem");
+                }
+            }
+            
+            return true ;
         }
-        maconnexion.executeUpdate(update);
+        return false ;
     }
      /**
       * Méthode permettant de modifier les informations d'un infirmier 
-      * @param listeMAJ
+      * @param listeMAJ, numero
       * @throws SQLException 
       */
-    public void updateInfirmier(ArrayList<String> listeMAJ) throws SQLException {
+    public void updateInfirmier(ArrayList<String> listeMAJ, String numero) throws SQLException {
 
-        String nom = listeMAJ.get(0);
-        String prenom = listeMAJ.get(1);
-        String rotation = listeMAJ.get(2);
-        String salaire = listeMAJ.get(3);
-        String update = null;
-
-        if (rotation != null) {
-            update = "UPDATE employe SET rotation = '" + rotation + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
-        } else if (salaire != null) {
-            update = "UPDATE employe SET salaire = '" + salaire + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        String rotation = listeMAJ.get(5);
+        String salaire = listeMAJ.get(6);
+        String update = "", set = "rotation = '" + rotation + "' ";
+        
+        
+        if (!salaire.equals("")) {
+            set += ", salaire = '" + salaire + "' " ;
         }
+        
+        update = "UPDATE infirmier SET " + set + "WHERE numero ='" + numero + "'";
+        
         maconnexion.executeUpdate(update);
+        
     }
 }
