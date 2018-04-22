@@ -15,6 +15,10 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe permettant l'utilisation et la connection avec la base de données
+ * @author Camille,Rim,Roman
+ */
 public class Hopital {
 
     static final String NAME = "hopital";
@@ -23,6 +27,10 @@ public class Hopital {
     public Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
+    /**
+     * Constructeurs par defaut d'Hopital 
+     * Elle fait la connection avec la base de données
+     */
     public Hopital() {
 
         try {
@@ -51,7 +59,12 @@ public class Hopital {
         //} catch (SQLException ex) {
         //}
     }
-
+    /**
+     * Constructeur suchargé d'Hopital 
+     * Elle permet la connectiona avec une base de données choisie
+     * @param a
+     * @param b 
+     */
     public Hopital(String a, String b) {
         LOGIN = a;
         PASSWORD = b;
@@ -82,15 +95,14 @@ public class Hopital {
         //}
     }
 
-    public void AjoutMalade(String ArrayList) throws SQLException {
 
-        //ajout malade
-        int num = maconnexion.IDgenerator("malade");
-        String insert = "INSERT INTO malade (numero,nom,prenom,adresse,tel,mutuelle) VALUES (" + num + "," + liste.get(0) + "," + liste.get(1) + "," + liste.get(2) + "," + liste.get(3) + "," + liste.get(4) + ")";
-        //System.out.println(num);
-        maconnexion.executeUpdate(insert);
-    }
-
+    
+    /**
+     * Méthode permettant de recherche une personne malade 
+     * @param nom
+     * @param prenom
+     * @return Arraylist d'informations sur les personnes malades
+     */
     public ArrayList malade(String nom, String prenom) {
 
         try {
@@ -110,6 +122,12 @@ public class Hopital {
 
     }
 
+    /**
+     * Méthode permettant de rechercher un docteur
+     * @param nom
+     * @param prenom
+     * @return Arraylist d'informations sur les docteurs
+     */
     public ArrayList docteur(String nom, String prenom) {
 
         try {
@@ -128,7 +146,13 @@ public class Hopital {
         }
         return liste;
     }
-
+    
+    /**
+     * Méthode permettant de rechercher un infirmier
+     * @param nom
+     * @param prenom
+     * @return Arraylist d'information sur les infirmiers
+     */
     public ArrayList infirmier(String nom, String prenom) {
 
         try {
@@ -148,6 +172,11 @@ public class Hopital {
         return liste;
     }
 
+    /**
+     * Méthode permettant de recherche un service
+     * @param nomService
+     * @return Arraylist d'informations sur les services
+     */
     public ArrayList service(String nomService) {
 
         try {
@@ -167,6 +196,12 @@ public class Hopital {
         return liste;
     }
 
+    /**
+     * Methode permettant de rechercher une chambre
+     * @param numChambre
+     * @param nomService
+     * @return Arraylist d'information sur les services 
+     */
     public ArrayList chambre(String numChambre, String nomService) {
 
         try {
@@ -186,6 +221,10 @@ public class Hopital {
         return liste;
     }
 
+    /**
+     * Méthode permettant d'ajouter un patient à la base de données
+     * @param donnees 
+     */
     public void nouveauPatient(ArrayList<String> donnees) {
         try {
             int num = maconnexion.IDgenerator("malade");
@@ -201,7 +240,10 @@ public class Hopital {
         }
 
     }
-
+    /**
+     * Méthode permettant d'ajouter un employé (docteur,infirmier) à base de données
+     * @param donnees 
+     */
     public void nouvelEmploye(ArrayList<String> donnees) {
 
         try {
@@ -225,7 +267,14 @@ public class Hopital {
         }
 
     }
-    
+    /**
+     * Méthode permttant de supprimer un docteur, un infirmier ou un malade
+     * @param nom
+     * @param prenom
+     * @param table
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void suppression(String nom, String prenom, String table) throws SQLException, ClassNotFoundException {
         try {
             String query2, query3;
@@ -248,6 +297,11 @@ public class Hopital {
 
     }
 
+    /**
+     * Méthode permmettant de modifier les informations d'un malade
+     * @param listeMAJ
+     * @throws SQLException 
+     */
     public void updateMalade(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
@@ -270,7 +324,11 @@ public class Hopital {
         }
         maconnexion.executeUpdate(update);
     }
-
+    /**
+     * Méthode permettant de modifier les informations d'un docteur
+     * @param listeMAJ
+     * @throws SQLException 
+     */
     public void updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
@@ -288,7 +346,11 @@ public class Hopital {
         }
         maconnexion.executeUpdate(update);
     }
-
+     /**
+      * Méthode permettant de modifier les informations d'un infirmier 
+      * @param listeMAJ
+      * @throws SQLException 
+      */
     public void updateInfirmier(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
