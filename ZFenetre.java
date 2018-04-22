@@ -257,6 +257,12 @@ public class ZFenetre extends JFrame {
             }
         });
     }
+    
+    public void messageErreur(String champ) 
+    {
+        JOptionPane.showMessageDialog(null,"Le champ " + champ + " n'est pas valide.");
+        
+    }
 
     public JMenuItem getMenuRetour() {
         return menuRetour;
