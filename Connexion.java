@@ -19,6 +19,7 @@ import java.util.Scanner;
  */
 public class Connexion {
 
+      public  boolean h = false;
     /**
      * Attributs prives : connexion JDBC, statement, ordre requete et resultat
      * requete
@@ -63,6 +64,9 @@ public class Connexion {
 
         // création d'un ordre SQL (statement)
         stmt = conn.createStatement();
+         if (stmt != null)
+        {h =  true ;}
+
 
     }
 
