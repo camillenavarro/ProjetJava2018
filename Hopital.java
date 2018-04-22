@@ -18,13 +18,43 @@ import java.util.logging.Logger;
 public class Hopital {
 
     static final String NAME = "hopital";
-    static final String LOGIN = "root";
-    static final String PASSWORD = "";
-    Connexion maconnexion;
+    static String LOGIN = "root";
+    static String PASSWORD = "";
+    public Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
     public Hopital() {
 
+        try {
+
+            try {
+                //Connection connection = null;
+                //Statement statement = null;
+                //ResultSet resultSet = null;
+
+                maconnexion = new Connexion(NAME, LOGIN, PASSWORD);
+                //maconnexion.remplirChampsTable("chambre");
+
+            } catch (SQLException ex) {
+                System.out.println("SQL problem.");
+            }
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class problem.");
+        }
+
+        //finally {
+        //try {
+        //    resultSet.close();
+        //    statement.close();
+        //    connection.close();
+        //} catch (SQLException ex) {
+        //}
+    }
+
+    public Hopital(String a, String b) {
+        LOGIN = a;
+        PASSWORD = b;
         try {
 
             try {
@@ -191,6 +221,28 @@ public class Hopital {
 
         } catch (SQLException ex) {
 
+            System.out.println("SQL problem.");
+        }
+
+    }
+    
+    public void suppression(String nom, String prenom, String table) throws SQLException, ClassNotFoundException {
+        try {
+            String query2, query3;
+            String query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+
+            String numero = maconnexion.getNumero(nom, prenom, table);
+            System.out.println("Le numero est " + numero);
+            maconnexion.executeUpdate(query);
+
+            if (table.equals("employe")) {
+                query2 = "DELETE FROM docteur WHERE numero = '" + numero + "'";
+                query3 = "DELETE FROM infirmier WHERE numero = '" + numero + "'";
+                maconnexion.executeUpdate(query2);
+                maconnexion.executeUpdate(query3);
+            }
+
+        } catch (SQLException ex) {
             System.out.println("SQL problem.");
         }
 
