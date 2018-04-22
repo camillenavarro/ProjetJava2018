@@ -18,13 +18,14 @@ import java.util.logging.Logger;
 public class Hopital {
 
     static final String NAME = "hopital";
-    static final String LOGIN = "root";
-    static final String PASSWORD = "";
+    static  String LOGIN = "root";
+    static  String PASSWORD = "";
     Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
-    public Hopital() {
-
+    public Hopital(String a, String b){
+        LOGIN = a;
+        PASSWORD = b;
         try {
 
             try {
