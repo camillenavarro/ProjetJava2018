@@ -83,11 +83,11 @@ public class NouveauPatient  {
     
     container.add(new JLabel ("Nouveau Patient")); 
     
-    container.add(new JLabel ("Numero : ")); 
-    numero.setFont(police);
-    numero.setPreferredSize(new Dimension(150, 30));
-    numero.setForeground(Color.BLACK);
-    container.add(numero);
+//    container.add(new JLabel ("Numero : ")); 
+//    numero.setFont(police);
+//    numero.setPreferredSize(new Dimension(150, 30));
+//    numero.setForeground(Color.BLACK);
+//    container.add(numero);
     
     container.add(new JLabel ("Nom : ")); 
     nom.setFont(police);
@@ -119,17 +119,17 @@ public class NouveauPatient  {
     mutuel.setForeground(Color.BLACK);
     container.add(mutuel);
     
-    container.add(new JLabel ("Service : "));
-    service.setFont(police);
-    service.setPreferredSize(new Dimension(150, 30));
-    service.setForeground(Color.BLACK);
-    container.add(service);
-    
-    container.add(new JLabel ("Chambre : "));
-    chambre.setFont(police);
-    chambre.setPreferredSize(new Dimension(150, 30));
-    chambre.setForeground(Color.BLACK);
-    container.add(chambre);
+//    container.add(new JLabel ("Service : "));
+//    service.setFont(police);
+//    service.setPreferredSize(new Dimension(150, 30));
+//    service.setForeground(Color.BLACK);
+//    container.add(service);
+//    
+//    container.add(new JLabel ("Chambre : "));
+//    chambre.setFont(police);
+//    chambre.setPreferredSize(new Dimension(150, 30));
+//    chambre.setForeground(Color.BLACK);
+//    container.add(chambre);
     
     JPanel truc = new JPanel() ;
     truc.add(container);
@@ -141,8 +141,8 @@ public class NouveauPatient  {
     save.addActionListener(new ActionListener() {
         public @Override void actionPerformed(ActionEvent e) {
             donnees.clear();
-            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
-                donnees.add(numero.getText());
+//            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
+//                donnees.add(numero.getText());
             if(!(nom.getText()).equals(""))
                donnees.add(nom.getText());
             if(!(prenom.getText()).equals(""))
@@ -153,12 +153,12 @@ public class NouveauPatient  {
                 donnees.add(adresse.getText());
             if(!(mutuel.getText()).equals(""))
                 donnees.add(mutuel.getText());
-            if(!(service.getText()).equals(""))
-                donnees.add(service.getText());
-            if(!(chambre.getText()).equals(""))
-                donnees.add(chambre.getText());
+//            if(!(service.getText()).equals(""))
+//                donnees.add(service.getText());
+//            if(!(chambre.getText()).equals(""))
+//                donnees.add(chambre.getText());
     
-            if (donnees.size() == 8)
+            if (donnees.size() == 5)
             {
                 System.out.println("Formulaire valide");
                 hop.nouveauPatient(donnees);
