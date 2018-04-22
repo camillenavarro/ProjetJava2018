@@ -140,11 +140,11 @@ public class TestHopital implements ActionListener {
         }
         if(e.getSource()==zFen.getNouveauS())
         {
-            
+            zFen.nouveauSoin();
         }
         if(e.getSource()==zFen.getSuppS())
         {
-            
+            zFen.supSoin();
         }
         if(e.getSource()==zFen.getRechMalade())
         {
