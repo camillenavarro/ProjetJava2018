@@ -303,6 +303,9 @@ public class ZFenetre extends JFrame {
         });
     }
     
+    /**
+     * Méthode qui saisit les noms et prénoms d'un docteur et d'un malade pour les ajouter dans la table soigne
+     */
     public void nouveauSoin()
     {
         JPanel container = new JPanel();
@@ -349,8 +352,10 @@ public class ZFenetre extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                hop.soin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText());
-                accueil();
+                if(hop.soin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
+                    accueil();
+                else
+                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos répertoires.");
             }
         });
     }
