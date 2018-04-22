@@ -359,6 +359,64 @@ public class ZFenetre extends JFrame {
             }
         });
     }
+    /**
+     * MÈthode qui demande de saisir le nom,prÈnom du docteur et du malade pour appeler la fonction qui supprime les soins
+     */    
+    public void supSoin()
+    {
+       JPanel container = new JPanel();
+        JPanel pan = new JPanel();
+        
+        JTextField nomDocteur = new JTextField() ;
+        JTextField prenomDocteur = new JTextField() ;
+        
+        container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+        container.add(new JLabel("Nom du docteur : "));
+        
+        nomDocteur.setPreferredSize(new Dimension(150, 30));
+        nomDocteur.setForeground(Color.BLACK);
+        container.add(nomDocteur);
+
+        container.add(new JLabel("Pr√©nom du docteur : "));
+       
+        prenomDocteur.setPreferredSize(new Dimension(150, 30));
+        prenomDocteur.setForeground(Color.BLACK);
+        container.add(prenomDocteur);
+        
+        JTextField nomMalade = new JTextField() ;
+        JTextField prenomMalade = new JTextField() ;
+        
+        
+        container.add(new JLabel("Nom du malade : "));
+        
+        nomMalade.setPreferredSize(new Dimension(150, 30));
+        nomMalade.setForeground(Color.BLACK);
+        container.add(nomMalade);
+
+        container.add(new JLabel("Pr√©nom du malade : "));
+       
+        prenomMalade.setPreferredSize(new Dimension(150, 30));
+        prenomMalade.setForeground(Color.BLACK);
+        container.add(prenomMalade);
+        
+        pan.add(container) ;
+        pan.add(submit) ;
+        
+        this.setContentPane(pan) ;
+        this.setVisible(true) ;
+        
+        submit.addActionListener(new ActionListener(){
+             @Override 
+             public void actionPerformed(ActionEvent arg0) {
+               if(hop.SuppSoin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
+                    accueil();
+                else
+                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos r√©pertoires.");
+             }});
+        
+   
+    }
+    
     
     /**
      * Methode qui affiche un message d'erreur 
