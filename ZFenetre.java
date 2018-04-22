@@ -1,9 +1,5 @@
 package Vue;
 
-/**
- *
- * @author Rim
- */
 import Modele.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
