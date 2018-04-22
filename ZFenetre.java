@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class qui crée toutes les fenetres que l'utilisateur verra
+ * @author Camille,Rim,Roman
+ */
 public class ZFenetre extends JFrame {
     
     
@@ -75,7 +79,14 @@ public class ZFenetre extends JFrame {
 
     private JTable table;
     
+    /**
+     * Methode qui se lance qaund on appuie sur un bouton
+     */
      private class BoutonListener implements ActionListener {
+         /**
+          * Methode qui lance le bon programme pour un bouton
+          * @param ae 
+          */
         public void actionPerformed(ActionEvent ae) {
           
             if(ae.getSource() == envoie)
@@ -91,21 +102,33 @@ public class ZFenetre extends JFrame {
         }
     }
 
+     /**
+      * Class qui s'occupe de l'image
+      */
     class ImagePanel extends JComponent {
 
         private Image image;
-
+        /**
+         * Constructeur pour ImagePanel
+         * @param image 
+         */
         public ImagePanel(Image image) {
             this.image = image;
         }
 
         @Override
+        /**
+         * Methode pour positionner l'image
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(image, 0, 0, this);
         }
     }
 
+    /**
+     * Constructeur de ZFenetre qui est la fenetre de base des autres fenetres
+     */
     public ZFenetre() {
         this.setSize(866, 648);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,6 +156,11 @@ public class ZFenetre extends JFrame {
 
         this.setJMenuBar(menuBar);
     }
+    
+    /**
+     * Methode qui crée le login
+     * L'utilisateur doit rentrer le Login et le mot de passe pour rentre dans la bonne base de données
+     */
  public void login()
     {
         JPanel pan = new JPanel() ;
@@ -157,6 +185,11 @@ public class ZFenetre extends JFrame {
         
         
     }
+ 
+ /**
+  * Méthode qui crée l'acceuil
+  * L'utilisateur à accès aux diférents boutons pour utuliser les diférentes méthodes
+  */
     public void accueil() {
         
         JPanel pan = new JPanel();
@@ -170,6 +203,10 @@ public class ZFenetre extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Méthode qui crée les Mise à jour pour la base de données
+     * 
+     */
     public void MAJ() {
         Box line1 = Box.createHorizontalBox();
         Box line2 = Box.createHorizontalBox();
@@ -193,6 +230,9 @@ public class ZFenetre extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Methode qui crée la fenetre recherche 
+     */
     public void optionsRecherche() {
         
         JPanel pan = new JPanel();
@@ -207,7 +247,9 @@ public class ZFenetre extends JFrame {
     }
 
     
-
+    /**
+     * Méthode qui crée la fenetre modifier 
+     */
     public void modifier() {
         JPanel pan = new JPanel() ;
         pan.add(modMalade);
@@ -220,6 +262,10 @@ public class ZFenetre extends JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * Méthode qui crée la fenetre supprimer
+     * @param table 
+     */
     public void supprimer(String table)
     {
         JPanel pan = new JPanel() ;
@@ -245,6 +291,9 @@ public class ZFenetre extends JFrame {
         
         submit.addActionListener(new ActionListener() {
             @Override
+            /**
+             * Methode qui lance la suppression apres l'appuie du bouton 
+             */
             public void actionPerformed(ActionEvent arg0) {
                 try {
                     hop.suppression(nom.getText(), prenom.getText(), table) ;
@@ -257,115 +306,199 @@ public class ZFenetre extends JFrame {
             }
         });
     }
-    
+    /**
+     * Methode qui affiche un message d'erreur 
+     * @param champ 
+     */
     public void messageErreur(String champ) 
     {
         JOptionPane.showMessageDialog(null,"Le champ " + champ + " n'est pas valide.");
         
     }
-
+    /**
+     * Methode qui revient à l'acceuil
+     * @return menuRetour
+     */
     public JMenuItem getMenuRetour() {
         return menuRetour;
     }
 
+    /**
+     * Methode qui revient à l'acceuil
+     * @return boutonRetour
+     */
     public JButton getBoutonRetour() {
         return boutonRetour;
     }
 
+    /**
+     * Methode qui revient à la MAJ
+     * @return menuMAJ
+     */
     public JMenuItem getMenuMAJ() {
         return menuMAJ;
     }
-
+    
+    /**
+     * Méthode qui revient à la Recherche
+     * @return menuRecherche
+     */
     public JMenuItem getMenuRecherche() {
         return menuRecherche;
     }
     
+    /**
+     * Méthode qui revient à au reporting
+     * @return menuReport
+     */
     public JMenuItem getMenuReport() {
         return menuReport;
     }
-
+    
+    /**
+     * Methode qui revient à la MAJ
+     * @return boutonMAJ
+     */
     public JButton getBoutonMAJ() {
         return boutonMAJ;
     }
 
+    /**
+     * Methode qui revient à la Recherche
+     * @return boutonRech
+     */
     public JButton getBoutonRecherche() {
         return boutonRech;
     }
     
+     /**
+     * Methode qui revient au reporting
+     * @return boutonRep
+     */
     public JButton getBoutonReport() {
         return boutonRep;
     }
-
+    
+     /**
+     * Methode qui revient au Nouveau Patient
+     * @return nouveaup
+     */
     public JButton getNouveauP() {
         return nouveauP;
     }
-
+    
+     /**
+     * Methode qui revient à la NouvelE
+     * @return nouvelE
+     */
     public JButton getNouvelE() {
         return nouvelE;
     }
-
+    
+     /**
+     * Methode qui revient à la modification
+     * @return modifier
+     */
     public JButton getModifier() {
         return modifier;
     }
-
+    
+     /**
+     * Methode qui revient à la Supression Patient
+     * @return suppP
+     */
     public JButton getSuppP() {
         return suppP;
     }
-
+    
+     /**
+     * Methode qui revient à la Supression Employer
+     * @return suppE
+     */
     public JButton getSuppE() {
         return suppE;
     }
-
+    
+     /**
+     * Methode qui revient au Service
+     * @return nouveauS
+     */
     public JButton getNouveauS() {
         return nouveauS;
     }
-
+    
+     /**
+     * Methode qui revient à la Supression Service
+     * @return suppS
+     */
     public JButton getSuppS() {
         return suppS;
     }
 
+       
+     /**
+     * Methode qui lance le bouton validation
+     * @return submit
+     */
     public JButton getSubmit() {
         return submit;
     }
-
+    
+     /**
+     * Methode qui revient à la Recherche Malade
+     * @return rechMalade
+     */
     public JButton getRechMalade() {
         return rechMalade;
     }
-
+    
+     /**
+     * Methode qui revient à la Recherche Infirmier
+     * @return rechInf
+     */
     public JButton getRechInf() {
         return rechInf;
     }
-
+    
+     /**
+     * Methode qui revient à la Recherche Malade
+     * @return rechMalade
+     */
     public JButton getRechDoc() {
         return rechDoc;
     }
-
+    
+     /**
+     * Methode qui revient à la Recherche Service
+     * @return rechServ
+     */
     public JButton getRechServ() {
         return rechServ;
     }
-
+    
+     /**
+     * Methode qui revient à la Recherche Chambre
+     * @return rechChambre
+     */
     public JButton getRechChambre() {
         return rechChambre;
     }
-
+    
+     /**
+     * Methode qui revient à la Modification Malade
+     * @return modMalade
+     */
     public JButton getModMalade() {
         return modMalade;
     }
-
-    public JButton getModInfirmier() {
-        return modInfirmier;
+    
+     /**
+     * Methode qui revient à la modification Employé
+     * @return mdEmploye
+     */
+    public JButton getModEmploye() {
+        return modEmploye;
     }
 
-    public JButton getModDocteur() {
-        return modDocteur;
-    }
-
-    public JButton getModService() {
-        return modService;
-    }
-
-    public JButton getModChambre() {
-        return modChambre;
-    }
 
 }
