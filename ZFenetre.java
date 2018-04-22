@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 public class ZFenetre extends JFrame {
 
@@ -174,6 +175,9 @@ public class ZFenetre extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+
+                //DefaultTableModel model = (DefaultTableModel) table.getModel();
+                //model.setRowCount(0);
                 if (module.equals("Malade")) {
                     liste = hop.malade(textField.get(0).getText(), textField.get(1).getText());
                     tableRechercheM(liste);
@@ -200,94 +204,138 @@ public class ZFenetre extends JFrame {
 
     public void tableRechercheM(ArrayList liste) {
 
-        setLayout(new FlowLayout());
+        if (liste.size() == 1) {
+            JOptionPane.showMessageDialog(null, liste.get(0),"Error",JOptionPane.ERROR_MESSAGE);
+        } else if (liste.size() == 6) {
+            setLayout(new FlowLayout());
+            String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle"};
 
-        while (liste.size() < 11) {
-            liste.add("NA");
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5)}
+            };
+
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
+            table.setFillsViewportHeight(true);
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
+            
+        } else {
+
+            setLayout(new FlowLayout());
+
+            while (liste.size() < 11) {
+                liste.add("NA");
+            }
+            JOptionPane.showMessageDialog(null,"Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisé. Veuillez consulter ses informations.");
+            String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle", "Num. de la chambre d'hospitalisation", "Num. du lit", "Surveillant de la chambre", "Service", "Batiment"};
+
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5), liste.get(6), liste.get(7), liste.get(8), liste.get(9), liste.get(10)}
+            };
+
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1200, 100));
+            table.setFillsViewportHeight(true);
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
         }
-        String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle", "Numero de la chambre d'hospitalisation", "Numero du lit", "Surveillant de la chambre", "Service", "Batiment"};
 
-        Object[][] data = {
-            {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5), liste.get(6), liste.get(7), liste.get(8), liste.get(9), liste.get(10)}
-        };
-
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-        table.setFillsViewportHeight(true);
-
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+        liste.clear();
     }
 
     public void tableRechercheI(ArrayList liste) {
 
-        setLayout(new FlowLayout());
-        String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Rotation"};
+        if (liste.size() == 1) {
+            JOptionPane.showMessageDialog(null, liste.get(0));
+        } else {
 
-        Object[][] data = {
-            {liste.get(0), liste.get(1), liste.get(3), liste.get(4), liste.get(5), liste.get(2)}
-        };
+            setLayout(new FlowLayout());
+            String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Rotation"};
 
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-        table.setFillsViewportHeight(true);
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(3), liste.get(4), liste.get(5), liste.get(2)}
+            };
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
+            table.setFillsViewportHeight(true);
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
+        }
+        liste.clear();
     }
 
     public void tableRechercheD(ArrayList liste) {
 
-        setLayout(new FlowLayout());
-        String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Specialite"};
+        if (liste.size() == 1) {
+            JOptionPane.showMessageDialog(null, liste.get(0));
+        } else {
+            setLayout(new FlowLayout());
+            String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Specialite"};
 
-        Object[][] data = {
-            {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5)}
-        };
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5)}
+            };
 
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-        table.setFillsViewportHeight(true);
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
+            table.setFillsViewportHeight(true);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
+        }
+        liste.clear();
     }
 
     public void tableRechercheS(ArrayList liste) {
 
-        setLayout(new FlowLayout());
-        String docteur = "Dr. " + liste.get(3) + " " + liste.get(4);
-        String[] columnNames = {"Nom du Service", "Code du Service", "Batiment", "Directeur du Service"};
+        if (liste.size() == 1) {
+            JOptionPane.showMessageDialog(null, liste.get(0));
+        } else {
+            setLayout(new FlowLayout());
+            String docteur = "Dr. " + liste.get(3) + " " + liste.get(4);
+            String[] columnNames = {"Nom du Service", "Code du Service", "Batiment", "Directeur du Service"};
 
-        Object[][] data = {
-            {liste.get(0), liste.get(1), liste.get(2), docteur}
-        };
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(2), docteur}
+            };
 
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-        table.setFillsViewportHeight(true);
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
+            table.setFillsViewportHeight(true);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
+        }
+        liste.clear();
     }
-    
+
     public void tableRechercheC(ArrayList liste) {
 
-        setLayout(new FlowLayout());
-        String[] columnNames = {"Numero de la Chambre", "Nombre de lits", "ID surveillant", "Infirmier(e)", "Service de la Chambre"};
+        if (liste.size() == 1) {
+            JOptionPane.showMessageDialog(null, liste.get(0));
+        } else {
+            setLayout(new FlowLayout());
+            String[] columnNames = {"Numero de la Chambre", "Nombre de lits", "ID surveillant", "Infirmier(e)", "Service de la Chambre"};
 
-        Object[][] data = {
-            {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4)}
-        };
+            Object[][] data = {
+                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4)}
+            };
 
-        table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-        table.setFillsViewportHeight(true);
+            table = new JTable(data, columnNames);
+            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
+            table.setFillsViewportHeight(true);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane);
+            JScrollPane scrollPane = new JScrollPane(table);
+            add(scrollPane);
+        }
+        liste.clear();
     }
-    
+
     public void ajouterPatient() {
         JTextField numero = new JTextField("");
         JTextField nom = new JTextField("");
