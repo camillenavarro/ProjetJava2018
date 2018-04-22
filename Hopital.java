@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * Classe permettant l'utilisation et la connection avec la base de données
+ *
  * @author Camille,Rim,Roman
  */
 public class Hopital {
@@ -28,8 +29,8 @@ public class Hopital {
     ArrayList<String> liste = new ArrayList<>();
 
     /**
-     * Constructeurs par defaut d'Hopital 
-     * Elle fait la connection avec la base de données
+     * Constructeurs par defaut d'Hopital Elle fait la connection avec la base
+     * de données
      */
     public Hopital() {
 
@@ -59,11 +60,13 @@ public class Hopital {
         //} catch (SQLException ex) {
         //}
     }
+
     /**
-     * Constructeur suchargé d'Hopital 
-     * Elle permet la connectiona avec une base de données choisie
+     * Constructeur suchargé d'Hopital Elle permet la connectiona avec une base
+     * de données choisie
+     *
      * @param a
-     * @param b 
+     * @param b
      */
     public Hopital(String a, String b) {
         LOGIN = a;
@@ -95,10 +98,9 @@ public class Hopital {
         //}
     }
 
-
-    
     /**
-     * Méthode permettant de recherche une personne malade 
+     * Méthode permettant de recherche une personne malade
+     *
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les personnes malades
@@ -124,6 +126,7 @@ public class Hopital {
 
     /**
      * Méthode permettant de rechercher un docteur
+     *
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les docteurs
@@ -146,9 +149,10 @@ public class Hopital {
         }
         return liste;
     }
-    
+
     /**
      * Méthode permettant de rechercher un infirmier
+     *
      * @param nom
      * @param prenom
      * @return Arraylist d'information sur les infirmiers
@@ -174,6 +178,7 @@ public class Hopital {
 
     /**
      * Méthode permettant de recherche un service
+     *
      * @param nomService
      * @return Arraylist d'informations sur les services
      */
@@ -198,9 +203,10 @@ public class Hopital {
 
     /**
      * Methode permettant de rechercher une chambre
+     *
      * @param numChambre
      * @param nomService
-     * @return Arraylist d'information sur les services 
+     * @return Arraylist d'information sur les services
      */
     public ArrayList chambre(String numChambre, String nomService) {
 
@@ -223,7 +229,8 @@ public class Hopital {
 
     /**
      * Méthode permettant d'ajouter un patient à la base de données
-     * @param donnees 
+     *
+     * @param donnees
      */
     public void nouveauPatient(ArrayList<String> donnees) {
         try {
@@ -240,9 +247,12 @@ public class Hopital {
         }
 
     }
+
     /**
-     * Méthode permettant d'ajouter un employé (docteur,infirmier) à base de données
-     * @param donnees 
+     * Méthode permettant d'ajouter un employé (docteur,infirmier) à base de
+     * données
+     *
+     * @param donnees
      */
     public void nouvelEmploye(ArrayList<String> donnees) {
 
@@ -267,197 +277,208 @@ public class Hopital {
         }
 
     }
+
     /**
      * Méthode permttant de supprimer un docteur, un infirmier ou un malade
+     *
      * @param nom
      * @param prenom
      * @param table
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public void suppression(String nom, String prenom, String table) throws SQLException, ClassNotFoundException {
-        try {
-            String query2, query3;
-            String query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
 
-            String numero = maconnexion.getNumero(nom, prenom, table);
-            System.out.println("Le numero est " + numero);
-            maconnexion.executeUpdate(query);
+        String query = "", query2, query3;
 
-            if (table.equals("employe")) {
-                query2 = "DELETE FROM docteur WHERE numero = '" + numero + "'";
-                query3 = "DELETE FROM infirmier WHERE numero = '" + numero + "'";
-                maconnexion.executeUpdate(query2);
-                maconnexion.executeUpdate(query3);
-            }
+        if (table.equals("hospitalisation")) {
+            query = "DELETE FROM " + table + " WHERE no_malade = '" + maconnexion.getNumero(nom, prenom, "malade") + "'";
 
-        } catch (SQLException ex) {
-            System.out.println("SQL problem.");
+        } else {
+            query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+
+        }
+
+        maconnexion.executeUpdate(query);
+        String numero = maconnexion.getNumero(nom, prenom, table);
+
+        if (table.equals("employe")) {
+            query2 = "DELETE FROM docteur WHERE numero = '" + numero + "'";
+            query3 = "DELETE FROM infirmier WHERE numero = '" + numero + "'";
+            maconnexion.executeUpdate(query2);
+            maconnexion.executeUpdate(query3);
         }
 
     }
 
     /**
      * Méthode permmettant de modifier les informations d'un malade
+     *
      * @param listeMAJ
-     * @throws SQLException 
+     * @throws SQLException
      * @return boolean true si le malade existe, false sinon
      */
     public Boolean updateMalade(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
         String prenom = listeMAJ.get(1);
-        
-        ArrayList<String> verif = new ArrayList() ;
+
+        ArrayList<String> verif = new ArrayList();
         try {
             verif = maconnexion.RechercheMalade(nom, prenom);
         } catch (ClassNotFoundException ex) {
             System.out.println("SQL problem");
         }
-        
-        if(verif.size() > 1)
-        {
+
+        if (verif.size() > 1) {
             String tel = listeMAJ.get(2);
             String adresse = listeMAJ.get(3);
             String mutuelle = listeMAJ.get(4);
             String update = "", set = "";
-            
+
             if (!adresse.equals("")) {
-                if(set.equals(""))
-                    set += "adresse = '" + adresse + "' " ;
-                else
-                    set += ", adresse = '" + adresse + "' " ;
+                if (set.equals("")) {
+                    set += "adresse = '" + adresse + "' ";
+                } else {
+                    set += ", adresse = '" + adresse + "' ";
+                }
             }
 
             if (!tel.equals("")) {
-                if(set.equals(""))
-                    set += "tel = '" + tel + "' " ;
-                else
-                    set += ", tel = '" + tel + "' " ;
+                if (set.equals("")) {
+                    set += "tel = '" + tel + "' ";
+                } else {
+                    set += ", tel = '" + tel + "' ";
+                }
             }
 
             if (!mutuelle.equals("")) {
-                if(set.equals(""))
-                    set += "mutuelle = '" + mutuelle + "' " ;
-                else
-                    set += ", mutuelle = '" + mutuelle + "' " ;
+                if (set.equals("")) {
+                    set += "mutuelle = '" + mutuelle + "' ";
+                } else {
+                    set += ", mutuelle = '" + mutuelle + "' ";
+                }
             }
             update = "UPDATE malade SET " + set + "WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
-                
+
             maconnexion.executeUpdate(update);
-            return true ;
+            return true;
+        } else {
+            return false;
         }
-        else
-            return false ;       
     }
+
     /**
      * Méthode permettant de modifier les informations d'un employé
+     *
      * @param listeMAJ
-     * @throws SQLException 
+     * @throws SQLException
      * @return boolean true si l'employé existe, false sinon
      */
     public Boolean updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
 
         String nom = listeMAJ.get(0);
         String prenom = listeMAJ.get(1);
-        String profession = listeMAJ.get(4) ;
-        
-        ArrayList<String> verif = new ArrayList() ;
+        String profession = listeMAJ.get(4);
+
+        ArrayList<String> verif = new ArrayList();
         try {
-            if(profession.equals("doc"))
+            if (profession.equals("doc")) {
                 verif = maconnexion.RechercheDocteur(nom, prenom);
-            else
+            } else {
                 verif = maconnexion.RechercheInfirmier(nom, prenom);
+            }
         } catch (ClassNotFoundException ex) {
             System.out.println("SQL problem");
         }
-        
-        if(verif.size() > 1)
-        {
+
+        if (verif.size() > 1) {
             String adresse = listeMAJ.get(2);
             String tel = listeMAJ.get(3);
             String update = "", set = "";
 
             if (!adresse.equals("")) {
-                if(set.equals(""))
-                    set += "adresse = '" + adresse + "' " ;
-                else
-                    set += ", adresse = '" + adresse + "' " ;
+                if (set.equals("")) {
+                    set += "adresse = '" + adresse + "' ";
+                } else {
+                    set += ", adresse = '" + adresse + "' ";
+                }
             }
 
             if (!tel.equals("")) {
-                if(set.equals(""))
-                    set += "tel = '" + tel + "' " ;
-                else
-                    set += ", tel = '" + tel + "' " ;
+                if (set.equals("")) {
+                    set += "tel = '" + tel + "' ";
+                } else {
+                    set += ", tel = '" + tel + "' ";
+                }
             }
             update = "UPDATE employe SET " + set + "WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
             maconnexion.executeUpdate(update);
-            
-            if(profession.equals("inf"))
-            {
+
+            if (profession.equals("inf")) {
                 try {
-                    String num = maconnexion.getNumero(nom, prenom, "Employe") ; 
-                    updateInfirmier(listeMAJ, num) ;
+                    String num = maconnexion.getNumero(nom, prenom, "Employe");
+                    updateInfirmier(listeMAJ, num);
                 } catch (ClassNotFoundException ex) {
                     System.out.println("SQL problem");
                 }
             }
-            
-            return true ;
+
+            return true;
         }
-        return false ;
+        return false;
     }
-     /**
-      * Méthode permettant de modifier les informations d'un infirmier 
-      * @param listeMAJ, numero
-      * @throws SQLException 
-      */
+
+    /**
+     * Méthode permettant de modifier les informations d'un infirmier
+     *
+     * @param listeMAJ, numero
+     * @throws SQLException
+     */
     public void updateInfirmier(ArrayList<String> listeMAJ, String numero) throws SQLException {
 
         String rotation = listeMAJ.get(5);
         String salaire = listeMAJ.get(6);
         String update = "", set = "rotation = '" + rotation + "' ";
-        
-        
+
         if (!salaire.equals("")) {
-            set += ", salaire = '" + salaire + "' " ;
+            set += ", salaire = '" + salaire + "' ";
         }
-        
+
         update = "UPDATE infirmier SET " + set + "WHERE numero ='" + numero + "'";
-        
+
         maconnexion.executeUpdate(update);
-        
+
     }
-    
+
     /**
      * Méthode qui ajoute un soin dans la table soigne
+     *
      * @param nomDocteur
      * @param prenomDocteur
      * @param nomMalade
      * @param prenomMalade
-     * @return boolean false si le docteur et/ou le malade n'existe pas, true sinon
+     * @return boolean false si le docteur et/ou le malade n'existe pas, true
+     * sinon
      */
-    public Boolean soin(String nomDocteur, String prenomDocteur, String nomMalade, String prenomMalade)
-    {
+    public Boolean soin(String nomDocteur, String prenomDocteur, String nomMalade, String prenomMalade) {
         try {
-            ArrayList<String> verifDocteur = new ArrayList() ;
-            ArrayList<String> verifMalade = new ArrayList() ;
-            
-            verifDocteur = maconnexion.RechercheDocteur(nomDocteur, prenomDocteur) ;
-            verifDocteur = maconnexion.RechercheMalade(nomMalade, prenomMalade) ;
-            
-            if(verifDocteur.size() > 1 && verifMalade.size() > 1)
-            {
+            ArrayList<String> verifDocteur = new ArrayList();
+            ArrayList<String> verifMalade = new ArrayList();
+
+            verifDocteur = maconnexion.RechercheDocteur(nomDocteur, prenomDocteur);
+            verifDocteur = maconnexion.RechercheMalade(nomMalade, prenomMalade);
+
+            if (verifDocteur.size() > 1 && verifMalade.size() > 1) {
                 String numDocteur = maconnexion.getNumero(nomDocteur, prenomDocteur, "Employe");
                 String numMalade = maconnexion.getNumero(nomMalade, prenomMalade, "Malade");
-                
-                String requete = "INSERT INTO soigne (no_docteur, no_malade) VALUES ('" + numDocteur + "','" + numMalade + "')" ;
+
+                String requete = "INSERT INTO soigne (no_docteur, no_malade) VALUES ('" + numDocteur + "','" + numMalade + "')";
                 maconnexion.executeUpdate(requete);
-                return true ;
+                return true;
+            } else {
+                return false;
             }
-            else
-                return false ;
         } catch (SQLException ex) {
             System.out.println("SQL problem");
             return false;
@@ -466,8 +487,27 @@ public class Hopital {
             return false;
         }
     }
+
     /**
-     * Methode qui permet de supprimer un soin dans la base de donn�es 
+     * Méthode qui crée une hospitalisation
+     *
+     * @param malade
+     * @param service
+     * @param chambre
+     * @param lit
+     */
+    public void hospi(String malade, String service, String chambre, String lit) {
+        try {
+            String requete = "INSERT INTO hospitalisation VALUES ('" + malade + "','" + service + "','" + chambre + "','" + lit + "')";
+            maconnexion.executeUpdate(requete);
+        } catch (SQLException ex) {
+            Logger.getLogger(Hopital.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    /**
+     * Methode qui permet de supprimer un soin dans la base de données 
      * @param nomDocteur
      * @param prenomDocteur
      * @param nomMalade
@@ -488,7 +528,7 @@ public class Hopital {
                 String numDocteur = maconnexion.getNumero(nomDocteur, prenomDocteur, "Employe");
                 String numMalade = maconnexion.getNumero(nomMalade, prenomMalade, "Malade");
                 
-                String requete = "DELETE FROM soigne WHERE no_docteur = 'nomDocteur' AND no_malade = 'nomMalade' ";
+                String requete = "DELETE FROM soigne WHERE no_docteur = '" + numDocteur + "' AND no_malade = '" + numMalade + "' ";
                 maconnexion.executeUpdate(requete);
                 return true ;
             }return false;

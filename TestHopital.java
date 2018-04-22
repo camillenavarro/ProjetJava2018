@@ -9,7 +9,10 @@ import Modele.Hopital;
 import Modele.*;
 import Vue.*;
 import java.io.IOException;
-
+/**
+ *
+ * @author Rim
+ */
 //import java.awt.* ;
 import java.awt.event.* ;
 import java.sql.SQLException;
@@ -200,4 +203,4 @@ public class TestHopital implements ActionListener {
         
     }
 }
-        
+         
