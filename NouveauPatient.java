@@ -16,7 +16,7 @@ import java.util.*;
 
 /**
  *Cette class permet la création d'un nouveau Patient  
- * @author roman
+ * @author Camille,Rim,Roman
  */
 
 
