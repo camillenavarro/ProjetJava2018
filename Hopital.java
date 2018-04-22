@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe permettant l'utilisation et la connection avec la base de données
+ * Classe permettant l'utilisation et la connection avec la base de donnÃ©es
  * @author Camille,Rim,Roman
  */
 public class Hopital {
@@ -29,7 +29,7 @@ public class Hopital {
 
     /**
      * Constructeurs par defaut d'Hopital 
-     * Elle fait la connection avec la base de données
+     * Elle fait la connection avec la base de donnÃ©es
      */
     public Hopital() {
 
@@ -60,8 +60,8 @@ public class Hopital {
         //}
     }
     /**
-     * Constructeur suchargé d'Hopital 
-     * Elle permet la connectiona avec une base de données choisie
+     * Constructeur suchargÃ© d'Hopital 
+     * Elle permet la connectiona avec une base de donnÃ©es choisie
      * @param a
      * @param b 
      */
@@ -98,7 +98,7 @@ public class Hopital {
 
     
     /**
-     * Méthode permettant de recherche une personne malade 
+     * MÃ©thode permettant de recherche une personne malade 
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les personnes malades
@@ -123,7 +123,7 @@ public class Hopital {
     }
 
     /**
-     * Méthode permettant de rechercher un docteur
+     * MÃ©thode permettant de rechercher un docteur
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les docteurs
@@ -148,7 +148,7 @@ public class Hopital {
     }
     
     /**
-     * Méthode permettant de rechercher un infirmier
+     * MÃ©thode permettant de rechercher un infirmier
      * @param nom
      * @param prenom
      * @return Arraylist d'information sur les infirmiers
@@ -173,7 +173,7 @@ public class Hopital {
     }
 
     /**
-     * Méthode permettant de recherche un service
+     * MÃ©thode permettant de recherche un service
      * @param nomService
      * @return Arraylist d'informations sur les services
      */
@@ -222,7 +222,7 @@ public class Hopital {
     }
 
     /**
-     * Méthode permettant d'ajouter un patient à la base de données
+     * MÃ©thode permettant d'ajouter un patient Ã  la base de donnÃ©es
      * @param donnees 
      */
     public void nouveauPatient(ArrayList<String> donnees) {
@@ -241,7 +241,7 @@ public class Hopital {
 
     }
     /**
-     * Méthode permettant d'ajouter un employé (docteur,infirmier) à base de données
+     * MÃ©thode permettant d'ajouter un employÃ© (docteur,infirmier) Ã  base de donnÃ©es
      * @param donnees 
      */
     public void nouvelEmploye(ArrayList<String> donnees) {
@@ -268,7 +268,7 @@ public class Hopital {
 
     }
     /**
-     * Méthode permttant de supprimer un docteur, un infirmier ou un malade
+     * MÃ©thode permttant de supprimer un docteur, un infirmier ou un malade
      * @param nom
      * @param prenom
      * @param table
@@ -298,7 +298,7 @@ public class Hopital {
     }
 
     /**
-     * Méthode permmettant de modifier les informations d'un malade
+     * MÃ©thode permmettant de modifier les informations d'un malade
      * @param listeMAJ
      * @throws SQLException 
      * @return boolean true si le malade existe, false sinon
@@ -351,10 +351,10 @@ public class Hopital {
             return false ;       
     }
     /**
-     * Méthode permettant de modifier les informations d'un employé
+     * MÃ©thode permettant de modifier les informations d'un employÃ©
      * @param listeMAJ
      * @throws SQLException 
-     * @return boolean true si l'employé existe, false sinon
+     * @return boolean true si l'employÃ© existe, false sinon
      */
     public Boolean updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
 
@@ -409,7 +409,7 @@ public class Hopital {
         return false ;
     }
      /**
-      * Méthode permettant de modifier les informations d'un infirmier 
+      * MÃ©thode permettant de modifier les informations d'un infirmier 
       * @param listeMAJ, numero
       * @throws SQLException 
       */
@@ -431,7 +431,25 @@ public class Hopital {
     }
     
     /**
-     * Méthode qui ajoute un soin dans la table soigne
+     * Méthode qui crée une hospitalisation
+     *
+     * @param malade
+     * @param service
+     * @param chambre
+     * @param lit
+     */
+    public void hospi(String malade, String service, String chambre, String lit) {
+        try {
+            String requete = "INSERT INTO hospitalisation VALUES ('" + malade + "','" + service + "','" + chambre + "','" + lit + "')";
+            maconnexion.executeUpdate(requete);
+        } catch (SQLException ex) {
+            Logger.getLogger(Hopital.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    /**
+     * MÃ©thode qui ajoute un soin dans la table soigne
      * @param nomDocteur
      * @param prenomDocteur
      * @param nomMalade
@@ -467,7 +485,7 @@ public class Hopital {
         }
     }
     /**
-     * Methode qui permet de supprimer un soin dans la base de donn�es 
+     * Methode qui permet de supprimer un soin dans la base de données 
      * @param nomDocteur
      * @param prenomDocteur
      * @param nomMalade
