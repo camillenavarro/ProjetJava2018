@@ -2,7 +2,7 @@ package Modele;
 
 /*
  * 
- * Librairies importées
+ * Librairies importÃ©es
  */
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.Scanner;
 
 /**
  *
- * Connexion a votre BDD locale ou à distance sur le serveur de l'ECE via le
+ * Connexion a votre BDD locale ou Ã  distance sur le serveur de l'ECE via le
  * tunnel SSH
  *
- * @author segado
+ * @author Camille,Rim,Roman
  */
 public class Connexion {
 
@@ -35,16 +35,16 @@ public class Connexion {
      */
     public ArrayList<String> tables = new ArrayList<>();
     /**
-     * ArrayList public pour les requêtes de sélection
+     * ArrayList public pour les requÃªtes de sÃ©lection
      */
     public ArrayList<String> requetes = new ArrayList<>();
     /**
-     * ArrayList public pour les requêtes de MAJ
+     * ArrayList public pour les requÃªtes de MAJ
      */
     public ArrayList<String> requetesMaj = new ArrayList<>();
 
     /**
-     * Constructeur avec 3 paramètres : nom, login et password de la BDD locale
+     * Constructeur avec 3 paramÃ¨tres : nom, login et password de la BDD locale
      *
      * @param nameDatabase
      * @param loginDatabase
@@ -59,10 +59,10 @@ public class Connexion {
         // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
         String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
 
-        //création d'une connexion JDBC à la base 
+        //crÃ©ation d'une connexion JDBC Ã  la base 
         conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
 
-        // création d'un ordre SQL (statement)
+        // crÃ©ation d'un ordre SQL (statement)
         stmt = conn.createStatement();
          if (stmt != null)
         {h =  true ;}
@@ -71,8 +71,8 @@ public class Connexion {
     }
 
     /**
-     * Constructeur avec 4 paramètres : username et password ECE, login et
-     * password de la BDD à distance sur le serveur de l'ECE
+     * Constructeur avec 4 paramÃ¨tres : username et password ECE, login et
+     * password de la BDD Ã  distance sur le serveur de l'ECE
      *
      * @param usernameECE
      * @param passwordECE
@@ -94,17 +94,17 @@ public class Connexion {
             // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
             String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
 
-            //création d'une connexion JDBC à la base
+            //crÃ©ation d'une connexion JDBC Ã  la base
             conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
 
-            // création d'un ordre SQL (statement)
+            // crÃ©ation d'un ordre SQL (statement)
             stmt = conn.createStatement();
 
         }
     }
 
     /**
-     * Méthode qui ajoute la table en parametre dans son ArrayList
+     * MÃ©thode qui ajoute la table en parametre dans son ArrayList
      *
      * @param table
      */
@@ -113,7 +113,7 @@ public class Connexion {
     }
 
     /**
-     * Méthode qui ajoute la requete de selection en parametre dans son
+     * MÃ©thode qui ajoute la requete de selection en parametre dans son
      * ArrayList
      *
      * @param requete
@@ -123,7 +123,7 @@ public class Connexion {
     }
 
     /**
-     * Méthode qui ajoute la requete de MAJ en parametre dans son ArrayList
+     * MÃ©thode qui ajoute la requete de MAJ en parametre dans son ArrayList
      *
      * @param requete
      */
@@ -132,17 +132,17 @@ public class Connexion {
     }
 
     /**
-     * Méthode qui retourne l'ArrayList des champs de la table en parametre
+     * MÃ©thode qui retourne l'ArrayList des champs de la table en parametre
      *
      * @param table
      * @return
      * @throws java.sql.SQLException
      */
     public ArrayList remplirChampsTable(String table) throws SQLException {
-        // récupération de l'ordre de la requete
+        // rÃ©cupÃ©ration de l'ordre de la requete
         rset = stmt.executeQuery("select * from " + table);
 
-        // récupération du résultat de l'ordre
+        // rÃ©cupÃ©ration du rÃ©sultat de l'ordre
         rsetMeta = rset.getMetaData();
 
         // calcul du nombre de colonnes du resultat
@@ -157,7 +157,7 @@ public class Connexion {
             champs = champs + " " + rsetMeta.getColumnLabel(i + 1);
         }
 
-        // ajouter un "\n" à la ligne des champs
+        // ajouter un "\n" Ã  la ligne des champs
         champs = champs + "\n";
 
         // ajouter les champs de la ligne dans l'ArrayList
@@ -175,10 +175,10 @@ public class Connexion {
      * @throws java.sql.SQLException
      */
     public ArrayList remplirChampsRequete(String requete) throws SQLException {
-        // récupération de l'ordre de la requete
+        // rÃ©cupÃ©ration de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
-        // récupération du résultat de l'ordre
+        // rÃ©cupÃ©ration du rÃ©sultat de l'ordre
         rsetMeta = rset.getMetaData();
 
         // calcul du nombre de colonnes du resultat
@@ -198,7 +198,7 @@ public class Connexion {
                 champs = champs + "," + rset.getString(i + 1);
             }
 
-            // ajouter un "\n" à la ligne des champs
+            // ajouter un "\n" Ã  la ligne des champs
             champs = champs + "\n";
 
             // ajouter les champs de la ligne dans l'ArrayList
@@ -210,7 +210,7 @@ public class Connexion {
     }
 
     /**
-     * Méthode qui execute une requete de MAJ en parametre
+     * MÃ©thode qui execute une requete de MAJ en parametre
      *
      * @param requeteMaj
      * @throws java.sql.SQLException
@@ -253,7 +253,7 @@ public class Connexion {
         return numRandom;
     }
     /**
-     * Methode qui permet de rechercher des malades en fonction de son nom et pr�nom
+     * Methode qui permet de rechercher des malades en fonction de son nom et prénom
      * @param nom
      * @param prenom
      * @return l'ArrayList des patients correspondants
@@ -292,14 +292,14 @@ public class Connexion {
                 liste.add(rset.getString("m.mutuelle"));
                 //}
             } else {
-                String info = "Ce malade n'est pas dans nos répertoires.";
+                String info = "Ce malade n'est pas dans nos rÃ©pertoires.";
                 liste.add(info);
             }
         }
         return liste;
     }
 /**
- * Methode qui recherche des docteurs en fonction de leur nom et pr�nom
+ * Methode qui recherche des docteurs en fonction de leur nom et prénom
  * @param nom
  * @param prenom
  * @return l'ArrayList des docteurs correspondants
@@ -326,7 +326,7 @@ public class Connexion {
         return liste;
     }
 /**
- * Methode qui recherche des infirmiers en fonction de leur nom et pr�nom
+ * Methode qui recherche des infirmiers en fonction de leur nom et prénom
  * @param nom
  * @param prenom
  * @return l'ArrayList des docteurs correspondants 
@@ -381,8 +381,8 @@ public class Connexion {
     
     
 /**
- * Methode qui recherche le b�timent de la chambre, le surveillant et le nombre de lits
- * Elle prend en param�tre le num�ro de chambre et son service
+ * Methode qui recherche le bâtiment de la chambre, le surveillant et le nombre de lits
+ * Elle prend en paramètre le numéro de chambre et son service
  * @param numChambre
  * @param nomService
  * @return  l'Arraylist correspondant
@@ -408,7 +408,7 @@ public class Connexion {
         return liste;
     }
 /**
- * Methode qui compte le nombre de docteurs qui a comme sp�cialit� Cardiologue
+ * Methode qui compte le nombre de docteurs qui a comme spécialité Cardiologue
  * @return l'entier correspondant
  * @throws SQLException
  * @throws ClassNotFoundException 
@@ -425,7 +425,7 @@ public class Connexion {
         return a;
     }
     /**
-     * Methode qui compte le nombre de docteurs qui a comme sp�cilit� Traumatologue
+     * Methode qui compte le nombre de docteurs qui a comme spécilité Traumatologue
      * @return l'entier correspondant
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -441,7 +441,7 @@ public class Connexion {
         return a;
     }
          /**
-     * Methode qui compte le nombre de docteurs qui a comme sp�cialit� Pneumologue
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Pneumologue
      * @return l'entier correspondant
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -457,7 +457,7 @@ public class Connexion {
         return a;
     }
      /**
-     * Methode qui compte le nombre de docteurs qui a comme sp�cialit� Orthopediste
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Orthopediste
      * @return l'entier correspondant
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -473,7 +473,7 @@ public class Connexion {
         return a;
     }
      /**
-     * Methode qui compte le nombre de docteurs qui a comme sp�cialit� Radiologuue
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Radiologuue
      * @return l'entier correspondant
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -489,7 +489,7 @@ public class Connexion {
         return a;
     }
       /**
-     * Methode qui compte le nombre de docteurs qui a comme sp�cialit� Aneshesiste
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Aneshesiste
      * @return l'entier correspondant
      * @throws SQLException
      * @throws ClassNotFoundException 
@@ -505,7 +505,7 @@ public class Connexion {
         return a;
     }
     /**
-     * Diff�rentes m�thodes que nous avons faites, mais que nous n'utilisons pas 
+     * Différentes méthodes que nous avons faites, mais que nous n'utilisons pas 
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
@@ -594,12 +594,12 @@ public class Connexion {
     }
 
     /**
-     * Methode qui retourne le num�ro d'une personne dans l'H�pital 
-     * Gr�ce au nom, pr�nom et quelle cat�gorie il fait partie (docteur, patient, infirmier) 
+     * Methode qui retourne le numéro d'une personne dans l'Hôpital 
+     * Grâce au nom, prénom et quelle catégorie il fait partie (docteur, patient, infirmier) 
      * @param nom
      * @param prenom
      * @param table
-     * @return le num�ro d'une personne 
+     * @return le numéro d'une personne 
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
