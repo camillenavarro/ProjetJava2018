@@ -2,7 +2,7 @@ package Modele;
 
 /**
  *
- * @author Rim
+ * @author Camille,Rim,Roman
  */
 import Controleur.*;
 import Vue.*;
