@@ -39,7 +39,9 @@ public class TestHopital implements ActionListener {
     private static NouveauPatient np ;
     private static NewEmploye ne ;
     private static AffichageRecherche aRech ; 
-    
+    private static ModifierPatient mp;
+    private static ModifierEmploye me;
+    private static Hospitalisation hospi = new Hospitalisation();
     /**
      * Constructeur de TestHopital 
      * Il ajoute les ActionListeners
@@ -47,32 +49,32 @@ public class TestHopital implements ActionListener {
      */
     public TestHopital() throws IOException{
        zFen = new ZFenetre();
-       zFen.login() ;
-       zFen.getMenuRetour().addActionListener(this) ;
-       zFen.getMenuMAJ().addActionListener(this) ;
-       zFen.getMenuRecherche().addActionListener(this) ;
-       zFen.getMenuReport().addActionListener(this) ;
-       zFen.getBoutonMAJ().addActionListener(this) ;
-       zFen.getBoutonRecherche().addActionListener(this) ;
-       zFen.getBoutonReport().addActionListener(this) ;
-       zFen.getNouveauP().addActionListener(this) ;
-       zFen.getNouvelE().addActionListener(this) ;
-       zFen.getModifier().addActionListener(this) ;
-       zFen.getSuppP().addActionListener(this) ;
-       zFen.getSuppE().addActionListener(this) ;
-       zFen.getRechMalade().addActionListener(this) ;
-       zFen.getRechInf().addActionListener(this) ;
-       zFen.getRechDoc().addActionListener(this) ;
-       zFen.getRechServ().addActionListener(this) ;
-       zFen.getRechChambre().addActionListener(this) ;
-       zFen.getBoutonRetour().addActionListener(this) ;
-       zFen.getModMalade().addActionListener(this) ;
-       zFen.getModDocteur().addActionListener(this) ;
-       zFen.getModInfirmier().addActionListener(this) ;
-       zFen.getModService().addActionListener(this) ;
-       zFen.getModChambre().addActionListener(this) ;
-       zFen.getNouveauS().addActionListener(this) ;
-       zFen.getSuppS().addActionListener(this) ;
+        zFen.login();
+        zFen.getMenuRetour().addActionListener(this);
+        zFen.getMenuMAJ().addActionListener(this);
+        zFen.getMenuRecherche().addActionListener(this);
+        zFen.getMenuReport().addActionListener(this);
+        zFen.getBoutonMAJ().addActionListener(this);
+        zFen.getBoutonRecherche().addActionListener(this);
+        zFen.getBoutonReport().addActionListener(this);
+        zFen.getNouveauP().addActionListener(this);
+        zFen.getNouvelE().addActionListener(this);
+        zFen.getModifier().addActionListener(this);
+        zFen.getSuppP().addActionListener(this);
+        zFen.getSuppE().addActionListener(this);
+        zFen.getRechMalade().addActionListener(this);
+        zFen.getRechInf().addActionListener(this);
+        zFen.getRechDoc().addActionListener(this);
+        zFen.getRechServ().addActionListener(this);
+        zFen.getRequetes().addActionListener(this);
+        zFen.getRechChambre().addActionListener(this);
+        zFen.getBoutonRetour().addActionListener(this);
+        zFen.getModMalade().addActionListener(this);
+        zFen.getModEmploye().addActionListener(this);
+        zFen.getNouveauS().addActionListener(this);
+        zFen.getSuppS().addActionListener(this);
+        zFen.getNouveauH().addActionListener(this);
+        zFen.getSuppH().addActionListener(this);
     }
     
     /**
@@ -88,7 +90,7 @@ public class TestHopital implements ActionListener {
     }
     
     /**
-     * Methode permettant de lancer la bonne m�thode quand un bouton est appuy�
+     * Methode permettant de lancer la bonne méthode quand un bouton est appuyé
      * @param e 
      */
     public @Override void actionPerformed(ActionEvent e) 
@@ -146,25 +148,31 @@ public class TestHopital implements ActionListener {
         {
             zFen.supSoin();
         }
+        if (e.getSource() == zFen.getNouveauH()) {
+            hospi.ajout(zFen);
+        }
+        if (e.getSource() == zFen.getSuppH()) {
+            hospi.suppression(zFen);
+        }
         if(e.getSource()==zFen.getRechMalade())
         {
             String champs[] = new String[2] ;
             champs[0] = "Nom" ;
-            champs[1] = "Prénom" ;
+            champs[1] = "PrÃ©nom" ;
             aRech = new AffichageRecherche(champs, "Malade", zFen);
         }
         if(e.getSource()==zFen.getRechInf())
         {
           String champs[] = new String[2] ;
             champs[0] = "Nom" ;
-            champs[1] = "Prénom" ;
+            champs[1] = "PrÃ©nom" ;
             aRech = new AffichageRecherche(champs, "Infirmier", zFen);
         }
         if(e.getSource()==zFen.getRechDoc())
         {
             String champs[] = new String[2] ;
             champs[0] = "Nom" ;
-            champs[1] = "Prénom" ;
+            champs[1] = "PrÃ©nom" ;
             aRech = new AffichageRecherche(champs, "Docteur", zFen);
         }
         if(e.getSource()==zFen.getRechServ())
@@ -176,29 +184,18 @@ public class TestHopital implements ActionListener {
         if(e.getSource()==zFen.getRechChambre())
         {
             String champs[] = new String[2] ;
-            champs[0] = "Numéro de chambre" ;
+            champs[0] = "NumÃ©ro de chambre" ;
             champs[1] = "Nom du service" ;
             aRech = new AffichageRecherche(champs, "Chambre", zFen);
         }
-        if(e.getSource()==zFen.getModMalade())
-        {
-            
+        if (e.getSource() == zFen.getRequetes()) {
+            zFen.optionRequetes();
         }
-        if(e.getSource()==zFen.getModInfirmier())
-        {
-            
+        if (e.getSource() == zFen.getModMalade()) {
+            mp = new ModifierPatient(zFen);
         }
-        if(e.getSource()==zFen.getModDocteur())
-        {
-            
-        }
-        if(e.getSource()==zFen.getModService())
-        {
-            
-        }
-        if(e.getSource()==zFen.getModChambre())
-        {
-            
+        if (e.getSource() == zFen.getModEmploye()) {
+            me = new ModifierEmploye(zFen);
         }
         
     }
