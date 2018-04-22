@@ -196,7 +196,6 @@ public class Hopital {
         
 
             try {
-                System.out.println("youpi");
                 String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "','" + donnees.get(5) +"')" ;
                 
                 
@@ -207,7 +206,6 @@ public class Hopital {
             //    maconnexion.executeUpdate(insert2);
                 
              } catch (SQLException ex) {
-                 System.out.println("hoho");
                  System.out.println("SQL problem.");
              }
  
