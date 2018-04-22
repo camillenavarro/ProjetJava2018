@@ -13,7 +13,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 
 public class ZFenetre extends JFrame {
 
@@ -41,23 +40,23 @@ public class ZFenetre extends JFrame {
     private JButton suppP = new JButton("Supprimer un patient");
     private JButton suppE = new JButton("Supprimer un employé");
     private JButton suppS = new JButton("Supprimer un soin");
-    private JPanel pan2 = new JPanel();
+  
 
     private JButton rechMalade = new JButton("Rechercher un patient");
     private JButton rechInf = new JButton("Rechercher un infirmier");
     private JButton rechDoc = new JButton("Rechercher un docteur");
     private JButton rechServ = new JButton("Rechercher un service");
     private JButton rechChambre = new JButton("Rechercher une chambre");
-    private JPanel pan3 = new JPanel();
+   
 
     private JButton modMalade = new JButton("Modifier un patient");
     private JButton modInfirmier = new JButton("Modifier un infirmier");
     private JButton modDocteur = new JButton("Modifier un docteur");
     private JButton modService = new JButton("Modifier un service");
     private JButton modChambre = new JButton("Modifier une chambre");
-    private JPanel pan4 = new JPanel();
+   
 
-    private JPanel pan5 = new JPanel();
+   
 
     private JFrame f = new JFrame();
     private JLabel image = new JLabel(Fond);
@@ -82,7 +81,7 @@ public class ZFenetre extends JFrame {
         }
     }
 
-    public ZFenetre() throws IOException {
+    public ZFenetre() {
         this.setSize(866, 648);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -131,7 +130,8 @@ public class ZFenetre extends JFrame {
         line2.add(suppE);
         line2.add(suppS);
         line3.add(boutonRetour);
-
+        
+        JPanel pan2 = new JPanel() ;
         pan2.setLayout(new BoxLayout(pan2, BoxLayout.PAGE_AXIS));
         pan2.add(line1);
         pan2.add(line2);
@@ -141,7 +141,8 @@ public class ZFenetre extends JFrame {
     }
 
     public void optionsRecherche() {
-        pan3.removeAll();
+        
+        JPanel pan3 = new JPanel();
         pan3.add(rechMalade);
         pan3.add(rechInf);
         pan3.add(rechDoc);
@@ -154,9 +155,9 @@ public class ZFenetre extends JFrame {
 
     public void saisieRecherche(String[] champs, String module) {
         //   this.setVisible(false) ;
+        JPanel pan3 = new JPanel();
         ArrayList<JTextField> textField = new ArrayList();
         saisie.removeAll();
-        pan3.removeAll();
 
         for (int i = 0; i < champs.length; i++) {
             JTextField jtf = new JTextField("");
@@ -175,9 +176,6 @@ public class ZFenetre extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-
-                //DefaultTableModel model = (DefaultTableModel) table.getModel();
-                //model.setRowCount(0);
                 if (module.equals("Malade")) {
                     liste = hop.malade(textField.get(0).getText(), textField.get(1).getText());
                     tableRechercheM(liste);
@@ -202,7 +200,7 @@ public class ZFenetre extends JFrame {
         });
     }
 
-    public void tableRechercheM(ArrayList liste) {
+     public void tableRechercheM(ArrayList liste) {
 
         if (liste.size() == 1) {
             JOptionPane.showMessageDialog(null, liste.get(0),"Error",JOptionPane.ERROR_MESSAGE);
@@ -342,10 +340,8 @@ public class ZFenetre extends JFrame {
         liste.clear();
     }
 
-
-
     public void modifier() {
-        pan4.removeAll();
+        JPanel pan4 = new JPanel() ;
         pan4.add(modMalade);
         pan4.add(modInfirmier);
         pan4.add(modDocteur);
@@ -354,6 +350,38 @@ public class ZFenetre extends JFrame {
         pan4.add(boutonRetour);
         this.setContentPane(pan4);
         this.setVisible(true);
+    }
+    
+    public void supprimer(String table)
+    {
+        JPanel pan = new JPanel() ;
+        saisie.removeAll();
+        
+        JTextField nom = new JTextField("");
+        nom.setPreferredSize(new Dimension(200, 30));
+        nom.setForeground(Color.black);
+        saisie.add(new JLabel("Nom"));
+        saisie.add(nom);
+        
+        JTextField prenom = new JTextField("");
+        prenom.setPreferredSize(new Dimension(200, 30));
+        prenom.setForeground(Color.black);
+        saisie.add(new JLabel("Prénom"));
+        saisie.add(prenom);
+        
+        pan.add(saisie) ;
+        pan.add(submit) ;
+        pan.add(boutonRetour) ;
+        this.setContentPane(pan);
+        this.setVisible(true);
+        
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                hop.suppression(nom.getText(), prenom.getText(), table) ;
+                accueil();
+            }
+        });
     }
 
     public JMenuItem getMenuRetour() {
