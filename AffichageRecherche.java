@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Vue;
+
 import Controleur.*;
 import Modele.*;
 import java.awt.Color;
@@ -21,22 +22,30 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * Class permettant d'afficher les recherches effectuées 
  *
  * @author camille
  */
 public class AffichageRecherche {
-    
+
     private JPanel pan = new JPanel();
     private ArrayList<JTextField> textField = new ArrayList();
     private JPanel saisie = new JPanel();
-    private JButton submit = new JButton("Valider") ;
+    private JButton submit = new JButton("Valider");
     private ArrayList<String> liste = new ArrayList<>();
-    private Hopital hop = new Hopital() ;
+    private Hopital hop = new Hopital();
     private JTable table;
-    
+
+    /**
+     * Constructeur de la class AfficheRecherche
+     *
+     * @param champs
+     * @param module
+     * @param zFen
+     */
     public AffichageRecherche(String[] champs, String module, ZFenetre zFen) {
         //   this.setVisible(false) ;
-        
+
         saisie.removeAll();
 
         for (int i = 0; i < champs.length; i++) {
@@ -80,10 +89,16 @@ public class AffichageRecherche {
         });
     }
 
-     public void tableRechercheM(ArrayList liste, ZFenetre zFen) {
+    /**
+     * Affiche sous forme d'un tableau les informations des malades recherchés
+     *
+     * @param liste
+     * @param zFen
+     */
+    public void tableRechercheM(ArrayList liste, ZFenetre zFen) {
 
         if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0),"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, liste.get(0), "Error", JOptionPane.ERROR_MESSAGE);
         } else if (liste.size() == 6) {
             zFen.setLayout(new FlowLayout());
             String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle"};
@@ -98,8 +113,8 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
-            
+            zFen.setVisible(true);
+
         } else {
 
             zFen.setLayout(new FlowLayout());
@@ -107,7 +122,7 @@ public class AffichageRecherche {
             while (liste.size() < 11) {
                 liste.add("NA");
             }
-            JOptionPane.showMessageDialog(null,"Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisÃ©. Veuillez consulter ses informations.");
+            JOptionPane.showMessageDialog(null, "Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisÃ©. Veuillez consulter ses informations.");
             String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle", "Num. de la chambre d'hospitalisation", "Num. du lit", "Surveillant de la chambre", "Service", "Batiment"};
 
             Object[][] data = {
@@ -120,12 +135,19 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
+            zFen.setVisible(true);
         }
 
         liste.clear();
     }
 
+    /**
+     * Affiche sous forme d'un tableau les informations des infirmiers
+     * recherchés
+     *
+     * @param liste
+     * @param zFen
+     */
     public void tableRechercheI(ArrayList liste, ZFenetre zFen) {
 
         if (liste.size() == 1) {
@@ -145,11 +167,17 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
+            zFen.setVisible(true);
         }
         liste.clear();
     }
 
+    /**
+     * Affiche sous forme d'un tableau les informations des doteurs recherchés
+     *
+     * @param liste
+     * @param zFen
+     */
     public void tableRechercheD(ArrayList liste, ZFenetre zFen) {
 
         if (liste.size() == 1) {
@@ -168,11 +196,17 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
+            zFen.setVisible(true);
         }
         liste.clear();
     }
 
+    /**
+     * Affiche sous forme d'un tableau les informations des services recherchés
+     *
+     * @param liste
+     * @param zFen
+     */
     public void tableRechercheS(ArrayList liste, ZFenetre zFen) {
 
         if (liste.size() == 1) {
@@ -192,11 +226,17 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
+            zFen.setVisible(true);
         }
         liste.clear();
     }
 
+    /**
+     * Affiche sous forme d'un tableau les informations des chambres recherchées
+     *
+     * @param liste
+     * @param zFen
+     */
     public void tableRechercheC(ArrayList liste, ZFenetre zFen) {
 
         if (liste.size() == 1) {
@@ -215,10 +255,9 @@ public class AffichageRecherche {
 
             JScrollPane scrollPane = new JScrollPane(table);
             zFen.add(scrollPane);
-            zFen.setVisible(true) ;
+            zFen.setVisible(true);
         }
         liste.clear();
     }
 
-   
 }
