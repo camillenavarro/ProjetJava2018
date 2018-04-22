@@ -190,5 +190,35 @@ public class Hopital {
  
          
     }
+    
+    public void nouvelEmploye(ArrayList<String> donnees)
+    {
+        
+
+            try {
+               
+                int num = maconnexion.IDgenerator("employe");
+                String insert = "INSERT INTO employe (numero, nom, prenom, tel, adresse) VALUES ('" + num + "','"+ donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "')" ;
+                String insert2 ;
+                
+                if((donnees.get(4)).equals("doc"))
+                
+                    insert2 = "INSERT INTO docteur (numero, specialite) VALUES ('" + num + "','" + donnees.get(5) + "')" ;
+                
+                else
+                
+                    insert2 = "INSERT INTO infirmier (numero, code_service, rotation, salaire) VALUES ('" + num + "','" + donnees.get(5) + "','" + donnees.get(6) + "','" + donnees.get(7) +"')" ;
+                
+                
+                maconnexion.executeUpdate(insert);
+                maconnexion.executeUpdate(insert2);
+                
+             } catch (SQLException ex) {
+                 
+                 System.out.println("SQL problem.");
+             }
+ 
+         
+    }
 
 }
