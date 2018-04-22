@@ -15,7 +15,7 @@ import java.util.*;
 
 
 /**
- *Cette class permet la cr�ation d'un nouveau Patient  
+ *Cette class permet la création d'un nouveau Patient  
  * @author roman
  */
 
@@ -25,8 +25,8 @@ public class NouveauPatient  {
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu Fichier = new JMenu("Fichier");
     
-    private final JMenuItem menuRetour = new JMenuItem("Retour � l'accueil");
-    private final JMenuItem menuMAJ = new JMenuItem("Mise � jour");
+    private final JMenuItem menuRetour = new JMenuItem("Retour à  l'accueil");
+    private final JMenuItem menuMAJ = new JMenuItem("Mise à  jour");
     private final JMenuItem menuRecherche = new JMenuItem("Recherche");
     private final JMenuItem Close = new JMenuItem("Fermer");
 
@@ -49,13 +49,13 @@ public class NouveauPatient  {
       private ArrayList<String> donnees = new ArrayList();
      
       
-      private JButton retour = new JButton("Retour à l'accueil");
+      private JButton retour = new JButton("Retour Ã  l'accueil");
       private Hopital hop = new Hopital() ;
     
 
      /**
       * Constructeur de la class
-      * Elle cr�e le formulaire pour ajouter un nouveau Patient 
+      * Elle crée le formulaire pour ajouter un nouveau Patient 
       * @param zFen 
       */
   public NouveauPatient(ZFenetre zFen){
@@ -120,9 +120,9 @@ public class NouveauPatient  {
     
     save.addActionListener(new ActionListener() {
         /**
-        * Cette m�thode s'occupe de ce qui se passe quand on appuie sur le bouton "Eregistrer"
-        * Elle v�rifie si le formulaire n'est pas vide
-        * Et appelle la fonction nouvelle patient dans H�pital si le formulaire est plein sinon elle affiche un message d'erreur
+        * Cette méthode s'occupe de ce qui se passe quand on appuie sur le bouton "Enregistrer"
+        * Elle vérifie si le formulaire n'est pas vide et s'il est valide
+        * Et appelle la fonction nouvelle patient dans Hôpital si le formulaire est plein sinon elle affiche un message d'erreur
          * @param e 
          */
         public @Override void actionPerformed(ActionEvent e) {
@@ -130,15 +130,33 @@ public class NouveauPatient  {
 //            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
 //                donnees.add(numero.getText());
             if(!(nom.getText()).equals(""))
-               donnees.add(nom.getText());
-            if(!(prenom.getText()).equals(""))
-                donnees.add(prenom.getText());
-            if(!(tel.getText()).equals(""))
-                donnees.add(tel.getText());
-            if(!(adresse.getText()).equals(""))
-                donnees.add(adresse.getText());
-            if(!(mutuel.getText()).equals(""))
-                donnees.add(mutuel.getText());
+            {
+                donnees.add(nom.getText());
+                if(!(prenom.getText()).equals(""))
+                {
+                    donnees.add(prenom.getText());
+                    if(!(tel.getText()).equals(""))
+                    {
+                        donnees.add(tel.getText());
+                        if(!(adresse.getText()).equals(""))
+                        {
+                            donnees.add(adresse.getText());
+                            if(!(mutuel.getText()).equals(""))
+                                donnees.add(mutuel.getText());
+                            else
+                                zFen.messageErreur("mutuelle");
+                        }
+                        else
+                            zFen.messageErreur("adresse") ;
+                    }
+                    else
+                        zFen.messageErreur("téléphone");
+                }
+                else
+                    zFen.messageErreur("prénom") ;
+            }
+            else
+                zFen.messageErreur("nom");
 //            if(!(service.getText()).equals(""))
 //                donnees.add(service.getText());
 //            if(!(chambre.getText()).equals(""))
@@ -162,7 +180,7 @@ public class NouveauPatient  {
     
     retour.addActionListener(new ActionListener() {
         /**
-         * Cette m�thode s'occupe de ce qui se passe quand on appuie sur "Retour � l'accueil"
+         * Cette méthode s'occupe de ce qui se passe quand on appuie sur "Retour à  l'accueil"
          * Elle appelle la fonction accueil de ZFenetre
          * @param e 
          */
