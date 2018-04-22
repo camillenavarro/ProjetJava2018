@@ -166,5 +166,29 @@ public class Hopital {
         
         return liste;
     }
+    
+    public void nouveauPatient(ArrayList<String> donnees)
+    {
+        
+
+            try {
+               
+                int num = maconnexion.IDgenerator("malade");
+                String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + num + "','"+ donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "')" ;
+                
+                
+                
+    //            String insert2 = "INSERT INTO hospitalisation  VALUES ('" + donnees.get(0) + "','" + donnees.get(6) + "','" + donnees.get(7) + "','"  ;
+                
+                maconnexion.executeUpdate(insert);
+            //    maconnexion.executeUpdate(insert2);
+                
+             } catch (SQLException ex) {
+                 
+                 System.out.println("SQL problem.");
+             }
+ 
+         
+    }
 
 }
