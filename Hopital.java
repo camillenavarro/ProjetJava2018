@@ -220,5 +220,19 @@ public class Hopital {
  
          
     }
+    
+    public void suppression(String nom, String prenom, String table) 
+    {
+       
+
+            try {
+                String query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+                maconnexion.executeUpdate(query);
+                
+            } catch (SQLException ex) {
+                System.out.println("SQL problem.");
+            }
+
+    }
 
 }
