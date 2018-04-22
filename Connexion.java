@@ -512,4 +512,16 @@ public class Connexion {
        
         return a;
     }
+    
+    public String getNumero(String nom, String prenom, String table) throws SQLException, ClassNotFoundException
+       {
+           
+            String query = "SELECT numero FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+            rset = stmt.executeQuery(query) ;
+           
+            if(rset.next())
+                return rset.getString("numero") ;
+            else
+                return "0" ;
+       }
 }
