@@ -30,10 +30,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
+ * Cette class permert de modifier un Patient
  *
- * @author camille
+ * @author Camille,Rim,Roman
  */
 public class ModifierPatient {
+
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu Fichier = new JMenu("Fichier");
 
@@ -63,11 +65,12 @@ public class ModifierPatient {
     private JButton retour = new JButton("Retour Ã  l'accueil");
     private Hopital hop = new Hopital();
 
-    /* public static void main(String[] args) throws IOException{
-       
-   NouveauPatient a = new NouveauPatient();
-   
-   }*/
+    /**
+     * Constructeur de ModifierPatient Affiche le formuaire pour modifier un
+     * Patient
+     *
+     * @param zFen
+     */
     public ModifierPatient(ZFenetre zFen) {
 
         Font police = new Font("Arial", Font.BOLD, 14);
@@ -115,38 +118,49 @@ public class ModifierPatient {
 
         save.addActionListener(new ActionListener() {
             public @Override
+            /**
+             * Methode qui vérifie si le formualire est validé 
+             * Ajoute les modifications dans la base de données 
+             */
             void actionPerformed(ActionEvent e) {
                 donnees.clear();
-                if (!(nom.getText()).equals("") && nom.getText().matches("[a-zA-Z]+")) 
+                if (!(nom.getText()).equals("") && nom.getText().matches("[a-zA-Z]+")) {
                     donnees.add(nom.getText());
-                else 
+                } else {
                     zFen.messageErreur("nom");
-                if (!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+")) 
+                }
+                if (!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+")) {
                     donnees.add(prenom.getText());
-                else 
+                } else {
                     zFen.messageErreur("prÃ©nom");
+                }
                 donnees.add(tel.getText());
                 donnees.add(adresse.getText());
-                donnees.add(mutuel.getText());                   
-                
+                donnees.add(mutuel.getText());
+
                 try {
-                    if(donnees.size() == 5)
-                    {
-                        if(hop.updateMalade(donnees))
+                    if (donnees.size() == 5) {
+                        if (hop.updateMalade(donnees)) {
                             zFen.accueil();
-                        else
+                        } else {
                             JOptionPane.showMessageDialog(null, "Ce malade n'est pas dans nos rÃ©pertoires");
+                        }
                     }
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(ModifierPatient.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    
+
             }
         }
         );
 
         retour.addActionListener(new ActionListener() {
+            /**
+             * Après l'appui du bouton "Retour Ã  l'accueil"
+             * Lance l'accueil
+             * @param e 
+             */
             public @Override
             void actionPerformed(ActionEvent e) {
                 zFen.accueil();
