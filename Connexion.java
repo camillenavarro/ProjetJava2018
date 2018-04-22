@@ -451,4 +451,65 @@ public class Connexion {
 
     }
 
+    public int NbdeCardio() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
+        rset = stmt.executeQuery(query);
+        
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+     public int NbdeTrauma() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+     public int NbdePneu() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
+        rset = stmt.executeQuery(query);
+       rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeOrth() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeRad() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
+      public int NbdeAn() throws SQLException, ClassNotFoundException{
+        
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
+        rset = stmt.executeQuery(query);
+       rset.next();
+        int a;
+        a = rset.getInt(1);
+       
+        return a;
+    }
 }
