@@ -57,6 +57,8 @@ public class ZFenetre extends JFrame {
     private JButton rechChambre = new JButton("Rechercher une chambre");
     private JButton requetes = new JButton("Voir les requêtes");
     
+    private JComboBox numRequetes = new JComboBox() ;
+    
     private JButton modMalade = new JButton("Modifier un patient");
     private JButton modEmploye = new JButton("Modifier une chambre");
 
@@ -237,6 +239,38 @@ public class ZFenetre extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Méthode qui affiche les choix de requêtes
+     */
+    public void optionRequetes()
+    {
+        numRequetes = new JComboBox() ;
+            
+            for(int i = 0 ; i < 11 ; i++)
+                numRequetes.addItem("R" + i);
+            
+        JPanel pan = new JPanel() ;
+        pan.add(numRequetes) ;
+        pan.add(submit) ;
+        this.setContentPane(pan) ;
+        this.setVisible(true) ;
+          
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try {
+                    hop.maconnexion.RechercheRandom(numRequetes.getSelectedItem().toString());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                    
+        });
+        
+    }
     /**
      * Méthode qui crée la fenetre modifier
      */
