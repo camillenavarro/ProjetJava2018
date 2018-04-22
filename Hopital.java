@@ -52,18 +52,16 @@ public class Hopital {
         //}
     }
 
-    public void MAJajout(String ArrayList) throws SQLException {
+    public void AjoutMalade(String ArrayList) throws SQLException {
         
         //ajout malade
-        String insert = "INSERT INTO malade (numero,nom,prenom,adresse,tel,mutuelle) VALUES + liste(0)";
-        maconnexion.executeUpdate(insert);
-        
-        //ajout employe
-        String insert2 = "INSERT INTO employe (deptno,dname,loc) VALUES (50,'ECE','Paris')";
-        maconnexion.executeUpdate(insert2);
-   
+        int num = maconnexion.IDgenerator("malade");
+        String insert = "INSERT INTO malade (numero,nom,prenom,adresse,tel,mutuelle) VALUES (" + num + "," + liste.get(0) + "," + liste.get(1) + "," + liste.get(2) + "," + liste.get(3) + "," + liste.get(4) + ")";
+        //System.out.println(num);
+        maconnexion.executeUpdate(insert);         
     }
 
+    
     public void MAJupdate() throws SQLException {
         String update = "UPDATE Dept SET" + "WHERE loc='Paris'";
         maconnexion.executeUpdate(update);
@@ -167,49 +165,6 @@ public class Hopital {
         }
         
         return liste;
-    }
-    
-    public Boolean numeroValideMalade(String numero)
-    {
-        try {
-
-            try {
-                
-                Boolean numeroExistant = maconnexion.RechercheNumero(numero);
-                return !numeroExistant ;
-                
-             } catch (SQLException ex) {
-                 System.out.println("SQL problem.");
-                 return false ;
-             }
- 
-         } catch (ClassNotFoundException e) {
-             System.out.println("Class problem.");
-             return false ;
-         }
-        
-        
-    }
-    
-    public void nouveauPatient(ArrayList<String> donnees)
-    {
-        
-
-            try {
-                String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "','" + donnees.get(5) +"')" ;
-                
-                
-                
-    //            String insert2 = "INSERT INTO hospitalisation  VALUES ('" + donnees.get(0) + "','" + donnees.get(6) + "','" + donnees.get(7) + "','"  ;
-                
-                maconnexion.executeUpdate(insert);
-            //    maconnexion.executeUpdate(insert2);
-                
-             } catch (SQLException ex) {
-                 System.out.println("SQL problem.");
-             }
- 
-         
     }
 
 }

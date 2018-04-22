@@ -6,6 +6,8 @@ package Modele;
  */
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -213,6 +215,40 @@ public class Connexion {
         stmt.executeUpdate(requeteMaj);
     }
 
+    public int IDgenerator(String table) throws SQLException {
+
+        Random rand = new Random();
+        int numRandom;
+        boolean uniqueIntWasFound = true;
+        
+        List<Integer> listeID = new ArrayList<>();
+        
+        String query = "SELECT numero from " + table + " WHERE 1";
+        rset = stmt.executeQuery(query);
+
+        while (rset.next()) {
+            int numInterdit = Integer.parseInt(rset.getString("numero"));
+            listeID.add(numInterdit);
+        }
+        while (true) {
+            uniqueIntWasFound = true;
+            numRandom = rand.nextInt(300) + 1;
+            
+            for (int el : listeID) 
+            {
+                if (el == numRandom) 
+                {
+                    uniqueIntWasFound = false;
+                }
+            }
+            if (uniqueIntWasFound) {
+                break;
+            }
+        }
+        
+        return numRandom;
+    }
+
     public ArrayList RechercheMalade(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT m.numero, m.nom, m.prenom, m.adresse, m.tel, m.mutuelle, h.no_chambre, h.lit, h.code_service, s.nom, s.batiment, e.nom FROM malade m, hospitalisation h, chambre c, service s, employe e WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "' AND m.numero = h.no_malade AND h.no_chambre = c.no_chambre AND h.code_service = c.code_service AND c.code_service = s.code AND c.surveillant = e.numero";
@@ -232,20 +268,20 @@ public class Connexion {
             liste.add(rset.getString("s.batiment"));
 
         } else {
-            if (rset.next()) {
-                String query1 = "SELECT m.nom, m.prenom, m.numero, m.adresse, m.tel, m.mutuelle FROM malade m WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "'";
-                rset = stmt.executeQuery(query1);
+            String query1 = "SELECT m.nom, m.prenom, m.numero, m.adresse, m.tel, m.mutuelle FROM malade m WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "'";
+            rset = stmt.executeQuery(query1);
 
-                while (rset.next()) {
-                    liste.add(rset.getString("m.prenom"));
-                    liste.add(rset.getString("m.nom"));
-                    liste.add(rset.getString("m.numero"));
-                    liste.add(rset.getString("m.adresse"));
-                    liste.add(rset.getString("m.tel"));
-                    liste.add(rset.getString("m.mutuelle"));
-                }
+            if (rset.next()) {
+//while (rset.next()) {
+                liste.add(rset.getString("m.prenom"));
+                liste.add(rset.getString("m.nom"));
+                liste.add(rset.getString("m.numero"));
+                liste.add(rset.getString("m.adresse"));
+                liste.add(rset.getString("m.tel"));
+                liste.add(rset.getString("m.mutuelle"));
+                //}
             } else {
-                String info = "Ce malade n'est pas dans nos repertoires.";
+                String info = "Ce malade n'est pas dans nos répertoires.";
                 liste.add(info);
             }
         }
@@ -413,83 +449,6 @@ public class Connexion {
             System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
         }
 
-    }
-    
-    //Methode pour savoir si un numéro existe déjà dans la table ou pas 
-    public Boolean RechercheNumero(String numero) throws SQLException, ClassNotFoundException {
-        ArrayList<String> recherche = new ArrayList() ;
-        
-        String query = "SELECT numero FROM malade ";
-        rset = stmt.executeQuery(query);
-
-        while (rset.next()) {
-            
-            recherche.add(rset.getString("numero"));
-            
-        }
-        return recherche.contains(numero) ;
-    }
-    
-    public int NbdeCardio() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
-        rset = stmt.executeQuery(query);
-        
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     public int NbdeTrauma() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     public int NbdePneu() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeOrth() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeRad() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeAn() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
     }
 
 }
