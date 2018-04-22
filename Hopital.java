@@ -221,13 +221,29 @@ public class Hopital {
          
     }
     
-    public void suppression(String nom, String prenom, String table) 
+    public void suppression(String nom, String prenom, String table) throws SQLException, ClassNotFoundException
     {
        
 
             try {
+                String query2, query3;
                 String query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+                
+                String numero = maconnexion.getNumero(nom, prenom, table) ;
+                System.out.println("Le numero est " + numero);
                 maconnexion.executeUpdate(query);
+                
+                if(table.equals("employe"))
+                {
+                    query2 = "DELETE FROM docteur WHERE numero = '" + numero + "'";
+                    query3 = "DELETE FROM infirmier WHERE numero = '" + numero + "'";
+                    maconnexion.executeUpdate(query2);
+                    maconnexion.executeUpdate(query3);
+                }
+                
+                
+                
+                
                 
             } catch (SQLException ex) {
                 System.out.println("SQL problem.");
