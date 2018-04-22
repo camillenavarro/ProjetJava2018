@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import java.util.*;
 
 /**
- * Classe permettant de gÈnÈrer un nouvel EmployÈ
+ * Classe permettant de g√©n√©rer un nouvel Employ√©
  * @author roman
  */
 public class NewEmploye {
@@ -39,7 +39,7 @@ public class NewEmploye {
       private ButtonGroup bg = new ButtonGroup();
       
       private JComboBox spe = new JComboBox();
-      private JLabel Spe = new JLabel("Sp√©cialisation");
+      private JLabel Spe = new JLabel("Sp√É¬©cialisation");
       
       private JComboBox service = new JComboBox();
       private JLabel Service = new JLabel("Service");
@@ -54,12 +54,12 @@ public class NewEmploye {
       private ArrayList<String> donnees = new ArrayList();
      
       
-      private JButton retour = new JButton("Retour ‡† l'accueil");
+      private JButton retour = new JButton("Retour √†¬† l'accueil");
       private Hopital hop = new Hopital() ;
       
       /**
        * Constructeur de la classe 
-       * Elle crÈe le formulaire pour ajouter un nouvel employÈ 
+       * Elle cr√©e le formulaire pour ajouter un nouvel employ√© 
        * @param zFen 
        */
       public NewEmploye(ZFenetre zFen)
@@ -69,7 +69,7 @@ public class NewEmploye {
   //  container.setBackground(Color.white);
    Font police = new Font("Arial", Font.BOLD, 14);
     container.setLayout(new BoxLayout(container,BoxLayout.Y_AXIS));
-   container.add(new JLabel ("Nouvel Employ√©"));  
+   container.add(new JLabel ("Nouvel Employ√É¬©"));  
    
     container.add(new JLabel ("Nom : ")); 
     nom.setFont(police);
@@ -150,37 +150,38 @@ public class NewEmploye {
     
     save.addActionListener(new ActionListener() {
         /**
-         * Cette mÈthode vÈrifie si le formulaire est vide aprËs avoir appuyÈ sur le bouton "Enregistrer"
-         * S'il n'est pas vide, on appelle la fonction nouvel employÈ d'HÙpital
+         * Cette m√©thode v√©rifie si le formulaire est vide apr√®s avoir appuy√© sur le bouton "Enregistrer"
+         * S'il n'est pas vide, on appelle la fonction nouvel employ√© d'H√¥pital
          * Sinon on affiche un message d'erreur 
          * @param e 
          */
         public @Override void actionPerformed(ActionEvent e) {
             donnees.clear();
-            if(!(nom.getText()).equals(""))
-               donnees.add(nom.getText());
-            if(!(prenom.getText()).equals(""))
+            if(!(nom.getText()).equals("") && nom.getText().matches("[a-zA-Z]+"))
+                donnees.add(nom.getText());
+            else
+                zFen.messageErreur("nom");
+            if(!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+"))
                 donnees.add(prenom.getText());
+            else
+                zFen.messageErreur("pr√©nom");
             if(!(tel.getText()).equals(""))
                 donnees.add(tel.getText());
+            else
+                zFen.messageErreur("t√©l√©phone");
             if(!(adresse.getText()).equals(""))
                 donnees.add(adresse.getText());
+            else
+                zFen.messageErreur("adresse");
             
-    
             if(doc.isSelected() == true)
             {
                 donnees.add("doc");
                 donnees.add(spe.getSelectedItem().toString());
                 if (donnees.size() == 6)
                 {
-                    System.out.println("Formulaire valide");
                     hop.nouvelEmploye(donnees);
                     zFen.accueil();
-                }
-                else
-                {
-                    //JTextArea erreur = new JTextArea("Formulaire non valide !") ;
-                    System.out.println("Formulaire non valide");
                 }
                 
             }
@@ -192,22 +193,17 @@ public class NewEmploye {
                     donnees.add(rot.getSelectedItem().toString());
                     if(!(salaire.getText()).equals(""))
                         donnees.add(salaire.getText());
+                    else
+                        zFen.messageErreur("salaire");
                     if (donnees.size() == 8)
                     {
-                        System.out.println("Formulaire valide");
                         hop.nouvelEmploye(donnees);
                         zFen.accueil();
-                    }
-                    else
-                    {
-                        //JTextArea erreur = new JTextArea("Formulaire non valide !") ;
-                        System.out.println("Formulaire non valide");
                     }
                 }
                 else
                 {
-                    //JTextArea erreur = new JTextArea("Formulaire non valide !") ;
-                    System.out.println("Formulaire non valide");
+                    zFen.messageErreur("profession");
                 }
             }
             
@@ -217,7 +213,7 @@ public class NewEmploye {
     
     retour.addActionListener(new ActionListener() {
         /**
-         * Lance l'accueil aprËs avoir appuyÈ sur le bouton "Retour ‡† l'accueil"
+         * Lance l'accueil apr√®s avoir appuy√© sur le bouton "Retour √†¬† l'accueil"
          * @param e 
          */
         public @Override void actionPerformed(ActionEvent e) {
@@ -226,9 +222,9 @@ public class NewEmploye {
     });
  }
         /**
-         * Cette mÈthode permet de savoir ce quíil se passe quand on choisit Docteur ou Infirmier 
+         * Cette m√©thode permet de savoir ce qu‚Äôil se passe quand on choisit Docteur ou Infirmier 
          * Si on choisit un docteur, on ne peut pas rentrer le salaire ou la rotation
-         * Si on choisit un infirmier, on ne peut pas choisir la spÈcialisation 
+         * Si on choisit un infirmier, on ne peut pas choisir la sp√©cialisation 
         */
     private class StateListener implements ActionListener {
 
@@ -239,14 +235,14 @@ public class NewEmploye {
                 rot.setEnabled(false); /// un docteur ne peut pas avoir de rotation
                 salaire.setEnabled(false); /// on ne choisit pas le salaire d'un docteur 
                 service.setEnabled(false) ; /// on ne choisit pas le service d'un docteur
-                spe.setEnabled(true);  /// on peut choisir la sp√© d'un docteur 
+                spe.setEnabled(true);  /// on peut choisir la sp√É¬© d'un docteur 
             }
             if(ae.getSource() == inf)
             {
                 rot.setEnabled(true); /// un infirmier a une rotation
                 salaire.setEnabled(true); /// on choisit le salaire d'un infirmier
                 service.setEnabled(true) ; ///on choisit le service d'un infirmier
-                spe.setEnabled(false);  /// les infirmiers n'ont pas de sp√©
+                spe.setEnabled(false);  /// les infirmiers n'ont pas de sp√É¬©
             }
             
         }
