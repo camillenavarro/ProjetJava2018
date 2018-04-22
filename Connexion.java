@@ -505,94 +505,95 @@ public class Connexion {
         return a;
     }
     /**
-     * Différentes méthodes que nous avons faites, mais que nous n'utilisons pas 
+     * Méthode qui affiche la requête choisie
+     * @param num
      * @throws SQLException
      * @throws ClassNotFoundException 
      */
-    public void RechercheRandom() throws SQLException, ClassNotFoundException {
+    public void RechercheRandom(String num) throws SQLException, ClassNotFoundException {
 
-        //R0
-        rset = stmt.executeQuery("SELECT * FROM chambre");
-        //rsetMeta = rset.getMetaData();
+        switch (num) {
+            case "R0":
+                rset = stmt.executeQuery("SELECT * FROM chambre");
+                //rsetMeta = rset.getMetaData();
 
-        while (rset.next()) {
-            System.out.println(rset.getString("code_service"));
+                while (rset.next()) {
+                    System.out.println(rset.getString("code_service"));
 
+                }
+
+            case "R1":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT nom, prenom FROM malade WHERE mutuelle = 'MAAF'");
+                while (rset.next()) {
+                    System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));
+                }
+
+            case "R2":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM infirmier i, employe e WHERE i.numero = e.numero AND i.rotation = 'NUIT'");
+                while (rset.next()) {
+                    System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));
+                }
+
+            case "R3":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT s.nom, s.batiment, d.specialite, e.nom, e.prenom FROM service s, docteur d, employe e WHERE s.directeur = d.numero AND d.numero = e.numero");
+                while (rset.next()) {
+                    System.out.println(rset.getString("s.nom") + " " + rset.getString("s.batiment") + " " + rset.getString("d.specialite") + " " + rset.getString("e.prenom") + " " + rset.getString("e.nom"));
+                }
+
+            case "R4":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT c.no_chambre, h.lit, s.nom, m.nom, m.prenom, m.mutuelle FROM chambre c, malade m, hospitalisation h, service s WHERE c.no_chambre = h.no_chambre AND c.code_service = s.code AND m.numero = h.no_malade AND m.mutuelle LIKE 'MN%' AND s.batiment = 'B'");
+                while (rset.next()) {
+                    System.out.println(rset.getString("c.no_chambre") + " " + rset.getString("h.lit") + " " + rset.getString("s.nom") + " " + rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("m.mutuelle"));
+                }
+
+            case "R5":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT AVG(i.salaire), i.code_service FROM infirmier i GROUP BY i.code_service");
+                while (rset.next()) {
+                    System.out.println(rset.getString("i.code_service") + " " + rset.getString("AVG(i.salaire)"));
+                }
+
+            case "R6":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT c.code_service, AVG(c.nb_lits) FROM chambre c, service s WHERE s.code = c.code_service AND s.batiment = 'A' GROUP BY c.code_service");
+                while (rset.next()) {
+                    System.out.println(rset.getString("c.code_service") + " " + rset.getString("AVG(c.nb_lits)"));
+                }
+
+            case "R7":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT m.nom, m.prenom, COUNT(s.no_docteur), COUNT(DISTINCT d.specialite) FROM soigne s, malade m, docteur d WHERE s.no_malade = m.numero AND s.no_docteur = d.numero GROUP BY s.no_malade HAVING COUNT(s.no_docteur) > 3 ORDER BY nom");
+                while (rset.next()) {
+                    System.out.println(rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("COUNT(s.no_docteur)") + " " + rset.getString("COUNT(DISTINCT d.specialite)"));
+                }
+
+            case "R8":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT s.nom, COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade) FROM service s, infirmier i, hospitalisation h WHERE s.code = i.code_service AND h.code_service = s.code GROUP BY s.code");
+                while (rset.next()) {
+                    System.out.println(rset.getString("s.nom") + " " + rset.getString("COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade)"));
+                }
+
+            case "R9":
+                System.out.println("-------------------");
+                rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) > '1' ORDER BY nom");
+                while (rset.next()) {
+                    System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
+                }
+
+            case "R10":
+                System.out.println("-------------------");
+                System.out.println("Les medecins n'ayant aucun patient hospitalise sont les suivants:");
+                rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) = '0' ORDER BY nom");
+                while (rset.next()) {
+                    System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
+                }
         }
-
-        //R1
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT nom, prenom FROM malade WHERE mutuelle = 'MAAF'");
-        while (rset.next()) {
-            System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));
-        }
-
-        //R2
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM infirmier i, employe e WHERE i.numero = e.numero AND i.rotation = 'NUIT'");
-        while (rset.next()) {
-            System.out.println(rset.getString("prenom") + " " + rset.getString("nom"));
-        }
-
-        //R3
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT s.nom, s.batiment, d.specialite, e.nom, e.prenom FROM service s, docteur d, employe e WHERE s.directeur = d.numero AND d.numero = e.numero");
-        while (rset.next()) {
-            System.out.println(rset.getString("s.nom") + " " + rset.getString("s.batiment") + " " + rset.getString("d.specialite") + " " + rset.getString("e.prenom") + " " + rset.getString("e.nom"));
-        }
-
-        //R4
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT c.no_chambre, h.lit, s.nom, m.nom, m.prenom, m.mutuelle FROM chambre c, malade m, hospitalisation h, service s WHERE c.no_chambre = h.no_chambre AND c.code_service = s.code AND m.numero = h.no_malade AND m.mutuelle LIKE 'MN%' AND s.batiment = 'B'");
-        while (rset.next()) {
-            System.out.println(rset.getString("c.no_chambre") + " " + rset.getString("h.lit") + " " + rset.getString("s.nom") + " " + rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("m.mutuelle"));
-        }
-
-        //R5
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT AVG(i.salaire), i.code_service FROM infirmier i GROUP BY i.code_service");
-        while (rset.next()) {
-            System.out.println(rset.getString("i.code_service") + " " + rset.getString("AVG(i.salaire)"));
-        }
-
-        //R6
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT c.code_service, AVG(c.nb_lits) FROM chambre c, service s WHERE s.code = c.code_service AND s.batiment = 'A' GROUP BY c.code_service");
-        while (rset.next()) {
-            System.out.println(rset.getString("c.code_service") + " " + rset.getString("AVG(c.nb_lits)"));
-        }
-
-        //R7
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT m.nom, m.prenom, COUNT(s.no_docteur), COUNT(DISTINCT d.specialite) FROM soigne s, malade m, docteur d WHERE s.no_malade = m.numero AND s.no_docteur = d.numero GROUP BY s.no_malade HAVING COUNT(s.no_docteur) > 3 ORDER BY nom");
-        while (rset.next()) {
-            System.out.println(rset.getString("m.nom") + " " + rset.getString("m.prenom") + " " + rset.getString("COUNT(s.no_docteur)") + " " + rset.getString("COUNT(DISTINCT d.specialite)"));
-        }
-
-        //R8
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT s.nom, COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade) FROM service s, infirmier i, hospitalisation h WHERE s.code = i.code_service AND h.code_service = s.code GROUP BY s.code");
-        while (rset.next()) {
-            System.out.println(rset.getString("s.nom") + " " + rset.getString("COUNT(DISTINCT i.numero) / COUNT(DISTINCT h.no_malade)"));
-        }
-
-        //R9
-        System.out.println("-------------------");
-        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) > '1' ORDER BY nom");
-        while (rset.next()) {
-            System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
-        }
-
-        //R10
-        System.out.println("-------------------");
-        System.out.println("Les medecins n'ayant aucun patient hospitalise sont les suivants:");
-        rset = stmt.executeQuery("SELECT e.nom, e.prenom FROM employe e, soigne s WHERE e.numero = s.no_docteur GROUP BY s.no_docteur HAVING COUNT(s.no_malade) = '0' ORDER BY nom");
-        while (rset.next()) {
-            System.out.println("Dr." + rset.getString("e.nom") + " " + rset.getString("e.prenom"));
-        }
-
     }
-
     /**
      * Methode qui retourne le numéro d'une personne dans l'Hôpital 
      * Grâce au nom, prénom et quelle catégorie il fait partie (docteur, patient, infirmier) 
