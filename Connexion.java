@@ -2,7 +2,7 @@ package Modele;
 
 /*
  * 
- * Librairies importÃ©es
+ * Librairies importées
  */
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ import java.util.Scanner;
 
 /**
  *
- * Connexion a votre BDD locale ou Ã  distance sur le serveur de l'ECE via le
+ * Connexion a votre BDD locale ou à distance sur le serveur de l'ECE via le
  * tunnel SSH
  *
- * @author Camille,Rim,Roman
+ * @author segado
  */
 public class Connexion {
 
-      public  boolean h = false;
+    public boolean h = false;
     /**
      * Attributs prives : connexion JDBC, statement, ordre requete et resultat
      * requete
@@ -35,16 +35,16 @@ public class Connexion {
      */
     public ArrayList<String> tables = new ArrayList<>();
     /**
-     * ArrayList public pour les requÃªtes de sÃ©lection
+     * ArrayList public pour les requêtes de sélection
      */
     public ArrayList<String> requetes = new ArrayList<>();
     /**
-     * ArrayList public pour les requÃªtes de MAJ
+     * ArrayList public pour les requêtes de MAJ
      */
     public ArrayList<String> requetesMaj = new ArrayList<>();
 
     /**
-     * Constructeur avec 3 paramÃ¨tres : nom, login et password de la BDD locale
+     * Constructeur avec 3 paramètres : nom, login et password de la BDD locale
      *
      * @param nameDatabase
      * @param loginDatabase
@@ -59,20 +59,20 @@ public class Connexion {
         // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
         String urlDatabase = "jdbc:mysql://localhost/" + nameDatabase;
 
-        //crÃ©ation d'une connexion JDBC Ã  la base 
+        //création d'une connexion JDBC à la base 
         conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
 
-        // crÃ©ation d'un ordre SQL (statement)
+        // création d'un ordre SQL (statement)
         stmt = conn.createStatement();
-         if (stmt != null)
-        {h =  true ;}
-
+        if (stmt != null) {
+            h = true;
+        }
 
     }
 
     /**
-     * Constructeur avec 4 paramÃ¨tres : username et password ECE, login et
-     * password de la BDD Ã  distance sur le serveur de l'ECE
+     * Constructeur avec 4 paramètres : username et password ECE, login et
+     * password de la BDD à distance sur le serveur de l'ECE
      *
      * @param usernameECE
      * @param passwordECE
@@ -94,17 +94,17 @@ public class Connexion {
             // url de connexion "jdbc:mysql://localhost:3305/usernameECE"
             String urlDatabase = "jdbc:mysql://localhost:3305/" + usernameECE;
 
-            //crÃ©ation d'une connexion JDBC Ã  la base
+            //création d'une connexion JDBC à la base
             conn = DriverManager.getConnection(urlDatabase, loginDatabase, passwordDatabase);
 
-            // crÃ©ation d'un ordre SQL (statement)
+            // création d'un ordre SQL (statement)
             stmt = conn.createStatement();
 
         }
     }
 
     /**
-     * MÃ©thode qui ajoute la table en parametre dans son ArrayList
+     * Méthode qui ajoute la table en parametre dans son ArrayList
      *
      * @param table
      */
@@ -113,7 +113,7 @@ public class Connexion {
     }
 
     /**
-     * MÃ©thode qui ajoute la requete de selection en parametre dans son
+     * Méthode qui ajoute la requete de selection en parametre dans son
      * ArrayList
      *
      * @param requete
@@ -123,7 +123,7 @@ public class Connexion {
     }
 
     /**
-     * MÃ©thode qui ajoute la requete de MAJ en parametre dans son ArrayList
+     * Méthode qui ajoute la requete de MAJ en parametre dans son ArrayList
      *
      * @param requete
      */
@@ -132,17 +132,17 @@ public class Connexion {
     }
 
     /**
-     * MÃ©thode qui retourne l'ArrayList des champs de la table en parametre
+     * Méthode qui retourne l'ArrayList des champs de la table en parametre
      *
      * @param table
      * @return
      * @throws java.sql.SQLException
      */
     public ArrayList remplirChampsTable(String table) throws SQLException {
-        // rÃ©cupÃ©ration de l'ordre de la requete
+        // récupération de l'ordre de la requete
         rset = stmt.executeQuery("select * from " + table);
 
-        // rÃ©cupÃ©ration du rÃ©sultat de l'ordre
+        // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
 
         // calcul du nombre de colonnes du resultat
@@ -157,7 +157,7 @@ public class Connexion {
             champs = champs + " " + rsetMeta.getColumnLabel(i + 1);
         }
 
-        // ajouter un "\n" Ã  la ligne des champs
+        // ajouter un "\n" à la ligne des champs
         champs = champs + "\n";
 
         // ajouter les champs de la ligne dans l'ArrayList
@@ -175,10 +175,10 @@ public class Connexion {
      * @throws java.sql.SQLException
      */
     public ArrayList remplirChampsRequete(String requete) throws SQLException {
-        // rÃ©cupÃ©ration de l'ordre de la requete
+        // récupération de l'ordre de la requete
         rset = stmt.executeQuery(requete);
 
-        // rÃ©cupÃ©ration du rÃ©sultat de l'ordre
+        // récupération du résultat de l'ordre
         rsetMeta = rset.getMetaData();
 
         // calcul du nombre de colonnes du resultat
@@ -198,7 +198,7 @@ public class Connexion {
                 champs = champs + "," + rset.getString(i + 1);
             }
 
-            // ajouter un "\n" Ã  la ligne des champs
+            // ajouter un "\n" à la ligne des champs
             champs = champs + "\n";
 
             // ajouter les champs de la ligne dans l'ArrayList
@@ -210,7 +210,7 @@ public class Connexion {
     }
 
     /**
-     * MÃ©thode qui execute une requete de MAJ en parametre
+     * Méthode qui execute une requete de MAJ en parametre
      *
      * @param requeteMaj
      * @throws java.sql.SQLException
@@ -224,9 +224,9 @@ public class Connexion {
         Random rand = new Random();
         int numRandom;
         boolean uniqueIntWasFound = true;
-        
+
         List<Integer> listeID = new ArrayList<>();
-        
+
         String query = "SELECT numero from " + table + " WHERE 1";
         rset = stmt.executeQuery(query);
 
@@ -237,11 +237,9 @@ public class Connexion {
         while (true) {
             uniqueIntWasFound = true;
             numRandom = rand.nextInt(300) + 1;
-            
-            for (int el : listeID) 
-            {
-                if (el == numRandom) 
-                {
+
+            for (int el : listeID) {
+                if (el == numRandom) {
                     uniqueIntWasFound = false;
                 }
             }
@@ -249,17 +247,10 @@ public class Connexion {
                 break;
             }
         }
-        
+
         return numRandom;
     }
-    /**
-     * Methode qui permet de rechercher des malades en fonction de son nom et prénom
-     * @param nom
-     * @param prenom
-     * @return l'ArrayList des patients correspondants
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
+
     public ArrayList RechercheMalade(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT m.numero, m.nom, m.prenom, m.adresse, m.tel, m.mutuelle, h.no_chambre, h.lit, h.code_service, s.nom, s.batiment, e.nom FROM malade m, hospitalisation h, chambre c, service s, employe e WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "' AND m.numero = h.no_malade AND h.no_chambre = c.no_chambre AND h.code_service = c.code_service AND c.code_service = s.code AND c.surveillant = e.numero";
@@ -292,20 +283,13 @@ public class Connexion {
                 liste.add(rset.getString("m.mutuelle"));
                 //}
             } else {
-                String info = "Ce malade n'est pas dans nos rÃ©pertoires.";
+                String info = "Ce malade n'est pas dans nos répertoires.";
                 liste.add(info);
             }
         }
         return liste;
     }
-/**
- * Methode qui recherche des docteurs en fonction de leur nom et prénom
- * @param nom
- * @param prenom
- * @return l'ArrayList des docteurs correspondants
- * @throws SQLException
- * @throws ClassNotFoundException 
- */
+
     public ArrayList RechercheDocteur(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT e.prenom, e.nom, d.specialite, e.numero, e.adresse, e.tel FROM docteur d, employe e WHERE e.nom = '" + nom + "' AND e.prenom = '" + prenom + "' AND d.numero = e.numero";
@@ -325,14 +309,7 @@ public class Connexion {
 
         return liste;
     }
-/**
- * Methode qui recherche des infirmiers en fonction de leur nom et prénom
- * @param nom
- * @param prenom
- * @return l'ArrayList des docteurs correspondants 
- * @throws SQLException
- * @throws ClassNotFoundException 
- */
+
     public ArrayList RechercheInfirmier(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT e.prenom, e.nom, e.numero, e.adresse, e.tel, i.rotation FROM infirmier i, employe e WHERE e.nom = '" + nom + "' AND e.prenom = '" + prenom + "' AND i.numero = e.numero";
@@ -352,13 +329,7 @@ public class Connexion {
 
         return liste;
     }
-/**
- * Methode qui recherche les personnes qui sont d'un service en particulier 
- * @param nomService
- * @return l'ArrayList des personnes correspondantes
- * @throws SQLException
- * @throws ClassNotFoundException 
- */ 
+
     public ArrayList RechercheService(String nomService) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * FROM service s, employe e WHERE s.nom = '" + nomService + "' AND s.directeur = e.numero";
@@ -378,17 +349,7 @@ public class Connexion {
 
         return liste;
     }
-    
-    
-/**
- * Methode qui recherche le bâtiment de la chambre, le surveillant et le nombre de lits
- * Elle prend en paramètre le numéro de chambre et son service
- * @param numChambre
- * @param nomService
- * @return  l'Arraylist correspondant
- * @throws SQLException
- * @throws ClassNotFoundException 
- */
+
     public ArrayList RechercheChambre(String numChambre, String nomService) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * FROM chambre c, service s, employe e WHERE c.no_chambre = '" + numChambre + "' AND s.nom = '" + nomService + "' AND c.code_service = s.code AND c.surveillant = e.numero ";
@@ -407,109 +368,7 @@ public class Connexion {
         }
         return liste;
     }
-/**
- * Methode qui compte le nombre de docteurs qui a comme spécialité Cardiologue
- * @return l'entier correspondant
- * @throws SQLException
- * @throws ClassNotFoundException 
- */
-    public int NbdeCardio() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
-        rset = stmt.executeQuery(query);
-        
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-    /**
-     * Methode qui compte le nombre de docteurs qui a comme spécilité Traumatologue
-     * @return l'entier correspondant
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-     public int NbdeTrauma() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-         /**
-     * Methode qui compte le nombre de docteurs qui a comme spécialité Pneumologue
-     * @return l'entier correspondant
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-     public int NbdePneu() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     /**
-     * Methode qui compte le nombre de docteurs qui a comme spécialité Orthopediste
-     * @return l'entier correspondant
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-      public int NbdeOrth() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     /**
-     * Methode qui compte le nombre de docteurs qui a comme spécialité Radiologuue
-     * @return l'entier correspondant
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-      public int NbdeRad() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      /**
-     * Methode qui compte le nombre de docteurs qui a comme spécialité Aneshesiste
-     * @return l'entier correspondant
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-      public int NbdeAn() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-    /**
-     * Méthode qui affiche la requête choisie
-     * @param num
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
+
     public void RechercheRandom(String num) throws SQLException, ClassNotFoundException {
 
         switch (num) {
@@ -594,25 +453,83 @@ public class Connexion {
                 }
         }
     }
-    /**
-     * Methode qui retourne le numéro d'une personne dans l'Hôpital 
-     * Grâce au nom, prénom et quelle catégorie il fait partie (docteur, patient, infirmier) 
-     * @param nom
-     * @param prenom
-     * @param table
-     * @return le numéro d'une personne 
-     * @throws SQLException
-     * @throws ClassNotFoundException 
-     */
-    public String getNumero(String nom, String prenom, String table) throws SQLException, ClassNotFoundException
-       {
-           
-            String query = "SELECT numero FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
-            rset = stmt.executeQuery(query) ;
-           
-            if(rset.next())
-                return rset.getString("numero") ;
-            else
-                return "0" ;
-       }
+
+    public int NbdeCardio() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
+        rset = stmt.executeQuery(query);
+
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public int NbdeTrauma() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public int NbdePneu() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public int NbdeOrth() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public int NbdeRad() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public int NbdeAn() throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
+        rset = stmt.executeQuery(query);
+        rset.next();
+        int a;
+        a = rset.getInt(1);
+
+        return a;
+    }
+
+    public String getNumero(String nom, String prenom, String table) throws SQLException, ClassNotFoundException {
+
+        String query = "SELECT numero FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
+        rset = stmt.executeQuery(query);
+
+        if (rset.next()) {
+            return rset.getString("numero");
+        } else {
+            return "0";
+        }
+    }
 }
