@@ -429,4 +429,41 @@ public class Hopital {
         maconnexion.executeUpdate(update);
         
     }
+    
+    /**
+     * Méthode qui ajoute un soin dans la table soigne
+     * @param nomDocteur
+     * @param prenomDocteur
+     * @param nomMalade
+     * @param prenomMalade
+     * @return boolean false si le docteur et/ou le malade n'existe pas, true sinon
+     */
+    public Boolean soin(String nomDocteur, String prenomDocteur, String nomMalade, String prenomMalade)
+    {
+        try {
+            ArrayList<String> verifDocteur = new ArrayList() ;
+            ArrayList<String> verifMalade = new ArrayList() ;
+            
+            verifDocteur = maconnexion.RechercheDocteur(nomDocteur, prenomDocteur) ;
+            verifDocteur = maconnexion.RechercheMalade(nomMalade, prenomMalade) ;
+            
+            if(verifDocteur.size() > 1 && verifMalade.size() > 1)
+            {
+                String numDocteur = maconnexion.getNumero(nomDocteur, prenomDocteur, "Employe");
+                String numMalade = maconnexion.getNumero(nomMalade, prenomMalade, "Malade");
+                
+                String requete = "INSERT INTO soigne (no_docteur, no_malade) VALUES ('" + numDocteur + "','" + numMalade + "')" ;
+                maconnexion.executeUpdate(requete);
+                return true ;
+            }
+            else
+                return false ;
+        } catch (SQLException ex) {
+            System.out.println("SQL problem");
+            return false;
+        } catch (ClassNotFoundException ex) {
+            System.out.println("SQL problem");
+            return false;
+        }
+    }
 }
