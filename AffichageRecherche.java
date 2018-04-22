@@ -22,9 +22,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- * Class permettant d'afficher les recherches effectuées 
+ * Class permettant d'afficher les recherches effectuÃ©es 
  *
- * @author camille
+ * @author Camille,Rim,Roman
  */
 public class AffichageRecherche {
 
@@ -90,7 +90,7 @@ public class AffichageRecherche {
     }
 
     /**
-     * Affiche sous forme d'un tableau les informations des malades recherchés
+     * Affiche sous forme d'un tableau les informations des malades recherchÃ©s
      *
      * @param liste
      * @param zFen
@@ -122,7 +122,7 @@ public class AffichageRecherche {
             while (liste.size() < 11) {
                 liste.add("NA");
             }
-            JOptionPane.showMessageDialog(null, "Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisÃ©. Veuillez consulter ses informations.");
+            JOptionPane.showMessageDialog(null, "Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisÃƒÂ©. Veuillez consulter ses informations.");
             String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle", "Num. de la chambre d'hospitalisation", "Num. du lit", "Surveillant de la chambre", "Service", "Batiment"};
 
             Object[][] data = {
@@ -143,7 +143,7 @@ public class AffichageRecherche {
 
     /**
      * Affiche sous forme d'un tableau les informations des infirmiers
-     * recherchés
+     * recherchÃ©s
      *
      * @param liste
      * @param zFen
@@ -173,7 +173,7 @@ public class AffichageRecherche {
     }
 
     /**
-     * Affiche sous forme d'un tableau les informations des doteurs recherchés
+     * Affiche sous forme d'un tableau les informations des doteurs recherchÃ©s
      *
      * @param liste
      * @param zFen
@@ -202,7 +202,7 @@ public class AffichageRecherche {
     }
 
     /**
-     * Affiche sous forme d'un tableau les informations des services recherchés
+     * Affiche sous forme d'un tableau les informations des services recherchÃ©s
      *
      * @param liste
      * @param zFen
@@ -232,7 +232,7 @@ public class AffichageRecherche {
     }
 
     /**
-     * Affiche sous forme d'un tableau les informations des chambres recherchées
+     * Affiche sous forme d'un tableau les informations des chambres recherchÃ©es
      *
      * @param liste
      * @param zFen
