@@ -252,7 +252,14 @@ public class Connexion {
         
         return numRandom;
     }
-
+    /**
+     * Methode qui permet de rechercher des malades en fonction de son nom et prénom
+     * @param nom
+     * @param prenom
+     * @return l'ArrayList des patients correspondants
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public ArrayList RechercheMalade(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT m.numero, m.nom, m.prenom, m.adresse, m.tel, m.mutuelle, h.no_chambre, h.lit, h.code_service, s.nom, s.batiment, e.nom FROM malade m, hospitalisation h, chambre c, service s, employe e WHERE m.nom = '" + nom + "' AND m.prenom = '" + prenom + "' AND m.numero = h.no_malade AND h.no_chambre = c.no_chambre AND h.code_service = c.code_service AND c.code_service = s.code AND c.surveillant = e.numero";
@@ -291,7 +298,14 @@ public class Connexion {
         }
         return liste;
     }
-
+/**
+ * Methode qui recherche des docteurs en fonction de leur nom et prénom
+ * @param nom
+ * @param prenom
+ * @return l'ArrayList des docteurs correspondants
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */
     public ArrayList RechercheDocteur(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT e.prenom, e.nom, d.specialite, e.numero, e.adresse, e.tel FROM docteur d, employe e WHERE e.nom = '" + nom + "' AND e.prenom = '" + prenom + "' AND d.numero = e.numero";
@@ -311,7 +325,14 @@ public class Connexion {
 
         return liste;
     }
-
+/**
+ * Methode qui recherche des infirmiers en fonction de leur nom et prénom
+ * @param nom
+ * @param prenom
+ * @return l'ArrayList des docteurs correspondants 
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */
     public ArrayList RechercheInfirmier(String nom, String prenom) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT e.prenom, e.nom, e.numero, e.adresse, e.tel, i.rotation FROM infirmier i, employe e WHERE e.nom = '" + nom + "' AND e.prenom = '" + prenom + "' AND i.numero = e.numero";
@@ -331,7 +352,13 @@ public class Connexion {
 
         return liste;
     }
-
+/**
+ * Methode qui recherche les personnes qui sont d'un service en particulier 
+ * @param nomService
+ * @return l'ArrayList des personnes correspondantes
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */ 
     public ArrayList RechercheService(String nomService) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * FROM service s, employe e WHERE s.nom = '" + nomService + "' AND s.directeur = e.numero";
@@ -351,7 +378,17 @@ public class Connexion {
 
         return liste;
     }
-
+    
+    
+/**
+ * Methode qui recherche le bâtiment de la chambre, le surveillant et le nombre de lits
+ * Elle prend en paramètre le numéro de chambre et son service
+ * @param numChambre
+ * @param nomService
+ * @return  l'Arraylist correspondant
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */
     public ArrayList RechercheChambre(String numChambre, String nomService) throws SQLException, ClassNotFoundException {
 
         String query = "SELECT * FROM chambre c, service s, employe e WHERE c.no_chambre = '" + numChambre + "' AND s.nom = '" + nomService + "' AND c.code_service = s.code AND c.surveillant = e.numero ";
@@ -370,7 +407,12 @@ public class Connexion {
         }
         return liste;
     }
-
+/**
+ * Methode qui compte le nombre de docteurs qui a comme spécialité Cardiologue
+ * @return l'entier correspondant
+ * @throws SQLException
+ * @throws ClassNotFoundException 
+ */
     public int NbdeCardio() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
@@ -382,6 +424,12 @@ public class Connexion {
        
         return a;
     }
+    /**
+     * Methode qui compte le nombre de docteurs qui a comme spécilité Traumatologue
+     * @return l'entier correspondant
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
      public int NbdeTrauma() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
@@ -392,6 +440,12 @@ public class Connexion {
        
         return a;
     }
+         /**
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Pneumologue
+     * @return l'entier correspondant
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
      public int NbdePneu() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
@@ -402,6 +456,12 @@ public class Connexion {
        
         return a;
     }
+     /**
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Orthopediste
+     * @return l'entier correspondant
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
       public int NbdeOrth() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
@@ -412,6 +472,12 @@ public class Connexion {
        
         return a;
     }
+     /**
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Radiologuue
+     * @return l'entier correspondant
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
       public int NbdeRad() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
@@ -422,6 +488,12 @@ public class Connexion {
        
         return a;
     }
+      /**
+     * Methode qui compte le nombre de docteurs qui a comme spécialité Aneshesiste
+     * @return l'entier correspondant
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
       public int NbdeAn() throws SQLException, ClassNotFoundException{
         
         String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
@@ -432,7 +504,11 @@ public class Connexion {
        
         return a;
     }
-    
+    /**
+     * Différentes méthodes que nous avons faites, mais que nous n'utilisons pas 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public void RechercheRandom() throws SQLException, ClassNotFoundException {
 
         //R0
@@ -517,68 +593,16 @@ public class Connexion {
 
     }
 
-    public int NbdeCardio() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Cardiologue' ";
-        rset = stmt.executeQuery(query);
-        
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     public int NbdeTrauma() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Traumatologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-     public int NbdePneu() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Pneumologue' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeOrth() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Orthopediste' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeRad() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Radiologue' ";
-        rset = stmt.executeQuery(query);
-        rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-      public int NbdeAn() throws SQLException, ClassNotFoundException{
-        
-        String query = "SELECT COUNT(*) FROM docteur WHERE specialite = 'Anesthesiste' ";
-        rset = stmt.executeQuery(query);
-       rset.next();
-        int a;
-        a = rset.getInt(1);
-       
-        return a;
-    }
-    
+    /**
+     * Methode qui retourne le numéro d'une personne dans l'Hôpital 
+     * Grâce au nom, prénom et quelle catégorie il fait partie (docteur, patient, infirmier) 
+     * @param nom
+     * @param prenom
+     * @param table
+     * @return le numéro d'une personne 
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public String getNumero(String nom, String prenom, String table) throws SQLException, ClassNotFoundException
        {
            
