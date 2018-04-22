@@ -149,22 +149,11 @@ public class NouveauPatient  {
                 donnees.add(mutuel.getText());
             else
                 zFen.messageErreur("mutuelle");
-//            if(!(service.getText()).equals(""))
-//                donnees.add(service.getText());
-//            if(!(chambre.getText()).equals(""))
-//                donnees.add(chambre.getText());
     
             if (donnees.size() == 5)
             {
-                System.out.println("Formulaire valide");
                 hop.nouveauPatient(donnees);
                 zFen.accueil();
-            }
-            else
-            {
-                
-                //JTextArea erreur = new JTextArea("Formulaire non valide !") ;
-                System.out.println("Formulaire non valide");
             }
         }
     }
