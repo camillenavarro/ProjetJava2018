@@ -130,33 +130,25 @@ public class NouveauPatient  {
 //            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
 //                donnees.add(numero.getText());
             if(!(nom.getText()).equals("") && nom.getText().matches("[a-zA-Z]+"))
-            {
                 donnees.add(nom.getText());
-                if(!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+"))
-                {
-                    donnees.add(prenom.getText());
-                    if(!(tel.getText()).equals(""))
-                    {
-                        donnees.add(tel.getText());
-                        if(!(adresse.getText()).equals(""))
-                        {
-                            donnees.add(adresse.getText());
-                            if(!(mutuel.getText()).equals(""))
-                                donnees.add(mutuel.getText());
-                            else
-                                zFen.messageErreur("mutuelle");
-                        }
-                        else
-                            zFen.messageErreur("adresse") ;
-                    }
-                    else
-                        zFen.messageErreur("téléphone");
-                }
-                else
-                    zFen.messageErreur("prénom") ;
-            }
             else
                 zFen.messageErreur("nom");
+            if(!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+"))
+                donnees.add(prenom.getText());
+            else
+                zFen.messageErreur("prénom") ;
+            if(!(tel.getText()).equals(""))
+                donnees.add(tel.getText());
+            else
+                zFen.messageErreur("téléphone");
+            if(!(adresse.getText()).equals(""))
+                donnees.add(adresse.getText());
+            else
+                zFen.messageErreur("adresse") ;
+            if(!(mutuel.getText()).equals(""))
+                donnees.add(mutuel.getText());
+            else
+                zFen.messageErreur("mutuelle");
 //            if(!(service.getText()).equals(""))
 //                donnees.add(service.getText());
 //            if(!(chambre.getText()).equals(""))
