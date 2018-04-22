@@ -370,7 +370,7 @@ public class ZFenetre extends JFrame {
         
     }
     /**
-     * Methode qui revient à l'acceuil
+     * Methode qui retourne le bouton retour  
      * @return menuRetour
      */
     public JMenuItem getMenuRetour() {
@@ -378,7 +378,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * Methode qui revient à l'acceuil
+     * Methode qui retourne le buton retour
      * @return boutonRetour
      */
     public JButton getBoutonRetour() {
@@ -386,7 +386,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * Methode qui revient à la MAJ
+     * Methode qui retourne le bouton MAJ
      * @return menuMAJ
      */
     public JMenuItem getMenuMAJ() {
@@ -394,7 +394,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui revient à la Recherche
+     * Méthode qui retourne le bouton Recherche
      * @return menuRecherche
      */
     public JMenuItem getMenuRecherche() {
@@ -402,7 +402,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui revient à au reporting
+     * Méthode qui retourne le bouton reporting
      * @return menuReport
      */
     public JMenuItem getMenuReport() {
@@ -410,7 +410,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Methode qui revient à la MAJ
+     * Methode qui retourne le bouton MAJ
      * @return boutonMAJ
      */
     public JButton getBoutonMAJ() {
@@ -418,7 +418,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * Methode qui revient à la Recherche
+     * Methode qui retourne le bouton Recherche
      * @return boutonRech
      */
     public JButton getBoutonRecherche() {
@@ -426,7 +426,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient au reporting
+     * Methode qui retourne  le bouton reporting
      * @return boutonRep
      */
     public JButton getBoutonReport() {
@@ -434,7 +434,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient au Nouveau Patient
+     * Methode qui retourne le bouton Nouveau Patient
      * @return nouveaup
      */
     public JButton getNouveauP() {
@@ -442,7 +442,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la NouvelE
+     * Methode qui retourne le bouton NouvelE
      * @return nouvelE
      */
     public JButton getNouvelE() {
@@ -450,7 +450,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la modification
+     * Methode qui retourne le bouton modification
      * @return modifier
      */
     public JButton getModifier() {
@@ -458,7 +458,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Supression Patient
+     * Methode qui retourne le bouton Supression Patient
      * @return suppP
      */
     public JButton getSuppP() {
@@ -466,7 +466,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Supression Employer
+     * Methode qui retourne le bouton Supression Employer
      * @return suppE
      */
     public JButton getSuppE() {
@@ -474,7 +474,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient au Service
+     * Methode qui retourne le bouton nouveau Service
      * @return nouveauS
      */
     public JButton getNouveauS() {
@@ -482,7 +482,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Supression Service
+     * Methode qui retourne le bouton Supression Service
      * @return suppS
      */
     public JButton getSuppS() {
@@ -491,7 +491,7 @@ public class ZFenetre extends JFrame {
 
        
      /**
-     * Methode qui lance le bouton validation
+     * Methode qui retourne le bouton validation
      * @return submit
      */
     public JButton getSubmit() {
@@ -499,7 +499,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Recherche Malade
+     * Methode qui retourne le bouton Recherche Malade
      * @return rechMalade
      */
     public JButton getRechMalade() {
@@ -507,7 +507,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Recherche Infirmier
+     * Methode qui retourne le bouton Recherche Infirmier
      * @return rechInf
      */
     public JButton getRechInf() {
@@ -515,7 +515,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Recherche Malade
+     * Methode qui retourne le buton Recherche Malade
      * @return rechMalade
      */
     public JButton getRechDoc() {
@@ -523,7 +523,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Recherche Service
+     * Methode qui retourne le bouton Recherche Service
      * @return rechServ
      */
     public JButton getRechServ() {
@@ -531,7 +531,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Recherche Chambre
+     * Methode qui retourne le bouton Recherche Chambre
      * @return rechChambre
      */
     public JButton getRechChambre() {
@@ -539,7 +539,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la Modification Malade
+     * Methode qui retourne le bouton Modification Malade
      * @return modMalade
      */
     public JButton getModMalade() {
@@ -547,7 +547,7 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui revient à la modification Employé
+     * Methode qui retourne le bouton modification Employé
      * @return mdEmploye
      */
     public JButton getModEmploye() {
