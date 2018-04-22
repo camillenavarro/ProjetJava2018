@@ -20,9 +20,38 @@ public class Hopital {
     static final String NAME = "hopital";
     static  String LOGIN = "root";
     static  String PASSWORD = "";
-    Connexion maconnexion;
+    public Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
+    public Hopital(){
+        
+        try {
+
+            try {
+                //Connection connection = null;
+                //Statement statement = null;
+                //ResultSet resultSet = null;
+
+                maconnexion = new Connexion(NAME, LOGIN, PASSWORD);
+                //maconnexion.remplirChampsTable("chambre");
+
+            } catch (SQLException ex) {
+                System.out.println("SQL problem.");
+            }
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class problem.");
+        }
+
+        //finally {
+        //try {
+        //    resultSet.close();
+        //    statement.close();
+        //    connection.close();
+        //} catch (SQLException ex) {
+        //}
+    }
+    
     public Hopital(String a, String b){
         LOGIN = a;
         PASSWORD = b;

@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 //import java.awt.* ;
 import java.awt.event.* ;
+import java.sql.SQLException;
 //import javax.swing.* ;
 //import java.sql.*;
 //import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.awt.event.* ;
 //import java.sql.SQLException;
 //import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestHopital implements ActionListener {
     
@@ -33,18 +36,20 @@ public class TestHopital implements ActionListener {
     private static ZFenetre zFen ;
     private static Hopital hop = new Hopital();
     private static NouveauPatient np ;
-    private static NPListener npl ;
     private static NewEmploye ne ;
+    private static AffichageRecherche aRech ; 
     
     
     public TestHopital() throws IOException{
        zFen = new ZFenetre();
-       zFen.login() ;
+       zFen.accueil() ;
        zFen.getMenuRetour().addActionListener(this) ;
        zFen.getMenuMAJ().addActionListener(this) ;
        zFen.getMenuRecherche().addActionListener(this) ;
+       zFen.getMenuReport().addActionListener(this) ;
        zFen.getBoutonMAJ().addActionListener(this) ;
        zFen.getBoutonRecherche().addActionListener(this) ;
+       zFen.getBoutonReport().addActionListener(this) ;
        zFen.getNouveauP().addActionListener(this) ;
        zFen.getNouvelE().addActionListener(this) ;
        zFen.getModifier().addActionListener(this) ;
@@ -88,11 +93,20 @@ public class TestHopital implements ActionListener {
             zFen.optionsRecherche();
         }
         
+        if(e.getSource()==zFen.getMenuReport() || e.getSource()==zFen.getBoutonReport())
+        {
+            try {
+                Graphe graphe = new Graphe();
+            } catch (SQLException ex) {
+                Logger.getLogger(TestHopital.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(TestHopital.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         if(e.getSource()==zFen.getNouveauP())
         {
             np = new NouveauPatient(zFen);
-          //  npl = new NPListener() ;
-            
         }
         if(e.getSource()==zFen.getNouvelE())
         {
@@ -123,34 +137,34 @@ public class TestHopital implements ActionListener {
             String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Malade");
+            aRech = new AffichageRecherche(champs, "Malade", zFen);
         }
         if(e.getSource()==zFen.getRechInf())
         {
           String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Infirmier");
+            aRech = new AffichageRecherche(champs, "Infirmier", zFen);
         }
         if(e.getSource()==zFen.getRechDoc())
         {
             String champs[] = new String[2] ;
             champs[0] = "Nom" ;
             champs[1] = "Prénom" ;
-            zFen.saisieRecherche(champs, "Docteur");
+            aRech = new AffichageRecherche(champs, "Docteur", zFen);
         }
         if(e.getSource()==zFen.getRechServ())
         {
             String champs[] = new String[1] ;
             champs[0] = "Nom du service" ;
-            zFen.saisieRecherche(champs, "Service");
+            aRech = new AffichageRecherche(champs, "Service", zFen);
         }
         if(e.getSource()==zFen.getRechChambre())
         {
             String champs[] = new String[2] ;
             champs[0] = "Numéro de chambre" ;
             champs[1] = "Nom du service" ;
-            zFen.saisieRecherche(champs, "Chambre");
+            aRech = new AffichageRecherche(champs, "Chambre", zFen);
         }
         if(e.getSource()==zFen.getModMalade())
         {

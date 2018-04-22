@@ -10,16 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ZFenetre extends JFrame {
     
     
      private final JTextField Login = new JTextField(null);
       private final JTextField MDP = new JTextField(null);
-      private final JPanel pan0 = new JPanel();
       private final JButton envoie = new JButton("Envoyer");
 
     ArrayList<String> liste = new ArrayList<>();
@@ -30,13 +32,14 @@ public class ZFenetre extends JFrame {
     private JMenuItem menuRetour = new JMenuItem("Retour à l'accueil");
     private JMenuItem menuMAJ = new JMenuItem("Mise à jour");
     private JMenuItem menuRecherche = new JMenuItem("Recherche");
+    private JMenuItem menuReport = new JMenuItem("Reporting");
     private JMenuItem Close = new JMenuItem("Fermer");
 
     private ImageIcon Fond = new ImageIcon("Medecin.jpg");
 
     private JButton boutonMAJ = new JButton("Mise à Jour");
     private JButton boutonRech = new JButton("Rechercher");
-    private JPanel pan1 = new JPanel();
+    private JButton boutonRep = new JButton("Reporting");
 
     private JButton boutonRetour = new JButton("Retour à l'accueil");
     private JButton nouveauP = new JButton("Nouveau patient");
@@ -112,6 +115,7 @@ public class ZFenetre extends JFrame {
         this.Fichier.add(menuRetour);
         this.Fichier.add(menuMAJ);
         this.Fichier.add(menuRecherche);
+        this.Fichier.add(menuReport);
         f.setContentPane(new JLabel(new ImageIcon("Medecin.jpg")));
 
         this.Fichier.addSeparator();
@@ -131,35 +135,37 @@ public class ZFenetre extends JFrame {
     }
  public void login()
     {
-        
-       Fichier.setEnabled(false);
-            Font police = new Font("Arial", Font.BOLD, 14);
-         pan0.add(new JLabel ("Login : "));
-    Login.setFont(police);
-    Login.setPreferredSize(new Dimension(150, 30));
-    Login.setForeground(Color.BLACK);
-    pan0.add(Login);
-         pan0.add(new JLabel ("Mot de Passe : "));
-    MDP.setFont(police);
-   MDP.setPreferredSize(new Dimension(150, 30));
-    MDP.setForeground(Color.BLACK);
-    pan0.add(MDP);
+        JPanel pan = new JPanel() ;
+        Fichier.setEnabled(false);
+        Font police = new Font("Arial", Font.BOLD, 14);
+        pan.add(new JLabel ("Login : "));
+        Login.setFont(police);
+        Login.setPreferredSize(new Dimension(150, 30));
+        Login.setForeground(Color.BLACK);
+        pan.add(Login);
+        pan.add(new JLabel ("Mot de Passe : "));
+        MDP.setFont(police);
+        MDP.setPreferredSize(new Dimension(150, 30));
+        MDP.setForeground(Color.BLACK);
+        pan.add(MDP);
     
-    envoie.addActionListener(new BoutonListener());
+        envoie.addActionListener(new BoutonListener());
     
-    pan0.add(envoie);
-        this.setContentPane(pan0);
+        pan.add(envoie);
+        this.setContentPane(pan);
         this.setVisible(true); 
         
         
     }
     public void accueil() {
         
-         Fichier.setEnabled(true);
-        pan1.add(boutonMAJ);
-        pan1.add(boutonRech);
-        pan1.add(image);
-        this.setContentPane(pan1);
+        JPanel pan = new JPanel();
+        Fichier.setEnabled(true);
+        pan.add(boutonMAJ);
+        pan.add(boutonRech);
+        pan.add(boutonRep);
+        pan.add(image);
+        this.setContentPane(pan);
 
         this.setVisible(true);
     }
@@ -178,224 +184,39 @@ public class ZFenetre extends JFrame {
         line2.add(suppS);
         line3.add(boutonRetour);
         
-        JPanel pan2 = new JPanel() ;
-        pan2.setLayout(new BoxLayout(pan2, BoxLayout.PAGE_AXIS));
-        pan2.add(line1);
-        pan2.add(line2);
-        pan2.add(line3);
-        this.setContentPane(pan2);
+        JPanel pan = new JPanel() ;
+        pan.setLayout(new BoxLayout(pan, BoxLayout.PAGE_AXIS));
+        pan.add(line1);
+        pan.add(line2);
+        pan.add(line3);
+        this.setContentPane(pan);
         this.setVisible(true);
     }
 
     public void optionsRecherche() {
         
-        JPanel pan3 = new JPanel();
-        pan3.add(rechMalade);
-        pan3.add(rechInf);
-        pan3.add(rechDoc);
-        pan3.add(rechServ);
-        pan3.add(rechChambre);
-        pan3.add(boutonRetour);
-        this.setContentPane(pan3);
+        JPanel pan = new JPanel();
+        pan.add(rechMalade);
+        pan.add(rechInf);
+        pan.add(rechDoc);
+        pan.add(rechServ);
+        pan.add(rechChambre);
+        pan.add(boutonRetour);
+        this.setContentPane(pan);
         this.setVisible(true);
     }
 
-    public void saisieRecherche(String[] champs, String module) {
-        //   this.setVisible(false) ;
-        JPanel pan3 = new JPanel();
-        ArrayList<JTextField> textField = new ArrayList();
-        saisie.removeAll();
-
-        for (int i = 0; i < champs.length; i++) {
-            JTextField jtf = new JTextField("");
-            jtf.setPreferredSize(new Dimension(200, 30));
-            jtf.setForeground(Color.black);
-            textField.add(jtf);
-            saisie.add(new JLabel(champs[i]));
-            saisie.add(jtf);
-        }
-
-        pan3.add(saisie);
-        pan3.add(submit);
-        pan3.add(boutonRetour);
-        this.setContentPane(pan3);
-        this.setVisible(true);
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (module.equals("Malade")) {
-                    liste = hop.malade(textField.get(0).getText(), textField.get(1).getText());
-                    tableRechercheM(liste);
-                }
-                if (module.equals("Infirmier")) {
-                    liste = hop.infirmier(textField.get(0).getText(), textField.get(1).getText());
-                    tableRechercheI(liste);
-                }
-                if (module.equals("Docteur")) {
-                    liste = hop.docteur(textField.get(0).getText(), textField.get(1).getText());
-                    tableRechercheD(liste);
-                }
-                if (module.equals("Service")) {
-                    liste = hop.service(textField.get(0).getText());
-                    tableRechercheS(liste);
-                }
-                if (module.equals("Chambre")) {
-                    liste = hop.chambre(textField.get(0).getText(), textField.get(1).getText());
-                    tableRechercheC(liste);
-                }
-            }
-        });
-    }
-
-     public void tableRechercheM(ArrayList liste) {
-
-        if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0),"Error",JOptionPane.ERROR_MESSAGE);
-        } else if (liste.size() == 6) {
-            setLayout(new FlowLayout());
-            String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5)}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-            
-        } else {
-
-            setLayout(new FlowLayout());
-
-            while (liste.size() < 11) {
-                liste.add("NA");
-            }
-            JOptionPane.showMessageDialog(null,"Le patient " + liste.get(0) + " " + liste.get(1) + " est actuellement hospitalisé. Veuillez consulter ses informations.");
-            String[] columnNames = {"Prenom", "Nom", "ID Patient", "Adresse", "Telephone", "Mutuelle", "Num. de la chambre d'hospitalisation", "Num. du lit", "Surveillant de la chambre", "Service", "Batiment"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5), liste.get(6), liste.get(7), liste.get(8), liste.get(9), liste.get(10)}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1200, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-        }
-
-        liste.clear();
-    }
-
-    public void tableRechercheI(ArrayList liste) {
-
-        if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0));
-        } else {
-
-            setLayout(new FlowLayout());
-            String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Rotation"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(3), liste.get(4), liste.get(5), liste.get(2)}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-        }
-        liste.clear();
-    }
-
-    public void tableRechercheD(ArrayList liste) {
-
-        if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0));
-        } else {
-            setLayout(new FlowLayout());
-            String[] columnNames = {"Prenom", "Nom", "ID Employe", "Adresse", "Telephone", "Specialite"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4), liste.get(5)}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-        }
-        liste.clear();
-    }
-
-    public void tableRechercheS(ArrayList liste) {
-
-        if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0));
-        } else {
-            setLayout(new FlowLayout());
-            String docteur = "Dr. " + liste.get(3) + " " + liste.get(4);
-            String[] columnNames = {"Nom du Service", "Code du Service", "Batiment", "Directeur du Service"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(2), docteur}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-        }
-        liste.clear();
-    }
-
-    public void tableRechercheC(ArrayList liste) {
-
-        if (liste.size() == 1) {
-            JOptionPane.showMessageDialog(null, liste.get(0));
-        } else {
-            setLayout(new FlowLayout());
-            String[] columnNames = {"Numero de la Chambre", "Nombre de lits", "ID surveillant", "Infirmier(e)", "Service de la Chambre"};
-
-            Object[][] data = {
-                {liste.get(0), liste.get(1), liste.get(2), liste.get(3), liste.get(4)}
-            };
-
-            table = new JTable(data, columnNames);
-            table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
-            table.setFillsViewportHeight(true);
-
-            JScrollPane scrollPane = new JScrollPane(table);
-            add(scrollPane);
-            this.setVisible(true) ;
-        }
-        liste.clear();
-    }
+    
 
     public void modifier() {
-        JPanel pan4 = new JPanel() ;
-        pan4.add(modMalade);
-        pan4.add(modInfirmier);
-        pan4.add(modDocteur);
-        pan4.add(modService);
-        pan4.add(modChambre);
-        pan4.add(boutonRetour);
-        this.setContentPane(pan4);
+        JPanel pan = new JPanel() ;
+        pan.add(modMalade);
+        pan.add(modInfirmier);
+        pan.add(modDocteur);
+        pan.add(modService);
+        pan.add(modChambre);
+        pan.add(boutonRetour);
+        this.setContentPane(pan);
         this.setVisible(true);
     }
     
@@ -425,7 +246,13 @@ public class ZFenetre extends JFrame {
         submit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                hop.suppression(nom.getText(), prenom.getText(), table) ;
+                try {
+                    hop.suppression(nom.getText(), prenom.getText(), table) ;
+                } catch (SQLException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 accueil();
             }
         });
@@ -446,6 +273,10 @@ public class ZFenetre extends JFrame {
     public JMenuItem getMenuRecherche() {
         return menuRecherche;
     }
+    
+    public JMenuItem getMenuReport() {
+        return menuReport;
+    }
 
     public JButton getBoutonMAJ() {
         return boutonMAJ;
@@ -453,6 +284,10 @@ public class ZFenetre extends JFrame {
 
     public JButton getBoutonRecherche() {
         return boutonRech;
+    }
+    
+    public JButton getBoutonReport() {
+        return boutonRep;
     }
 
     public JButton getNouveauP() {
