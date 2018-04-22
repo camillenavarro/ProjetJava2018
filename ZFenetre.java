@@ -220,6 +220,7 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
             
         } else {
 
@@ -241,6 +242,7 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
         }
 
         liste.clear();
@@ -265,6 +267,7 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
         }
         liste.clear();
     }
@@ -287,6 +290,7 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
         }
         liste.clear();
     }
@@ -310,6 +314,7 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
         }
         liste.clear();
     }
@@ -332,61 +337,12 @@ public class ZFenetre extends JFrame {
 
             JScrollPane scrollPane = new JScrollPane(table);
             add(scrollPane);
+            this.setVisible(true) ;
         }
         liste.clear();
     }
 
-    public void ajouterPatient() {
-        JTextField numero = new JTextField("");
-        JTextField nom = new JTextField("");
-        JTextField prenom = new JTextField("");
-        JTextField adresse = new JTextField("");
-        JTextField tel = new JTextField("");
-        JTextField mutuelle = new JTextField("");
-        JTextField chambre = new JTextField("");
 
-        numero.setPreferredSize(new Dimension(200, 30));
-        numero.setForeground(Color.black);
-        nom.setPreferredSize(new Dimension(200, 30));
-        nom.setForeground(Color.black);
-        prenom.setPreferredSize(new Dimension(200, 30));
-        prenom.setForeground(Color.black);
-        adresse.setPreferredSize(new Dimension(200, 30));
-        adresse.setForeground(Color.black);
-        tel.setPreferredSize(new Dimension(200, 30));
-        tel.setForeground(Color.black);
-        mutuelle.setPreferredSize(new Dimension(200, 30));
-        mutuelle.setForeground(Color.black);
-        chambre.setPreferredSize(new Dimension(200, 30));
-        chambre.setForeground(Color.black);
-
-        saisie.setLayout(new BoxLayout(saisie, BoxLayout.PAGE_AXIS));
-        saisie.add(new JLabel("Numero"));
-        saisie.add(numero);
-        saisie.add(new JLabel("Nom"));
-        saisie.add(nom);
-        saisie.add(new JLabel("Prénom"));
-        saisie.add(prenom);
-        saisie.add(new JLabel("Adresse"));
-        saisie.add(adresse);
-        saisie.add(new JLabel("Téléphone"));
-        saisie.add(tel);
-        saisie.add(new JLabel("Mutuelle"));
-        saisie.add(mutuelle);
-        saisie.add(new JLabel("Chambre"));
-        saisie.add(chambre);
-
-        pan5.add(saisie);
-        pan5.add(submit);
-        pan5.add(boutonRetour);
-        this.setContentPane(pan5);
-        this.setVisible(true);
-        submit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                //ajout
-            }
-        });
-    }
 
     public void modifier() {
         pan4.removeAll();
