@@ -15,7 +15,8 @@ import java.sql.*;
 import Modele.Connexion;
 
 /**
- *
+ *Creation du cammenbert des spécialisation des Docteurs
+
  * @author roman
  */
 public class Graphe {
@@ -23,7 +24,12 @@ public class Graphe {
     static final String LOGIN = "root";
     static final String PASSWORD = "";
     Connexion maconnexion= new Connexion(NAME, LOGIN, PASSWORD);
-   
+   /**
+    * Constructeur de Graphe
+    * Il fait un camembert é 6 parts qui �volue avec la base de donn�es
+    * @throws SQLException
+    * @throws ClassNotFoundException 
+    */
      public Graphe() throws SQLException, ClassNotFoundException{
           DefaultPieDataset dataset = new DefaultPieDataset(); 
     dataset.setValue("Cardiologue", maconnexion.NbdeCardio()); 
@@ -32,7 +38,7 @@ public class Graphe {
     dataset.setValue("Traumatologue", maconnexion.NbdeTrauma());
     dataset.setValue("Radiologue", maconnexion.NbdeRad());
     dataset.setValue("Orthopediste", maconnexion.NbdeOrth());
-    JFreeChart chart = ChartFactory.createPieChart( "Spéciation des Docteurs", dataset, true,true, false);
+    JFreeChart chart = ChartFactory.createPieChart( "Spécialisation des Docteurs", dataset, true,true, false);
     ChartFrame frame = new ChartFrame("First", chart);
 frame.pack();
 frame.setVisible(true);
