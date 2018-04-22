@@ -222,7 +222,7 @@ public class Hopital {
     }
 
     /**
-     * MÃ©thode permettant d'ajouter un patient Ã  la base de donnÃ©es
+     * MÃ©thode permettant d'ajouter un patient Ã  la base de donnÃ©es
      * @param donnees 
      */
     public void nouveauPatient(ArrayList<String> donnees) {
@@ -241,7 +241,7 @@ public class Hopital {
 
     }
     /**
-     * MÃ©thode permettant d'ajouter un employÃ© (docteur,infirmier) Ã  base de donnÃ©es
+     * MÃ©thode permettant d'ajouter un employÃ© (docteur,infirmier) Ã  base de donnÃ©es
      * @param donnees 
      */
     public void nouvelEmploye(ArrayList<String> donnees) {
