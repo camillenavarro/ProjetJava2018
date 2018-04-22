@@ -15,7 +15,7 @@ import java.sql.*;
 import Modele.Connexion;
 
 /**
- *Creation du cammenbert des spécialisation des Docteurs
+ *Creation du cammenbert des spÃ©cialisation des Docteurs
 
  * @author roman
  */
@@ -26,7 +26,7 @@ public class Graphe {
     Connexion maconnexion= new Connexion(NAME, LOGIN, PASSWORD);
    /**
     * Constructeur de Graphe
-    * Il fait un camembert é 6 parts qui �volue avec la base de donn�es
+    * Il fait un camembert Ã© 6 parts qui évolue avec la base de données
     * @throws SQLException
     * @throws ClassNotFoundException 
     */
