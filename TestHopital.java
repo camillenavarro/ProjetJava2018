@@ -39,7 +39,7 @@ public class TestHopital implements ActionListener {
     
     public TestHopital() throws IOException{
        zFen = new ZFenetre();
-       zFen.accueil() ;
+       zFen.login() ;
        zFen.getMenuRetour().addActionListener(this) ;
        zFen.getMenuMAJ().addActionListener(this) ;
        zFen.getMenuRecherche().addActionListener(this) ;
