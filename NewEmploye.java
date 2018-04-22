@@ -20,7 +20,7 @@ import java.util.*;
 
 /**
  * Classe permettant de générer un nouvel Employé
- * @author roman
+ * @author Camille,Rim,Roman
  */
 public class NewEmploye {
     
