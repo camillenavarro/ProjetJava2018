@@ -24,7 +24,7 @@ import java.util.*;
  */
 
 
-public class NouveauPatient extends JFrame  {
+public class NouveauPatient  {
     
     private final JMenuBar menuBar = new JMenuBar();
     private final JMenu Fichier = new JMenu("Fichier");
@@ -73,33 +73,8 @@ public class NouveauPatient extends JFrame  {
    
    }*/
      
-  public NouveauPatient(){
-            
-            
-    this.setSize(866,648);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setContentPane(new NouveauPatient.ImagePanel(new ImageIcon("Medecin.jpg").getImage()));
-        //On initialise nos menus   
-        this.Fichier.add(menuRetour);
-        this.Fichier.add(menuMAJ);
-        this.Fichier.add(menuRecherche);
-        f.setContentPane(new JLabel(new ImageIcon("Medecin.jpg")));
-        
-        this.Fichier.addSeparator();
-    
-        Close.addActionListener(new ActionListener(){
-            public @Override void actionPerformed(ActionEvent arg0) {
-                System.exit(1);
-            }        
-        });
-        this.Fichier.add(Close); 
-    
-        //L'ordre d'ajout va déterminer l'ordre d'apparition dans le menu de gauche à droite
-        //Le premier ajouté sera tout à gauche de la barre de menu et inversement pour le dernier
-        this.menuBar.add(Fichier);
-   
-        this.setJMenuBar(menuBar);
+  public NouveauPatient(ZFenetre zFen){
+           
     
   //  container.setBackground(Color.white);
    Font police = new Font("Arial", Font.BOLD, 14);
@@ -160,41 +135,66 @@ public class NouveauPatient extends JFrame  {
     truc.add(container);
     truc.add(save);
     truc.add(retour);
-    this.setContentPane(truc);
-    this.setVisible(true);
+    zFen.setContentPane(truc);
+    zFen.setVisible(true);
     
-    if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
-        donnees.add(numero.getText());
-    if(!(nom.getText()).equals(""))
-        donnees.add(nom.getText());
-    if(!(prenom.getText()).equals(""))
-        donnees.add(prenom.getText());
-    if(!(tel.getText()).equals(""))
-        donnees.add(tel.getText());
-    if(!(adresse.getText()).equals(""))
-        donnees.add(adresse.getText());
-    if(!(mutuel.getText()).equals(""))
-        donnees.add(mutuel.getText());
-    if(!(service.getText()).equals(""))
-        donnees.add(service.getText());
-    if(!(chambre.getText()).equals(""))
-        donnees.add(chambre.getText());
+    save.addActionListener(new ActionListener() {
+        public @Override void actionPerformed(ActionEvent e) {
+            donnees.clear();
+            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
+                donnees.add(numero.getText());
+            if(!(nom.getText()).equals(""))
+               donnees.add(nom.getText());
+            if(!(prenom.getText()).equals(""))
+                donnees.add(prenom.getText());
+            if(!(tel.getText()).equals(""))
+                donnees.add(tel.getText());
+            if(!(adresse.getText()).equals(""))
+                donnees.add(adresse.getText());
+            if(!(mutuel.getText()).equals(""))
+                donnees.add(mutuel.getText());
+            if(!(service.getText()).equals(""))
+                donnees.add(service.getText());
+            if(!(chambre.getText()).equals(""))
+                donnees.add(chambre.getText());
     
+            if (donnees.size() == 8)
+            {
+                System.out.println("Formulaire valide");
+                hop.nouveauPatient(donnees);
+                zFen.accueil();
+            }
+            else
+            {
+                
+                //JTextArea erreur = new JTextArea("Formulaire non valide !") ;
+                System.out.println("Formulaire non valide");
+            }
+        }
+    }
+    ) ; 
     
+    retour.addActionListener(new ActionListener() {
+        public @Override void actionPerformed(ActionEvent e) {
+            zFen.accueil();
+        }
+    });
   }
-    
-  public JButton getSave()
-  {
-      return save ;
-  }
+} 
   
-  public JButton getRetour()
-  {
-      return retour ;
-  }
-          
-  public ArrayList<String> getDonnees()
-  {
-      return donnees ;
-  }
-}
+    
+//  public JButton getSave()
+//  {
+//      return save ;
+//  }
+//  
+//  public JButton getRetour()
+//  {
+//      return retour ;
+//  }
+//          
+//  public ArrayList<String> getDonnees()
+//  {
+//      return donnees ;
+//  }
+//}
