@@ -466,4 +466,31 @@ public class Hopital {
             return false;
         }
     }
+    /**
+     * Methode qui permet de supprimer un soin dans la base de données 
+     * @param nomDocteur
+     * @param prenomDocteur
+     * @param nomMalade
+     * @param prenomMalade
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
+     public boolean SuppSoin(String nomDocteur, String prenomDocteur, String nomMalade, String prenomMalade) throws SQLException, ClassNotFoundException 
+    { 
+           ArrayList<String> verifDocteur = new ArrayList() ;
+            ArrayList<String> verifMalade = new ArrayList() ;
+            
+            verifDocteur = maconnexion.RechercheDocteur(nomDocteur, prenomDocteur) ;
+            verifMalade = maconnexion.RechercheMalade(nomMalade, prenomMalade) ;
+              if(verifDocteur.size() > 1 && verifMalade.size() > 1)
+            {
+                String numDocteur = maconnexion.getNumero(nomDocteur, prenomDocteur, "Employe");
+                String numMalade = maconnexion.getNumero(nomMalade, prenomMalade, "Malade");
+                
+                String requete = "DELETE FROM soigne WHERE no_docteur = 'nomDocteur' AND no_malade = 'nomMalade' ";
+                maconnexion.executeUpdate(requete);
+                return true ;
+            }return false;
+    }   
 }
