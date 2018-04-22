@@ -29,15 +29,15 @@ public class ZFenetre extends JFrame {
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Fichier = new JMenu("Fichier");
 
-    private JMenuItem menuRetour = new JMenuItem("Retour ÃƒÂ  l'accueil");
-    private JMenuItem menuMAJ = new JMenuItem("Mise ÃƒÂ  jour");
+    private JMenuItem menuRetour = new JMenuItem("Retour ÃƒÂ  l'accueil");
+    private JMenuItem menuMAJ = new JMenuItem("Mise ÃƒÂ  jour");
     private JMenuItem menuRecherche = new JMenuItem("Recherche");
     private JMenuItem menuReport = new JMenuItem("Reporting");
     private JMenuItem Close = new JMenuItem("Fermer");
 
     private ImageIcon Fond = new ImageIcon("Medecin.jpg");
 
-    private JButton boutonMAJ = new JButton("Mise ÃƒÂ  Jour");
+    private JButton boutonMAJ = new JButton("Mise ÃƒÂ  Jour");
     private JButton boutonRech = new JButton("Rechercher");
     private JButton boutonRep = new JButton("Reporting");
 
@@ -147,8 +147,8 @@ public class ZFenetre extends JFrame {
         });
         this.Fichier.add(Close);
 
-        //L'ordre d'ajout va dÃƒÂ©terminer l'ordre d'apparition dans le menu de gauche ÃƒÂ  droite
-        //Le premier ajoutÃƒÂ© sera tout ÃƒÂ  gauche de la barre de menu et inversement pour le dernier
+        //L'ordre d'ajout va dÃƒÂ©terminer l'ordre d'apparition dans le menu de gauche ÃƒÂ  droite
+        //Le premier ajoutÃƒÂ© sera tout ÃƒÂ  gauche de la barre de menu et inversement pour le dernier
         this.menuBar.add(Fichier);
 
         this.setJMenuBar(menuBar);
@@ -185,7 +185,7 @@ public class ZFenetre extends JFrame {
  
  /**
   * MÃ©thode qui crÃ©e l'acceuil
-  * L'utilisateur Ã  accÃ¨s aux difÃ©rents boutons pour utuliser les difÃ©rentes mÃ©thodes
+  * L'utilisateur Ã  accÃ¨s aux difÃ©rents boutons pour utuliser les difÃ©rentes mÃ©thodes
   */
     public void accueil() {
         
@@ -201,7 +201,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * MÃ©thode qui crÃ©e les Mise Ã  jour pour la base de donnÃ©es
+     * MÃ©thode qui crÃ©e les Mise Ã  jour pour la base de donnÃ©es
      * 
      */
     public void MAJ() {
@@ -283,10 +283,7 @@ public class ZFenetre extends JFrame {
     public void modifier() {
         JPanel pan = new JPanel() ;
         pan.add(modMalade);
-        pan.add(modInfirmier);
-        pan.add(modDocteur);
-        pan.add(modService);
-        pan.add(modChambre);
+        pan.add(modEmploye);
         pan.add(boutonRetour);
         this.setContentPane(pan);
         this.setVisible(true);
@@ -442,10 +439,16 @@ public class ZFenetre extends JFrame {
         submit.addActionListener(new ActionListener(){
              @Override 
              public void actionPerformed(ActionEvent arg0) {
-               if(hop.SuppSoin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
-                    accueil();
-                else
-                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos rÃ©pertoires.");
+                 try {
+                     if(hop.SuppSoin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
+                         accueil();
+                     else
+                         JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos rÃ©pertoires.");
+                 } catch (SQLException ex) {
+                     Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                 } catch (ClassNotFoundException ex) {
+                     Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                 }
              }});
         
    
