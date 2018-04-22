@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Class qui crée toutes les fenetres que l'utilisateur verra
+ * Class qui crÃ©e toutes les fenetres que l'utilisateur verra
  * @author Camille,Rim,Roman
  */
 public class ZFenetre extends JFrame {
@@ -29,26 +29,28 @@ public class ZFenetre extends JFrame {
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Fichier = new JMenu("Fichier");
 
-    private JMenuItem menuRetour = new JMenuItem("Retour Ã  l'accueil");
-    private JMenuItem menuMAJ = new JMenuItem("Mise Ã  jour");
+    private JMenuItem menuRetour = new JMenuItem("Retour ÃƒÂ  l'accueil");
+    private JMenuItem menuMAJ = new JMenuItem("Mise ÃƒÂ  jour");
     private JMenuItem menuRecherche = new JMenuItem("Recherche");
     private JMenuItem menuReport = new JMenuItem("Reporting");
     private JMenuItem Close = new JMenuItem("Fermer");
 
     private ImageIcon Fond = new ImageIcon("Medecin.jpg");
 
-    private JButton boutonMAJ = new JButton("Mise Ã  Jour");
+    private JButton boutonMAJ = new JButton("Mise ÃƒÂ  Jour");
     private JButton boutonRech = new JButton("Rechercher");
     private JButton boutonRep = new JButton("Reporting");
 
-    private JButton boutonRetour = new JButton("Retour Ã  l'accueil");
+    private JButton boutonRetour = new JButton("Retour a l'accueil");
     private JButton nouveauP = new JButton("Nouveau patient");
-    private JButton nouvelE = new JButton("Nouvel employÃ©");
+    private JButton nouvelE = new JButton("Nouvel employe");
     private JButton nouveauS = new JButton("Nouveau soin");
-    private JButton modifier = new JButton("Modifier une donnÃ©e");
+    private JButton nouveauH = new JButton("Nouvelle hospitalisation") ;
+    private JButton modifier = new JButton("Modifier une donnee");
     private JButton suppP = new JButton("Supprimer un patient");
-    private JButton suppE = new JButton("Supprimer un employÃ©");
+    private JButton suppE = new JButton("Supprimer un employe");
     private JButton suppS = new JButton("Supprimer un soin");
+    private JButton suppH = new JButton("Supprimer une hospitalisation");
   
 
     private JButton rechMalade = new JButton("Rechercher un patient");
@@ -56,13 +58,12 @@ public class ZFenetre extends JFrame {
     private JButton rechDoc = new JButton("Rechercher un docteur");
     private JButton rechServ = new JButton("Rechercher un service");
     private JButton rechChambre = new JButton("Rechercher une chambre");
-   
+    private JButton requetes = new JButton("Voir les requêtes");
+    
+    private JComboBox numRequetes = new JComboBox() ;
 
     private JButton modMalade = new JButton("Modifier un patient");
-    private JButton modInfirmier = new JButton("Modifier un infirmier");
-    private JButton modDocteur = new JButton("Modifier un docteur");
-    private JButton modService = new JButton("Modifier un service");
-    private JButton modChambre = new JButton("Modifier une chambre");
+    private JButton modEmploye = new JButton("Modifier un employe");
    
 
    
@@ -146,16 +147,16 @@ public class ZFenetre extends JFrame {
         });
         this.Fichier.add(Close);
 
-        //L'ordre d'ajout va dÃ©terminer l'ordre d'apparition dans le menu de gauche Ã  droite
-        //Le premier ajoutÃ© sera tout Ã  gauche de la barre de menu et inversement pour le dernier
+        //L'ordre d'ajout va dÃƒÂ©terminer l'ordre d'apparition dans le menu de gauche ÃƒÂ  droite
+        //Le premier ajoutÃƒÂ© sera tout ÃƒÂ  gauche de la barre de menu et inversement pour le dernier
         this.menuBar.add(Fichier);
 
         this.setJMenuBar(menuBar);
     }
     
     /**
-     * Methode qui crée le login
-     * L'utilisateur doit rentrer le Login et le mot de passe pour rentre dans la bonne base de données
+     * Methode qui crÃ©e le login
+     * L'utilisateur doit rentrer le Login et le mot de passe pour rentre dans la bonne base de donnÃ©es
      */
  public void login()
     {
@@ -183,8 +184,8 @@ public class ZFenetre extends JFrame {
     }
  
  /**
-  * Méthode qui crée l'acceuil
-  * L'utilisateur à accès aux diférents boutons pour utuliser les diférentes méthodes
+  * MÃ©thode qui crÃ©e l'acceuil
+  * L'utilisateur Ã  accÃ¨s aux difÃ©rents boutons pour utuliser les difÃ©rentes mÃ©thodes
   */
     public void accueil() {
         
@@ -200,7 +201,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * Méthode qui crée les Mise à jour pour la base de données
+     * MÃ©thode qui crÃ©e les Mise Ã  jour pour la base de donnÃ©es
      * 
      */
     public void MAJ() {
@@ -227,7 +228,7 @@ public class ZFenetre extends JFrame {
     }
 
     /**
-     * Methode qui crée la fenetre recherche 
+     * Methode qui crÃ©e la fenetre recherche 
      */
     public void optionsRecherche() {
         
@@ -241,10 +242,43 @@ public class ZFenetre extends JFrame {
         this.setContentPane(pan);
         this.setVisible(true);
     }
-
     
     /**
-     * Méthode qui crée la fenetre modifier 
+     * Méthode qui affiche les choix de requêtes
+     */
+    public void optionRequetes()
+    {
+        numRequetes = new JComboBox() ;
+            
+            for(int i = 0 ; i < 11 ; i++)
+                numRequetes.addItem("R" + i);
+            
+        JPanel pan = new JPanel() ;
+        pan.add(numRequetes) ;
+        pan.add(submit) ;
+        pan.add(boutonRetour) ;
+        this.setContentPane(pan) ;
+        this.setVisible(true) ;
+          
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try {
+                    hop.maconnexion.RechercheRandom(numRequetes.getSelectedItem().toString());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ZFenetre.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                    
+        });
+        
+    }
+    
+    /**
+     * MÃ©thode qui crÃ©e la fenetre modifier 
      */
     public void modifier() {
         JPanel pan = new JPanel() ;
@@ -259,7 +293,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui crée la fenetre supprimer
+     * MÃ©thode qui crÃ©e la fenetre supprimer
      * @param table 
      */
     public void supprimer(String table)
@@ -276,7 +310,7 @@ public class ZFenetre extends JFrame {
         JTextField prenom = new JTextField("");
         prenom.setPreferredSize(new Dimension(200, 30));
         prenom.setForeground(Color.black);
-        saisie.add(new JLabel("PrÃ©nom"));
+        saisie.add(new JLabel("PrÃƒÂ©nom"));
         saisie.add(prenom);
         
         pan.add(saisie) ;
@@ -304,7 +338,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui saisit les noms et prénoms d'un docteur et d'un malade pour les ajouter dans la table soigne
+     * MÃ©thode qui saisit les noms et prÃ©noms d'un docteur et d'un malade pour les ajouter dans la table soigne
      */
     public void nouveauSoin()
     {
@@ -321,7 +355,7 @@ public class ZFenetre extends JFrame {
         nomDocteur.setForeground(Color.BLACK);
         container.add(nomDocteur);
 
-        container.add(new JLabel("Prénom du docteur : "));
+        container.add(new JLabel("PrÃ©nom du docteur : "));
        
         prenomDocteur.setPreferredSize(new Dimension(150, 30));
         prenomDocteur.setForeground(Color.BLACK);
@@ -337,7 +371,7 @@ public class ZFenetre extends JFrame {
         nomMalade.setForeground(Color.BLACK);
         container.add(nomMalade);
 
-        container.add(new JLabel("Prénom du malade : "));
+        container.add(new JLabel("PrÃ©nom du malade : "));
        
         prenomMalade.setPreferredSize(new Dimension(150, 30));
         prenomMalade.setForeground(Color.BLACK);
@@ -355,12 +389,12 @@ public class ZFenetre extends JFrame {
                 if(hop.soin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
                     accueil();
                 else
-                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos répertoires.");
+                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos rÃ©pertoires.");
             }
         });
     }
     /**
-     * M�thode qui demande de saisir le nom,pr�nom du docteur et du malade pour appeler la fonction qui supprime les soins
+     * Méthode qui demande de saisir le nom,prénom du docteur et du malade pour appeler la fonction qui supprime les soins
      */    
     public void supSoin()
     {
@@ -377,7 +411,7 @@ public class ZFenetre extends JFrame {
         nomDocteur.setForeground(Color.BLACK);
         container.add(nomDocteur);
 
-        container.add(new JLabel("Prénom du docteur : "));
+        container.add(new JLabel("PrÃ©nom du docteur : "));
        
         prenomDocteur.setPreferredSize(new Dimension(150, 30));
         prenomDocteur.setForeground(Color.BLACK);
@@ -393,7 +427,7 @@ public class ZFenetre extends JFrame {
         nomMalade.setForeground(Color.BLACK);
         container.add(nomMalade);
 
-        container.add(new JLabel("Prénom du malade : "));
+        container.add(new JLabel("PrÃ©nom du malade : "));
        
         prenomMalade.setPreferredSize(new Dimension(150, 30));
         prenomMalade.setForeground(Color.BLACK);
@@ -411,7 +445,7 @@ public class ZFenetre extends JFrame {
                if(hop.SuppSoin(nomDocteur.getText(), prenomDocteur.getText(), nomMalade.getText(), prenomMalade.getText()))
                     accueil();
                 else
-                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos répertoires.");
+                    JOptionPane.showMessageDialog(null, "Le docteur ou le malade n'existe pas dans nos rÃ©pertoires.");
              }});
         
    
@@ -452,7 +486,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui retourne le bouton Recherche
+     * MÃ©thode qui retourne le bouton Recherche
      * @return menuRecherche
      */
     public JMenuItem getMenuRecherche() {
@@ -460,7 +494,7 @@ public class ZFenetre extends JFrame {
     }
     
     /**
-     * Méthode qui retourne le bouton reporting
+     * MÃ©thode qui retourne le bouton reporting
      * @return menuReport
      */
     public JMenuItem getMenuReport() {
@@ -605,11 +639,37 @@ public class ZFenetre extends JFrame {
     }
     
      /**
-     * Methode qui retourne le bouton modification Employé
+     * Methode qui retourne le bouton modification EmployÃ©
      * @return mdEmploye
      */
     public JButton getModEmploye() {
         return modEmploye;
+    }
+    
+    /**
+     * Methode qui retourne le bouton de nouvelle hospitalisation
+     *
+     * @return nouveauH
+     */
+    public JButton getNouveauH() {
+        return nouveauH;
+    }
+    
+    /**
+     * Methode qui retourne le bouton de suppression d'hospitalisation
+     *
+     * @return suppH
+     */
+    public JButton getSuppH() {
+        return suppH;
+    }
+    
+    /**
+     * Méthode qui retourne le bouton de requêtes
+     * @return requetes
+     */
+    public JButton getRequetes() {
+        return requetes;
     }
 
 
