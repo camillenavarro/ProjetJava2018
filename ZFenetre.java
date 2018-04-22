@@ -15,9 +15,15 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class ZFenetre extends JFrame {
+    
+    
+     private final JTextField Login = new JTextField(null);
+      private final JTextField MDP = new JTextField(null);
+      private final JPanel pan0 = new JPanel();
+      private final JButton envoie = new JButton("Envoyer");
 
     ArrayList<String> liste = new ArrayList<>();
-    private Hopital hop = new Hopital();
+    private Hopital hop;
     private JMenuBar menuBar = new JMenuBar();
     private JMenu Fichier = new JMenu("Fichier");
 
@@ -65,6 +71,22 @@ public class ZFenetre extends JFrame {
     private JButton submit = new JButton("Valider");
 
     private JTable table;
+    
+     private class BoutonListener implements ActionListener {
+        public void actionPerformed(ActionEvent ae) {
+          
+            if(ae.getSource() == envoie)
+            {
+                
+                hop = new Hopital(Login.getText(),MDP.getText());
+                if (hop.maconnexion.h == true)
+                {
+                accueil();}
+                
+            }
+
+        }
+    }
 
     class ImagePanel extends JComponent {
 
@@ -107,8 +129,33 @@ public class ZFenetre extends JFrame {
 
         this.setJMenuBar(menuBar);
     }
-
+ public void login()
+    {
+        
+       Fichier.setEnabled(false);
+            Font police = new Font("Arial", Font.BOLD, 14);
+         pan0.add(new JLabel ("Login : "));
+    Login.setFont(police);
+    Login.setPreferredSize(new Dimension(150, 30));
+    Login.setForeground(Color.BLACK);
+    pan0.add(Login);
+         pan0.add(new JLabel ("Mot de Passe : "));
+    MDP.setFont(police);
+   MDP.setPreferredSize(new Dimension(150, 30));
+    MDP.setForeground(Color.BLACK);
+    pan0.add(MDP);
+    
+    envoie.addActionListener(new BoutonListener());
+    
+    pan0.add(envoie);
+        this.setContentPane(pan0);
+        this.setVisible(true); 
+        
+        
+    }
     public void accueil() {
+        
+         Fichier.setEnabled(true);
         pan1.add(boutonMAJ);
         pan1.add(boutonRech);
         pan1.add(image);
