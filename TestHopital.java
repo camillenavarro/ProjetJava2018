@@ -90,13 +90,13 @@ public class TestHopital implements ActionListener {
         
         if(e.getSource()==zFen.getNouveauP())
         {
-            np = new NouveauPatient();
-            npl = new NPListener() ;
+            np = new NouveauPatient(zFen);
+          //  npl = new NPListener() ;
             
         }
         if(e.getSource()==zFen.getNouvelE())
         {
-            ne = new NewEmploye();
+            ne = new NewEmploye(zFen);
         }
         if(e.getSource()==zFen.getModifier())
         {
