@@ -15,8 +15,7 @@ import java.util.*;
 
 
 /**
- *Cette class permet la création d'un nouveau Patient 
- * Elle affiche le formulaire pour un nouveau Patient 
+ *Cette class permet la création d'un nouveau Patient  
  * @author roman
  */
 
