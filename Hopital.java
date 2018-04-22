@@ -18,43 +18,13 @@ import java.util.logging.Logger;
 public class Hopital {
 
     static final String NAME = "hopital";
-    static  String LOGIN = "root";
-    static  String PASSWORD = "";
-    public Connexion maconnexion;
+    static final String LOGIN = "root";
+    static final String PASSWORD = "";
+    Connexion maconnexion;
     ArrayList<String> liste = new ArrayList<>();
 
-    public Hopital(){
-        
-        try {
+    public Hopital() {
 
-            try {
-                //Connection connection = null;
-                //Statement statement = null;
-                //ResultSet resultSet = null;
-
-                maconnexion = new Connexion(NAME, LOGIN, PASSWORD);
-                //maconnexion.remplirChampsTable("chambre");
-
-            } catch (SQLException ex) {
-                System.out.println("SQL problem.");
-            }
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class problem.");
-        }
-
-        //finally {
-        //try {
-        //    resultSet.close();
-        //    statement.close();
-        //    connection.close();
-        //} catch (SQLException ex) {
-        //}
-    }
-    
-    public Hopital(String a, String b){
-        LOGIN = a;
-        PASSWORD = b;
         try {
 
             try {
@@ -83,23 +53,12 @@ public class Hopital {
     }
 
     public void AjoutMalade(String ArrayList) throws SQLException {
-        
+
         //ajout malade
         int num = maconnexion.IDgenerator("malade");
         String insert = "INSERT INTO malade (numero,nom,prenom,adresse,tel,mutuelle) VALUES (" + num + "," + liste.get(0) + "," + liste.get(1) + "," + liste.get(2) + "," + liste.get(3) + "," + liste.get(4) + ")";
         //System.out.println(num);
-        maconnexion.executeUpdate(insert);         
-    }
-
-    
-    public void MAJupdate() throws SQLException {
-        String update = "UPDATE Dept SET" + "WHERE loc='Paris'";
-        maconnexion.executeUpdate(update);
-    }
-
-    public void MAJdelete() throws SQLException {
-        String delete = "DELETE FROM Dept WHERE loc='Eiffel'";
-        maconnexion.executeUpdate(delete);
+        maconnexion.executeUpdate(insert);
     }
 
     public ArrayList malade(String nom, String prenom) {
@@ -113,12 +72,12 @@ public class Hopital {
             } catch (SQLException ex) {
                 System.out.println("SQL problem.");
             }
-            
+
         } catch (ClassNotFoundException e) {
             System.out.println("Class problem.");
-        }       
+        }
         return liste;
-        
+
     }
 
     public ArrayList docteur(String nom, String prenom) {
@@ -193,92 +152,104 @@ public class Hopital {
         } catch (ClassNotFoundException e) {
             System.out.println("Class problem.");
         }
-        
+
         return liste;
     }
-    
-    public void nouveauPatient(ArrayList<String> donnees)
-    {
-        
 
-            try {
-               
-                int num = maconnexion.IDgenerator("malade");
-                String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + num + "','"+ donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "')" ;
-                
-                
-                
-    //            String insert2 = "INSERT INTO hospitalisation  VALUES ('" + donnees.get(0) + "','" + donnees.get(6) + "','" + donnees.get(7) + "','"  ;
-                
-                maconnexion.executeUpdate(insert);
+    public void nouveauPatient(ArrayList<String> donnees) {
+        try {
+            int num = maconnexion.IDgenerator("malade");
+            String insert = "INSERT INTO malade (numero, nom, prenom, tel, adresse, mutuelle) VALUES ('" + num + "','" + donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "','" + donnees.get(4) + "')";
+            //            String insert2 = "INSERT INTO hospitalisation  VALUES ('" + donnees.get(0) + "','" + donnees.get(6) + "','" + donnees.get(7) + "','"  ;
+
+            maconnexion.executeUpdate(insert);
             //    maconnexion.executeUpdate(insert2);
-                
-             } catch (SQLException ex) {
-                 
-                 System.out.println("SQL problem.");
-             }
- 
-         
-    }
-    
-    public void nouvelEmploye(ArrayList<String> donnees)
-    {
-        
 
-            try {
-               
-                int num = maconnexion.IDgenerator("employe");
-                String insert = "INSERT INTO employe (numero, nom, prenom, tel, adresse) VALUES ('" + num + "','"+ donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "')" ;
-                String insert2 ;
-                
-                if((donnees.get(4)).equals("doc"))
-                
-                    insert2 = "INSERT INTO docteur (numero, specialite) VALUES ('" + num + "','" + donnees.get(5) + "')" ;
-                
-                else
-                
-                    insert2 = "INSERT INTO infirmier (numero, code_service, rotation, salaire) VALUES ('" + num + "','" + donnees.get(5) + "','" + donnees.get(6) + "','" + donnees.get(7) +"')" ;
-                
-                
-                maconnexion.executeUpdate(insert);
-                maconnexion.executeUpdate(insert2);
-                
-             } catch (SQLException ex) {
-                 
-                 System.out.println("SQL problem.");
-             }
- 
-         
-    }
-    
-    public void suppression(String nom, String prenom, String table) throws SQLException, ClassNotFoundException
-    {
-       
+        } catch (SQLException ex) {
 
-            try {
-                String query2, query3;
-                String query = "DELETE FROM " + table + " WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'";
-                
-                String numero = maconnexion.getNumero(nom, prenom, table) ;
-                System.out.println("Le numero est " + numero);
-                maconnexion.executeUpdate(query);
-                
-                if(table.equals("employe"))
-                {
-                    query2 = "DELETE FROM docteur WHERE numero = '" + numero + "'";
-                    query3 = "DELETE FROM infirmier WHERE numero = '" + numero + "'";
-                    maconnexion.executeUpdate(query2);
-                    maconnexion.executeUpdate(query3);
-                }
-                
-                
-                
-                
-                
-            } catch (SQLException ex) {
-                System.out.println("SQL problem.");
+            System.out.println("SQL problem.");
+        }
+
+    }
+
+    public void nouvelEmploye(ArrayList<String> donnees) {
+
+        try {
+
+            int num = maconnexion.IDgenerator("employe");
+            String insert = "INSERT INTO employe (numero, nom, prenom, tel, adresse) VALUES ('" + num + "','" + donnees.get(0) + "','" + donnees.get(1) + "','" + donnees.get(2) + "','" + donnees.get(3) + "')";
+            String insert2;
+
+            if ((donnees.get(4)).equals("doc")) {
+                insert2 = "INSERT INTO docteur (numero, specialite) VALUES ('" + num + "','" + donnees.get(5) + "')";
+            } else {
+                insert2 = "INSERT INTO infirmier (numero, code_service, rotation, salaire) VALUES ('" + num + "','" + donnees.get(5) + "','" + donnees.get(6) + "','" + donnees.get(7) + "')";
             }
 
+            maconnexion.executeUpdate(insert);
+            maconnexion.executeUpdate(insert2);
+
+        } catch (SQLException ex) {
+
+            System.out.println("SQL problem.");
+        }
+
     }
 
+    public void updateMalade(ArrayList<String> listeMAJ) throws SQLException {
+
+        String nom = listeMAJ.get(0);
+        String prenom = listeMAJ.get(1);
+        String adresse = liste.get(2);
+        String tel = liste.get(3);
+        String mutuelle = liste.get(4);
+        String update = null;
+
+        if (adresse != null) {
+            update = "UPDATE employe SET adresse = '" + adresse + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+
+        if (tel != null) {
+            update = "UPDATE employe SET tel = '" + tel + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+
+        if (mutuelle != null) {
+            update = "UPDATE employe SET mutuelle = '" + mutuelle + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+        maconnexion.executeUpdate(update);
+    }
+
+    public void updateEmploye(ArrayList<String> listeMAJ) throws SQLException {
+
+        String nom = listeMAJ.get(0);
+        String prenom = listeMAJ.get(1);
+        String adresse = listeMAJ.get(2);
+        String tel = listeMAJ.get(3);
+        String update = null;
+
+        if (adresse != null) {
+            update = "UPDATE employe SET adresse = '" + adresse + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+
+        if (tel != null) {
+            update = "UPDATE employe SET tel = '" + tel + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+        maconnexion.executeUpdate(update);
+    }
+
+    public void updateInfirmier(ArrayList<String> listeMAJ) throws SQLException {
+
+        String nom = listeMAJ.get(0);
+        String prenom = listeMAJ.get(1);
+        String rotation = listeMAJ.get(2);
+        String salaire = listeMAJ.get(3);
+        String update = null;
+
+        if (rotation != null) {
+            update = "UPDATE employe SET rotation = '" + rotation + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        } else if (salaire != null) {
+            update = "UPDATE employe SET salaire = '" + salaire + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        }
+        maconnexion.executeUpdate(update);
+    }
 }
