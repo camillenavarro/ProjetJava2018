@@ -9,10 +9,7 @@ import Modele.Hopital;
 import Modele.*;
 import Vue.*;
 import java.io.IOException;
-/**
- *
- * @author Rim
- */
+
 //import java.awt.* ;
 import java.awt.event.* ;
 import java.sql.SQLException;
@@ -28,6 +25,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class contenant le main
+ * @author Camille,Rim,Roman
+ */
 public class TestHopital implements ActionListener {
     
 
@@ -39,7 +40,11 @@ public class TestHopital implements ActionListener {
     private static NewEmploye ne ;
     private static AffichageRecherche aRech ; 
     
-    
+    /**
+     * Constructeur de TestHopital 
+     * Il ajoute les ActionListeners
+     * @throws IOException 
+     */
     public TestHopital() throws IOException{
        zFen = new ZFenetre();
        zFen.login() ;
@@ -70,6 +75,11 @@ public class TestHopital implements ActionListener {
        zFen.getSuppS().addActionListener(this) ;
     }
     
+    /**
+     * Main du programme 
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException{
        
        new TestHopital() ;
@@ -77,6 +87,10 @@ public class TestHopital implements ActionListener {
        
     }
     
+    /**
+     * Methode permettant de lancer la bonne méthode quand un bouton est appuyé
+     * @param e 
+     */
     public @Override void actionPerformed(ActionEvent e) 
     {
         if(e.getSource()==zFen.getMenuRetour() || e.getSource()==zFen.getBoutonRetour())
