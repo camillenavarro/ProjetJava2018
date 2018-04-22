@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Classe permettant l'utilisation et la connection avec la base de donnÈes
+ * Classe permettant l'utilisation et la connection avec la base de donn√©es
  * @author Camille,Rim,Roman
  */
 public class Hopital {
@@ -29,7 +29,7 @@ public class Hopital {
 
     /**
      * Constructeurs par defaut d'Hopital 
-     * Elle fait la connection avec la base de donnÈes
+     * Elle fait la connection avec la base de donn√©es
      */
     public Hopital() {
 
@@ -60,8 +60,8 @@ public class Hopital {
         //}
     }
     /**
-     * Constructeur suchargÈ d'Hopital 
-     * Elle permet la connectiona avec une base de donnÈes choisie
+     * Constructeur sucharg√© d'Hopital 
+     * Elle permet la connectiona avec une base de donn√©es choisie
      * @param a
      * @param b 
      */
@@ -98,7 +98,7 @@ public class Hopital {
 
     
     /**
-     * MÈthode permettant de recherche une personne malade 
+     * M√©thode permettant de recherche une personne malade 
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les personnes malades
@@ -123,7 +123,7 @@ public class Hopital {
     }
 
     /**
-     * MÈthode permettant de rechercher un docteur
+     * M√©thode permettant de rechercher un docteur
      * @param nom
      * @param prenom
      * @return Arraylist d'informations sur les docteurs
@@ -148,7 +148,7 @@ public class Hopital {
     }
     
     /**
-     * MÈthode permettant de rechercher un infirmier
+     * M√©thode permettant de rechercher un infirmier
      * @param nom
      * @param prenom
      * @return Arraylist d'information sur les infirmiers
@@ -173,7 +173,7 @@ public class Hopital {
     }
 
     /**
-     * MÈthode permettant de recherche un service
+     * M√©thode permettant de recherche un service
      * @param nomService
      * @return Arraylist d'informations sur les services
      */
@@ -222,7 +222,7 @@ public class Hopital {
     }
 
     /**
-     * MÈthode permettant d'ajouter un patient ‡ la base de donnÈes
+     * M√©thode permettant d'ajouter un patient √† la base de donn√©es
      * @param donnees 
      */
     public void nouveauPatient(ArrayList<String> donnees) {
@@ -241,7 +241,7 @@ public class Hopital {
 
     }
     /**
-     * MÈthode permettant d'ajouter un employÈ (docteur,infirmier) ‡ base de donnÈes
+     * M√©thode permettant d'ajouter un employ√© (docteur,infirmier) √† base de donn√©es
      * @param donnees 
      */
     public void nouvelEmploye(ArrayList<String> donnees) {
@@ -268,7 +268,7 @@ public class Hopital {
 
     }
     /**
-     * MÈthode permttant de supprimer un docteur, un infirmier ou un malade
+     * M√©thode permttant de supprimer un docteur, un infirmier ou un malade
      * @param nom
      * @param prenom
      * @param table
@@ -298,7 +298,7 @@ public class Hopital {
     }
 
     /**
-     * MÈthode permmettant de modifier les informations d'un malade
+     * M√©thode permmettant de modifier les informations d'un malade
      * @param listeMAJ
      * @throws SQLException 
      */
@@ -306,26 +306,52 @@ public class Hopital {
 
         String nom = listeMAJ.get(0);
         String prenom = listeMAJ.get(1);
-        String adresse = liste.get(2);
-        String tel = liste.get(3);
-        String mutuelle = liste.get(4);
-        String update = null;
-
-        if (adresse != null) {
-            update = "UPDATE employe SET adresse = '" + adresse + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+        
+        ArrayList<String> verif = new ArrayList() ;
+        try {
+            verif = maconnexion.RechercheMalade(nom, prenom);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("SQL problem");
         }
+        
+        if(verif.size() > 1)
+        {
+            String tel = listeMAJ.get(2);
+            String adresse = listeMAJ.get(3);
+            String mutuelle = listeMAJ.get(4);
+            String update = "", set = "";
+            
+            if (!adresse.equals("")) {
+                if(set.equals(""))
+                    set += "adresse = '" + adresse + "' " ;
+                else
+                    set += ", adresse = '" + adresse + "' " ;
+            }
 
-        if (tel != null) {
-            update = "UPDATE employe SET tel = '" + tel + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
-        }
+            if (!tel.equals("")) {
+                if(set.equals(""))
+                    set += "tel = '" + tel + "' " ;
+                else
+                    set += ", tel = '" + tel + "' " ;
+            }
 
-        if (mutuelle != null) {
-            update = "UPDATE employe SET mutuelle = '" + mutuelle + "' WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+            if (!mutuelle.equals("")) {
+                if(set.equals(""))
+                    set += "mutuelle = '" + mutuelle + "' " ;
+                else
+                    set += ", mutuelle = '" + mutuelle + "' " ;
+            }
+            update = "UPDATE malade SET " + set + "WHERE nom ='" + nom + "' AND prenom='" + prenom + "'";
+                
+            System.out.println(update);
+            maconnexion.executeUpdate(update);
         }
-        maconnexion.executeUpdate(update);
+        else
+            JOptionPane.showMessageDialog(null, "Ce malade n'est pas dans nos r√©pertoires");
+    
     }
     /**
-     * MÈthode permettant de modifier les informations d'un docteur
+     * M√©thode permettant de modifier les informations d'un docteur
      * @param listeMAJ
      * @throws SQLException 
      */
@@ -347,7 +373,7 @@ public class Hopital {
         maconnexion.executeUpdate(update);
     }
      /**
-      * MÈthode permettant de modifier les informations d'un infirmier 
+      * M√©thode permettant de modifier les informations d'un infirmier 
       * @param listeMAJ
       * @throws SQLException 
       */
