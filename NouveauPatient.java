@@ -129,10 +129,10 @@ public class NouveauPatient  {
             donnees.clear();
 //            if(!(numero.getText()).equals("") && (hop.numeroValideMalade(numero.getText())) )
 //                donnees.add(numero.getText());
-            if(!(nom.getText()).equals(""))
+            if(!(nom.getText()).equals("") && nom.getText().matches("[a-zA-Z]+"))
             {
                 donnees.add(nom.getText());
-                if(!(prenom.getText()).equals(""))
+                if(!(prenom.getText()).equals("") && prenom.getText().matches("[a-zA-Z]+"))
                 {
                     donnees.add(prenom.getText());
                     if(!(tel.getText()).equals(""))
